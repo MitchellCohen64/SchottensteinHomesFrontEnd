@@ -63,7 +63,7 @@ body {
   justify-content: center;
   gap: clamp(40px, 5vw, 86px);
   white-space: nowrap;
-  font-family: "Jost", "Montserrat", sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-size: clamp(18px, 1.25vw, 20px);
   font-weight: 400;
   letter-spacing: 0.45px;
@@ -259,7 +259,7 @@ button {
 
 h1 {
   margin: 0 0 23px;
-  font-family: "Cormorant Garamond", Georgia, serif;
+  font-family: "Times New Roman", Times, serif;
   font-size: clamp(64px, 5vw, 84px);
   font-weight: 400;
   line-height: 1.04;
@@ -353,7 +353,7 @@ h1 {
 
 .stat strong {
   color: #821f31;
-  font-family: "Cormorant Garamond", Georgia, serif;
+  font-family: "Manrope", "Montserrat", sans-serif;
   font-size: clamp(42px, 3.6vw, 58px);
   font-weight: 500;
   line-height: 0.95;
@@ -767,6 +767,20 @@ h1 {
   filter: sepia(0.15) saturate(0.65) contrast(0.94) brightness(1.04);
 }
 
+.communities-map.is-home-map {
+  background: #f4f0f2;
+  border-top: 1px solid #8d2637;
+}
+
+.communities-map.is-home-map .leaflet-tile-pane {
+  opacity: 0.42;
+  filter: grayscale(1) sepia(0.08) hue-rotate(285deg) saturate(0.25) contrast(0.72) brightness(1.15);
+}
+
+.communities-map.is-home-map .leaflet-control-attribution {
+  opacity: 0.62;
+}
+
 .community-pin {
   background: transparent;
   border: 0;
@@ -791,6 +805,20 @@ h1 {
 
 .community-pin:hover svg {
   transform: translateY(-4px) scale(1.12);
+}
+
+.community-pin.is-pushpin svg {
+  width: 36px;
+  height: 48px;
+  filter: drop-shadow(0 3px 2px rgba(36, 8, 13, 0.2));
+}
+
+.community-pin.is-pushpin path {
+  fill: #090909;
+}
+
+.community-pin.is-pushpin ellipse {
+  fill: rgba(69, 10, 20, 0.22);
 }
 
 .community-tooltip {
@@ -1469,4 +1497,13 @@ h1 {
   .communities-map-page .communities-map {
     min-height: 380px;
   }
+}
+
+.home-page h1 {
+  font-family: "Times New Roman", Times, serif;
+}
+
+.home-page :is(h2, h3) {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 400;
 }
