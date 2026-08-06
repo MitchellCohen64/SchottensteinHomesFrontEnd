@@ -2,9 +2,19 @@ import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 
 const header = document.querySelector('.site-header')
+const isCommunitiesPage = document.body.classList.contains('communities-page')
+let previousScrollY = window.scrollY
 
 const updateHeader = () => {
-  header?.classList.toggle('is-scrolled', window.scrollY > 40)
+  const currentScrollY = window.scrollY
+  header?.classList.toggle('is-scrolled', currentScrollY > 40)
+
+  if (isCommunitiesPage && header) {
+    const isScrollingDown = currentScrollY > previousScrollY
+    header.classList.toggle('is-hidden', isScrollingDown && currentScrollY > 112)
+  }
+
+  previousScrollY = currentScrollY
 }
 
 updateHeader()
