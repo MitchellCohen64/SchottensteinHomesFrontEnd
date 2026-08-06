@@ -167,7 +167,7 @@ if (mapElement) {
       ? toHomeMapCoords(community.coords)
       : community.markerCoords ?? community.coords
     const marker = L.marker(markerPosition, { icon: pinIcon }).addTo(map)
-    marker.bindTooltip(`<strong>${community.name}</strong><span>${community.address}</span><i>→</i>`, {
+    marker.bindTooltip(`<strong>${community.name}</strong><span>${community.address}</span>`, {
       direction: 'top',
       className: 'community-tooltip',
       opacity: 1,
@@ -211,6 +211,36 @@ if (mapElement) {
 
 const filterPills = document.querySelectorAll('.filter-pill')
 const communityCards = document.querySelectorAll('.community-card')
+const communityFilterControl = document.querySelector('.community-filter-menu .community-control')
+const communityFilterOptions = document.querySelector('.community-filter-options')
+const communitySortControl = document.querySelector('.community-sort')
+const communitySortOptions = document.querySelector('.community-sort-options')
+const communityGrid = document.querySelector('.communities-grid')
+const communityResultCount = document.querySelector('.communities-result-count')
+
+const closeCommunityMenu = (control, menu) => {
+  control?.setAttribute('aria-expanded', 'false')
+  menu?.classList.remove('is-open')
+}
+
+const openCommunityMenu = (control, menu) => {
+  control?.setAttribute('aria-expanded', 'true')
+  menu?.classList.add('is-open')
+}
+
+const closeAllCommunityMenus = () => {
+  closeCommunityMenu(communityFilterControl, communityFilterOptions)
+  closeCommunityMenu(communitySortControl, communitySortOptions)
+}
+
+if (communityFilterControl || communitySortControl) {
+  document.addEventListener('click', (event) => {
+    const clickedInsideMenu = event.target.closest('.community-filter-menu, .community-sort-menu')
+    if (!clickedInsideMenu) closeAllCommunityMenus()
+  })
+
+  window.addEventListener('scroll', closeAllCommunityMenus, true)
+}
 
 const placeholderHouseIcon = `
   <svg viewBox="0 0 64 64" aria-hidden="true">
@@ -274,14 +304,14 @@ communityCards.forEach((card) => {
   previous.type = 'button'
   previous.className = 'community-card-arrow is-previous'
   previous.setAttribute('aria-label', `Show previous ${communityName} photo`)
-  previous.innerHTML = '<span aria-hidden="true">‹</span>'
+  previous.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6-6 6 6 6"></path></svg>'
   previous.addEventListener('click', () => showSlide(activeSlide - 1))
 
   const next = document.createElement('button')
   next.type = 'button'
   next.className = 'community-card-arrow is-next'
   next.setAttribute('aria-label', `Show next ${communityName} photo`)
-  next.innerHTML = '<span aria-hidden="true">›</span>'
+  next.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9.5 6 6 6-6 6"></path></svg>'
   next.addEventListener('click', () => showSlide(activeSlide + 1))
 
   media.append(dots, previous, next)
@@ -298,6 +328,71 @@ if (filterPills.length && communityCards.length) {
         const matches = filter === 'all' || card.dataset.type === filter
         card.classList.toggle('is-hidden', !matches)
       })
+    })
+  })
+}
+
+if (communityFilterControl && communityFilterOptions) {
+  let selectedPrice = 'all'
+  let selectedHouseType = 'all'
+
+  const applyCommunityFilters = () => {
+    let visibleCount = 0
+    communityCards.forEach((card) => {
+      const price = Number(card.dataset.priceMin)
+      const matchesType = selectedHouseType === 'all' || card.dataset.type === selectedHouseType
+      const matchesPrice = selectedPrice === 'all'
+        || (selectedPrice === 'under-500' && price < 500)
+        || (selectedPrice === '500-550' && price >= 500 && price < 550)
+        || (selectedPrice === '550-plus' && price >= 550)
+      card.classList.toggle('is-hidden', !(matchesType && matchesPrice))
+      if (matchesType && matchesPrice) visibleCount += 1
+    })
+    if (communityResultCount) {
+      communityResultCount.textContent = `Showing results for ${visibleCount} ${visibleCount === 1 ? 'community' : 'communities'}`
+    }
+  }
+
+  communityFilterControl.addEventListener('click', () => {
+    const isOpen = communityFilterControl.getAttribute('aria-expanded') === 'true'
+    closeCommunityMenu(communitySortControl, communitySortOptions)
+    if (isOpen) closeCommunityMenu(communityFilterControl, communityFilterOptions)
+    else openCommunityMenu(communityFilterControl, communityFilterOptions)
+  })
+
+  communityFilterOptions.querySelectorAll('[data-price], [data-house-type]').forEach((option) => {
+    option.addEventListener('click', () => {
+      const groupAttribute = option.hasAttribute('data-price') ? 'data-price' : 'data-house-type'
+      communityFilterOptions.querySelectorAll(`[${groupAttribute}]`).forEach((item) => item.classList.remove('is-active'))
+      option.classList.add('is-active')
+      if (groupAttribute === 'data-price') selectedPrice = option.dataset.price
+      else selectedHouseType = option.dataset.houseType
+      applyCommunityFilters()
+    })
+  })
+}
+
+if (communitySortControl && communitySortOptions && communityGrid) {
+  communitySortControl.addEventListener('click', () => {
+    const isOpen = communitySortControl.getAttribute('aria-expanded') === 'true'
+    closeCommunityMenu(communityFilterControl, communityFilterOptions)
+    if (isOpen) closeCommunityMenu(communitySortControl, communitySortOptions)
+    else openCommunityMenu(communitySortControl, communitySortOptions)
+  })
+
+  communitySortOptions.querySelectorAll('[data-sort]').forEach((option) => {
+    option.addEventListener('click', () => {
+      const sorters = {
+        'price-asc': (a, b) => Number(a.dataset.priceMin) - Number(b.dataset.priceMin),
+        'price-desc': (a, b) => Number(b.dataset.priceMin) - Number(a.dataset.priceMin),
+        'designs-desc': (a, b) => Number(b.dataset.homeDesigns) - Number(a.dataset.homeDesigns),
+        'move-ins-desc': (a, b) => Number(b.dataset.quickMoveIns) - Number(a.dataset.quickMoveIns),
+      }
+      const cards = [...communityCards].sort(sorters[option.dataset.sort])
+      cards.forEach((card) => communityGrid.append(card))
+      communitySortOptions.querySelectorAll('[data-sort]').forEach((item) => item.classList.remove('is-active'))
+      option.classList.add('is-active')
+      closeCommunityMenu(communitySortControl, communitySortOptions)
     })
   })
 }

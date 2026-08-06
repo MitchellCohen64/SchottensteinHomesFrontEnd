@@ -119,8 +119,7 @@ button {
 }
 
 .nav-label:hover::after,
-.nav-label:focus-visible::after,
-.nav-group:focus-within > .nav-label::after {
+.nav-label:focus-visible::after {
   transform: scaleX(1);
   transform-origin: left;
 }
@@ -321,7 +320,9 @@ button {
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.75px;
+  text-decoration: none;
   text-transform: uppercase;
+  cursor: pointer;
   transition: height 260ms ease, color 180ms ease, transform 180ms ease;
 }
 
@@ -393,16 +394,44 @@ button {
 
 .home-page .site-header:not(.is-scrolled) .hero-account {
   grid-column: 3;
+  width: 49px;
   justify-self: end;
+  gap: 10px;
+  overflow: hidden;
   padding: 12px;
+  white-space: nowrap;
+  transition: width 260ms ease, color 180ms ease;
 }
 
 .home-page .site-header:not(.is-scrolled) .hero-account svg {
+  flex: 0 0 25px;
   width: 25px;
   height: 25px;
   fill: none;
   stroke: currentColor;
   stroke-width: 1.35;
+}
+
+.home-page .site-header:not(.is-scrolled) .hero-account span {
+  opacity: 0;
+  font-family: "Montserrat", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  transform: translateX(8px);
+  transition: opacity 180ms ease 70ms, transform 220ms ease 50ms;
+}
+
+.home-page .site-header:not(.is-scrolled) .hero-account:hover,
+.home-page .site-header:not(.is-scrolled) .hero-account:focus-visible {
+  width: 190px;
+}
+
+.home-page .site-header:not(.is-scrolled) .hero-account:hover span,
+.home-page .site-header:not(.is-scrolled) .hero-account:focus-visible span {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .home-page .site-header:not(.is-scrolled) .hero-menu-trigger:hover,
@@ -820,7 +849,7 @@ h1 {
 
 .stat strong {
   color: #821f31;
-  font-family: "Manrope", "Montserrat", sans-serif;
+  font-family: "Times New Roman", Times, serif;
   font-size: clamp(42px, 3.6vw, 58px);
   font-weight: 500;
   line-height: 0.95;
@@ -1173,7 +1202,7 @@ h1 {
 .featured-communities {
   position: relative;
   padding: clamp(78px, 7vw, 118px) clamp(28px, 4.2vw, 72px);
-  background: #fbfaf7;
+  background: #f8f5ef;
 }
 
 .featured-community-slides {
@@ -1249,9 +1278,9 @@ h1 {
   font-size: 17px;
   font-weight: 500;
   text-decoration: underline;
-  text-decoration-color: #8d2637;
+  text-decoration-color: #252321;
   text-underline-offset: 5px;
-  transition: color 180ms ease, transform 180ms ease;
+  transition: color 180ms ease, text-decoration-color 180ms ease, transform 180ms ease;
 }
 
 .featured-community-copy .featured-community-all {
@@ -1263,6 +1292,7 @@ h1 {
 .featured-community-copy a:hover,
 .featured-community-copy a:focus-visible {
   color: #8d2637;
+  text-decoration-color: #8d2637;
   outline: none;
   transform: translateX(3px);
 }
@@ -1486,13 +1516,17 @@ h1 {
   transform: translateY(-4px) scale(1.12);
 }
 
+.community-pin:hover path {
+  fill: #111;
+}
+
 .community-pin.is-highlighted svg {
   filter: drop-shadow(0 7px 7px rgba(55, 29, 25, 0.38));
   transform: translateY(-6px) scale(1.3);
 }
 
 .community-pin.is-highlighted path {
-  fill: #d09236;
+  fill: #111;
 }
 
 .community-pin.is-pushpin svg {
@@ -1913,10 +1947,126 @@ h1 {
 
 .communities-filter {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
   gap: 14px;
   margin: 0 auto 56px;
+}
+
+.communities-result-count {
+  margin: 0 auto 12px;
+  color: #77716a;
+  font-family: "Jost", "Montserrat", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+.community-filter-menu,
+.community-sort-menu {
+  position: relative;
+}
+
+.community-sort-options {
+  right: 0;
+  left: auto;
+}
+
+.community-control {
+  height: 50px;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 0 20px;
+  border: 1px solid #ded7cd;
+  border-radius: 8px;
+  background: #fbfaf7;
+  color: #454748;
+  font-family: "Jost", "Montserrat", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.4px;
+  cursor: pointer;
+  transition: color 200ms ease, border-color 200ms ease, transform 200ms ease;
+}
+
+.community-control svg {
+  width: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.community-control:hover,
+.community-control[aria-expanded="true"] {
+  border-color: #8d2637;
+  color: #8d2637;
+}
+
+.community-filter-options {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 240px;
+  padding: 8px;
+  border: 1px solid #ded7cd;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 12px 28px rgba(37, 35, 33, 0.14);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition: opacity 180ms ease, transform 220ms cubic-bezier(0.2, 0.7, 0.2, 1), visibility 0s linear 220ms;
+}
+
+.community-filter-options.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+  transition: opacity 180ms ease, transform 220ms cubic-bezier(0.2, 0.7, 0.2, 1), visibility 0s;
+}
+
+.community-filter-options fieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 8px 0;
+  border: 0;
+}
+
+.community-filter-options fieldset + fieldset {
+  border-top: 1px solid #e6e0d7;
+}
+
+.community-filter-options legend {
+  width: 100%;
+  padding: 0 12px 5px;
+  color: #77716a;
+  font: 600 11px "Jost", "Montserrat", sans-serif;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.community-filter-options button {
+  width: 100%;
+  padding: 10px 12px;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: #454748;
+  font: 500 13px "Jost", "Montserrat", sans-serif;
+  text-align: left;
+  cursor: pointer;
+}
+
+.community-filter-options button:hover,
+.community-filter-options button.is-active {
+  background: #f3eee7;
+  color: #8d2637;
 }
 
 .filter-pill {
@@ -2062,50 +2212,57 @@ h1 {
   position: absolute;
   top: 50%;
   z-index: 5;
-  width: 38px;
-  height: 46px;
+  width: 42px;
+  height: 42px;
   display: grid;
   place-items: center;
   padding: 0;
-  border: 1px solid rgba(255, 255, 255, 0.72);
-  background: rgba(23, 32, 43, 0.7);
-  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.68);
+  border-radius: 50%;
+  background: rgba(250, 248, 243, 0.84);
+  box-shadow: 0 8px 24px rgba(17, 20, 24, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(10px);
+  color: #20282d;
   opacity: 0;
   cursor: pointer;
   transform: translateY(-50%);
-  transition: opacity 180ms ease, background-color 180ms ease, transform 180ms ease;
+  transition: opacity 180ms ease, color 180ms ease, background-color 180ms ease, border-color 180ms ease, transform 220ms cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 180ms ease;
 }
 
 .community-card-arrow.is-previous {
-  left: 0;
-  border-left: 0;
-  border-radius: 0 5px 5px 0;
+  left: 14px;
   transform: translate(-8px, -50%);
 }
 
 .community-card-arrow.is-next {
-  right: 0;
-  border-right: 0;
-  border-radius: 5px 0 0 5px;
+  right: 14px;
   transform: translate(8px, -50%);
 }
 
-.community-card-arrow span {
-  margin-top: -3px;
-  font-size: 30px;
-  line-height: 1;
+.community-card-arrow svg {
+  width: 19px;
+  height: 19px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
-.community-card:hover .community-card-arrow,
-.community-card:focus-within .community-card-arrow {
+.community-card:hover .community-card-arrow {
   opacity: 1;
   transform: translate(0, -50%);
 }
 
 .community-card-arrow:hover,
 .community-card-arrow:focus-visible {
+  opacity: 1;
   background: #8d2637;
+  border-color: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 10px 28px rgba(37, 15, 20, 0.32);
+  color: white;
   outline: none;
+  transform: translate(0, -50%) scale(1.06);
 }
 
 .community-card:hover .community-card-media img {
@@ -2332,12 +2489,16 @@ h1 {
   grid-row: 1;
   height: 100%;
   overflow-y: auto;
-  overscroll-behavior: contain;
+  overscroll-behavior-y: auto;
   padding: clamp(58px, 5vw, 86px) clamp(24px, 3vw, 48px) 100px;
 }
 
 .communities-browser .offer-heading {
   text-align: left;
+}
+
+.communities-browser .offer-heading h2 {
+  font-family: "Times New Roman", Times, serif;
 }
 
 .communities-browser .offer-heading .section-accent {
@@ -2350,9 +2511,19 @@ h1 {
   margin-bottom: 36px;
 }
 
+.communities-browser .communities-result-count {
+  margin: 0 0 12px;
+  text-align: left;
+}
+
 .communities-browser .filter-pill {
   height: 44px;
   padding: 0 20px;
+  font-size: 12px;
+}
+
+.communities-browser .community-control {
+  height: 44px;
   font-size: 12px;
 }
 
@@ -2380,6 +2551,10 @@ h1 {
   font-size: 28px;
 }
 
+.communities-browser .community-card-body h3 {
+  font-family: "Times New Roman", Times, serif;
+}
+
 .communities-browser .community-card.is-featured .community-card-desc {
   max-width: none;
   font-size: 14.5px;
@@ -2391,8 +2566,9 @@ h1 {
   grid-row: 1;
   height: 100%;
   min-height: 0;
-  padding: 42px 28px 28px;
+  padding: 0;
   border-left: 1px solid #ddd7ce;
+  background: #ece9e2;
 }
 
 .communities-browser .communities-map-page .offer-heading {
@@ -2406,7 +2582,10 @@ h1 {
 .communities-browser .communities-map-page .communities-map {
   width: 100%;
   height: 100%;
+  max-width: none;
   min-height: 0;
+  margin: 0;
+  border-radius: 0;
 }
 
 @media (max-width: 1180px) {
@@ -2510,6 +2689,11 @@ h1 {
 .page-title h1 {
   margin: 0;
   color: #17202b;
+  font-family: "Times New Roman", Times, serif;
+}
+
+.team-section .offer-heading h2 {
+  font-family: "Times New Roman", Times, serif;
 }
 
 .breadcrumb.is-dark {
@@ -2562,7 +2746,7 @@ h1 {
 }
 
 .team-section {
-  padding: clamp(75px, 8vw, 125px) clamp(28px, 5vw, 88px);
+  padding: clamp(52px, 6vw, 85px) clamp(28px, 5vw, 88px) clamp(75px, 8vw, 125px);
   background: #f7f3ed;
 }
 
@@ -2685,6 +2869,21 @@ h1 {
 .home-page .featured-community-copy > p,
 .home-page .final-cta-eyebrow {
   color: #252321;
+}
+
+.home-page {
+  animation: home-page-fade-in 700ms ease-out both;
+}
+
+@keyframes home-page-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-page {
+    animation: none;
+  }
 }
 
 @media (max-width: 960px) {

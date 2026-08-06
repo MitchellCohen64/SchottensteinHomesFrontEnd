@@ -72,9 +72,9 @@
         </div>
       </nav>
 
-      <div class="login" aria-label="Homeowner Login">
+      <a class="login" href="https://www.homeinformationpackages.com/" target="_blank" rel="noopener noreferrer" aria-label="Homeowner Login">
         <span>Homeowner Login</span>
-      </div>
+      </a>
     </header>
 
     <div class="communities-browser">
@@ -87,22 +87,51 @@
         <h2 id="communities-grid-heading">Communities in Columbus, OH</h2>
       </div>
 
-      <div class="communities-filter" role="group" aria-label="Filter communities by type">
-        <span class="filter-pill is-active" data-filter="all">All Communities</span>
-        <span class="filter-pill" data-filter="cottage">Cottage Communities</span>
-        <span class="filter-pill" data-filter="single-family">Single Family Homes</span>
+      <p class="communities-result-count" aria-live="polite">Showing results for 8 communities</p>
+      <div class="communities-filter" aria-label="Community display controls">
+        <div class="community-filter-menu">
+          <button class="community-control" type="button" aria-expanded="false" aria-controls="community-filter-options">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"></path></svg>
+            <span>Filter</span>
+          </button>
+          <div class="community-filter-options" id="community-filter-options">
+            <fieldset>
+              <legend>Price Range</legend>
+              <button type="button" class="is-active" data-price="all">Any Price</button>
+              <button type="button" data-price="under-500">Under $500k</button>
+              <button type="button" data-price="500-550">$500k–$550k</button>
+              <button type="button" data-price="550-plus">$550k+</button>
+            </fieldset>
+            <fieldset>
+              <legend>House Type</legend>
+              <button type="button" class="is-active" data-house-type="all">All Home Types</button>
+              <button type="button" data-house-type="cottage">Cottage Homes</button>
+              <button type="button" data-house-type="single-family">Single Family Homes</button>
+            </fieldset>
+          </div>
+        </div>
+        <div class="community-sort-menu">
+          <button class="community-control community-sort" type="button" aria-expanded="false" aria-controls="community-sort-options">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14m0 0-3-3m3 3 3-3M14 7h5M14 12h4M14 17h3"></path></svg>
+            <span>Sort</span>
+          </button>
+          <div class="community-filter-options community-sort-options" id="community-sort-options">
+            <button type="button" data-sort="price-asc">Price: Low to High</button>
+            <button type="button" data-sort="price-desc">Price: High to Low</button>
+            <button type="button" data-sort="designs-desc">Most Home Designs</button>
+            <button type="button" data-sort="move-ins-desc">Most Quick Move-ins</button>
+          </div>
+        </div>
       </div>
 
       <div class="communities-grid">
-        <article class="community-card is-featured" data-type="single-family">
+        <article class="community-card is-featured" data-type="single-family" data-price-min="540" data-home-designs="12" data-quick-move-ins="6">
           <div class="community-card-media">
             <img src="/media/communities/jerome-village-aster.jpg" alt="Homes at Jerome Village Aster in Plain City, Ohio" />
-            <span class="community-card-tag">New Release</span>
           </div>
           <div class="community-card-body">
             <h3>Jerome Village Aster</h3>
             <p class="community-card-location">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12Z"></path><circle cx="12" cy="9" r="2.5"></circle></svg>
               Plain City, OH · Dublin City Schools
             </p>
             <div class="community-card-details">
@@ -118,16 +147,14 @@
           </div>
         </article>
 
-        <article class="community-card" data-type="cottage">
+        <article class="community-card" data-type="cottage" data-price-min="440" data-home-designs="8" data-quick-move-ins="4">
           <div class="community-card-media">
             <img src="/media/communities/glacier-pointe.jpg" alt="Glacier Pointe clubhouse and amenities in Plain City, Ohio" />
-            <span class="community-card-tag">Cottage</span>
           </div>
           <div class="community-card-body">
             <h3>Glacier Pointe</h3>
             <p class="community-card-location">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12Z"></path><circle cx="12" cy="9" r="2.5"></circle></svg>
-              Plain City, OH
+              Plain City, OH · Jonathan Alder Local Schools
             </p>
             <div class="community-card-details">
               <strong>Low-Maintenance Living</strong>
@@ -142,16 +169,14 @@
           </div>
         </article>
 
-        <article class="community-card" data-type="cottage">
+        <article class="community-card" data-type="cottage" data-price-min="460" data-home-designs="7" data-quick-move-ins="3">
           <div class="community-card-media">
             <img src="/media/communities/cottages-at-verbena.jpg" alt="A home at The Cottages at Verbena in Jerome Village, Plain City" />
-            <span class="community-card-tag">Cottage</span>
           </div>
           <div class="community-card-body">
             <h3>The Cottages at Verbena</h3>
             <p class="community-card-location">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12Z"></path><circle cx="12" cy="9" r="2.5"></circle></svg>
-              Jerome Village, Plain City, OH
+              Plain City, OH · Dublin City Schools
             </p>
             <div class="community-card-details">
               <strong>Private Cottage Collection</strong>
@@ -166,16 +191,14 @@
           </div>
         </article>
 
-        <article class="community-card" data-type="single-family">
+        <article class="community-card" data-type="single-family" data-price-min="460" data-home-designs="10" data-quick-move-ins="5">
           <div class="community-card-media">
             <img src="/media/communities/retreat-at-hickory-lakes.jpg" alt="A home at The Retreat at Hickory Lakes in Pickerington, Ohio" />
-            <span class="community-card-tag">Single Family</span>
           </div>
           <div class="community-card-body">
             <h3>The Retreat at Hickory Lakes</h3>
             <p class="community-card-location">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12Z"></path><circle cx="12" cy="9" r="2.5"></circle></svg>
-              Pickerington, OH
+              Pickerington, OH · Pickerington Local Schools
             </p>
             <div class="community-card-details">
               <strong>Pickerington Schools</strong>
@@ -190,15 +213,13 @@
           </div>
         </article>
 
-        <article class="community-card" data-type="single-family">
+        <article class="community-card" data-type="single-family" data-price-min="410" data-home-designs="9" data-quick-move-ins="4">
           <div class="community-card-media">
             <img src="/media/communities/renner-park.jpg" alt="A home at Renner Park in Columbus, Ohio" />
-            <span class="community-card-tag">Single Family</span>
           </div>
           <div class="community-card-body">
             <h3>Renner Park</h3>
             <p class="community-card-location">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12Z"></path><circle cx="12" cy="9" r="2.5"></circle></svg>
               Columbus, OH · Hilliard Schools
             </p>
             <div class="community-card-details">
@@ -214,15 +235,13 @@
           </div>
         </article>
 
-        <article class="community-card" data-type="single-family">
+        <article class="community-card" data-type="single-family" data-price-min="560" data-home-designs="11" data-quick-move-ins="3">
           <div class="community-card-media">
             <img src="/media/communities/reserve-at-new-california.jpg" alt="A home at The Reserve at New California in Plain City, Ohio" />
-            <span class="community-card-tag">Single Family</span>
           </div>
           <div class="community-card-body">
             <h3>The Reserve at New California</h3>
             <p class="community-card-location">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12Z"></path><circle cx="12" cy="9" r="2.5"></circle></svg>
               Plain City, OH · Fairbanks Schools
             </p>
             <div class="community-card-details">
@@ -238,15 +257,13 @@
           </div>
         </article>
 
-        <article class="community-card" data-type="single-family">
+        <article class="community-card" data-type="single-family" data-price-min="480" data-home-designs="10" data-quick-move-ins="5">
           <div class="community-card-media">
             <img src="/media/communities/holton-run.jpg" alt="A model home at Holton Run in Grove City, Ohio" />
-            <span class="community-card-tag">Single Family</span>
           </div>
           <div class="community-card-body">
             <h3>Holton Run</h3>
             <p class="community-card-location">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12Z"></path><circle cx="12" cy="9" r="2.5"></circle></svg>
               Grove City, OH · South-Western Schools
             </p>
             <div class="community-card-details">
@@ -262,15 +279,13 @@
           </div>
         </article>
 
-        <article class="community-card" data-type="single-family">
+        <article class="community-card" data-type="single-family" data-price-min="540" data-home-designs="16" data-quick-move-ins="2">
           <div class="community-card-media">
             <img src="/media/communities/hickory-creek.jpg" alt="A home at Hickory Creek in Grove City, Ohio" />
-            <span class="community-card-tag">Single Family</span>
           </div>
           <div class="community-card-body">
             <h3>Hickory Creek</h3>
             <p class="community-card-location">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12Z"></path><circle cx="12" cy="9" r="2.5"></circle></svg>
               Grove City, OH · South-Western Schools
             </p>
             <div class="community-card-details">
@@ -292,7 +307,6 @@
     <section class="final-cta">
       <div class="final-cta-card">
         <div class="final-cta-content">
-          <p class="final-cta-eyebrow">Ready to Call One Home?</p>
           <h2>Your New Home<br />is Waiting</h2>
           <p>Take the first step today—schedule a tour, connect with our sales team, or explore floor plans in the community that's right for you.</p>
           <span class="final-cta-button">Let's Get Started <span aria-hidden="true">→</span></span>
