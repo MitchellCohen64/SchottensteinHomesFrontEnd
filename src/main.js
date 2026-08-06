@@ -218,6 +218,63 @@ if (mapElement) {
   }
 }
 
+const communityMapImage = document.querySelector('.community-page .about-intro-image img[src*="/community-maps/"]')
+
+if (communityMapImage) {
+  const lightbox = document.createElement('div')
+  lightbox.className = 'community-map-lightbox'
+  lightbox.hidden = true
+  lightbox.innerHTML = `
+    <div class="community-map-lightbox-backdrop" data-map-lightbox-close></div>
+    <div class="community-map-lightbox-dialog" role="dialog" aria-modal="true" aria-label="Enlarged community map">
+      <button class="community-map-lightbox-close" type="button" aria-label="Close enlarged community map" data-map-lightbox-close>&times;</button>
+      <img src="${communityMapImage.src}" alt="${communityMapImage.alt}" />
+    </div>
+  `
+  document.body.append(lightbox)
+
+  const closeButton = lightbox.querySelector('.community-map-lightbox-close')
+  let closeTimer
+
+  const openMapLightbox = () => {
+    window.clearTimeout(closeTimer)
+    lightbox.hidden = false
+    document.body.classList.add('map-lightbox-open')
+    window.requestAnimationFrame(() => {
+      lightbox.classList.add('is-open')
+      closeButton.focus()
+    })
+  }
+
+  const closeMapLightbox = () => {
+    lightbox.classList.remove('is-open')
+    document.body.classList.remove('map-lightbox-open')
+    communityMapImage.focus()
+    closeTimer = window.setTimeout(() => {
+      lightbox.hidden = true
+    }, 260)
+  }
+
+  communityMapImage.tabIndex = 0
+  communityMapImage.setAttribute('role', 'button')
+  communityMapImage.setAttribute('aria-label', `${communityMapImage.alt}. Open larger view`)
+  communityMapImage.addEventListener('click', openMapLightbox)
+  communityMapImage.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault()
+      openMapLightbox()
+    }
+  })
+
+  lightbox.querySelectorAll('[data-map-lightbox-close]').forEach((control) => {
+    control.addEventListener('click', closeMapLightbox)
+  })
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && lightbox.classList.contains('is-open')) closeMapLightbox()
+  })
+}
+
 const filterPills = document.querySelectorAll('.filter-pill')
 const communityCards = document.querySelectorAll('.community-card')
 const communityFilterControl = document.querySelector('.community-filter-menu .community-control')
@@ -690,7 +747,9 @@ document.querySelectorAll('.plan-grid').forEach((grid) => {
       </div>
     </div>`
 
-  grid.before(controls)
+  const controlsHost = document.querySelector('.inventory-page .page-title-inner')
+  if (grid.matches('[data-inventory-catalog]') && controlsHost) controlsHost.append(controls)
+  else grid.before(controls)
 
   const resultCount = controls.querySelector('.plan-result-count')
   const filterTrigger = controls.querySelector('.plan-filter-trigger')

@@ -245,16 +245,18 @@ button {
   font-size: 13px;
   font-weight: 500;
   letter-spacing: 0.3px;
+  transition: color 160ms ease, transform 160ms ease;
 }
 
 .community-menu-all span {
-  color: #8d2637;
-  font-size: 19px;
-  transition: transform 180ms ease;
+  display: none;
 }
 
-.community-menu-all:hover span {
-  transform: translateX(5px);
+.community-menu-all:hover,
+.community-menu-all:focus-visible {
+  color: #8d2637;
+  outline: none;
+  transform: translateX(4px);
 }
 
 .community-menu-grid {
@@ -2318,11 +2320,12 @@ h1 {
 
 .community-card-body h3 {
   margin: 0;
-  color: #17202b;
-  font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: 28px;
+  color: #111;
+  font-family: "Jost", "Montserrat", sans-serif;
+  font-size: 26px;
   font-weight: 500;
-  line-height: 1.12;
+  letter-spacing: 0.35px;
+  line-height: 1.1;
 }
 
 .community-card-location {
@@ -2359,7 +2362,7 @@ h1 {
   align-items: flex-start;
   margin: 22px 0 26px;
   color: #252321;
-  font-size: 13.5px;
+  font: 400 14px "Jost", "Montserrat", sans-serif;
   line-height: 1.45;
 }
 
@@ -2386,7 +2389,7 @@ h1 {
   margin-top: 18px;
   color: #17202b;
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 400;
 }
 
 .community-card-actions {
@@ -2397,14 +2400,14 @@ h1 {
 }
 
 .community-card-link {
-  min-height: 54px;
+  min-height: 38px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 0 16px;
+  padding: 5px 12px;
   border: 1px solid #8d2637;
-  border-radius: 12px;
+  border-radius: 9px;
   background: transparent;
   color: #8d2637;
   font-family: "Jost", "Montserrat", sans-serif;
@@ -2419,7 +2422,7 @@ h1 {
 }
 
 .community-card-link:first-child {
-  background: transparent;
+  background: white;
   color: #8d2637;
 }
 
@@ -2486,7 +2489,7 @@ h1 {
 .communities-browser {
   display: grid;
   height: calc(100vh - 78px);
-  grid-template-columns: minmax(0, 56%) minmax(440px, 44%);
+  grid-template-columns: minmax(0, 52%) minmax(480px, 48%);
   align-items: stretch;
   overflow: hidden;
   background: #f8f5ef;
@@ -2507,6 +2510,8 @@ h1 {
 
 .communities-browser .offer-heading h2 {
   font-family: "Times New Roman", Times, serif;
+  font-size: clamp(40px, 3.8vw, 58px);
+  white-space: nowrap;
 }
 
 .communities-browser .offer-heading .section-accent {
@@ -2556,11 +2561,11 @@ h1 {
 }
 
 .communities-browser .community-card.is-featured .community-card-body h3 {
-  font-size: 28px;
+  font-size: 26px;
 }
 
 .communities-browser .community-card-body h3 {
-  font-family: "Times New Roman", Times, serif;
+  font-family: "Jost", "Montserrat", sans-serif;
 }
 
 .communities-browser .community-card.is-featured .community-card-desc {
@@ -2650,6 +2655,10 @@ h1 {
 }
 
 @media (max-width: 620px) {
+  .communities-browser .offer-heading h2 {
+    font-size: clamp(22px, 7.1vw, 36px);
+  }
+
   .communities-grid {
     grid-template-columns: 1fr;
     max-width: 480px;
@@ -3378,6 +3387,88 @@ h1 {
 .community-page .about-intro-image img {
   object-fit: contain;
   object-position: center;
+  cursor: zoom-in;
+}
+
+body.map-lightbox-open {
+  overflow: hidden;
+}
+
+.community-map-lightbox[hidden] {
+  display: none;
+}
+
+.community-map-lightbox {
+  position: fixed;
+  z-index: 2000;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: clamp(18px, 3vw, 48px);
+}
+
+.community-map-lightbox-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(16, 18, 18, 0.86);
+  opacity: 0;
+  transition: opacity 240ms ease;
+}
+
+.community-map-lightbox-dialog {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  max-width: 94vw;
+  max-height: 92vh;
+  padding: clamp(8px, 1.2vw, 16px);
+  border-radius: 6px;
+  background: #f7f3ed;
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.42);
+  opacity: 0;
+  transform: scale(0.82) translateY(18px);
+  transition: opacity 240ms ease, transform 240ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.community-map-lightbox-dialog img {
+  display: block;
+  width: auto;
+  max-width: calc(94vw - 32px);
+  height: auto;
+  max-height: calc(92vh - 32px);
+  object-fit: contain;
+}
+
+.community-map-lightbox-close {
+  position: absolute;
+  z-index: 2;
+  top: 10px;
+  right: 10px;
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(23, 32, 43, 0.9);
+  color: white;
+  font-size: 30px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.community-map-lightbox.is-open .community-map-lightbox-backdrop,
+.community-map-lightbox.is-open .community-map-lightbox-dialog {
+  opacity: 1;
+}
+
+.community-map-lightbox.is-open .community-map-lightbox-dialog {
+  transform: scale(1) translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .community-map-lightbox-backdrop,
+  .community-map-lightbox-dialog {
+    transition: none;
+  }
 }
 
 .community-back-link {
@@ -3678,6 +3769,23 @@ h1 {
   font: 500 13px "Jost", "Montserrat", sans-serif;
 }
 
+.inventory-page .page-title-inner {
+  max-width: none;
+}
+
+.inventory-page .page-title {
+  border-bottom: 0;
+}
+
+.inventory-page .offer-section {
+  padding-top: 0;
+}
+
+.inventory-page .page-title .plan-browser-controls {
+  max-width: none;
+  margin: 28px 0 0;
+}
+
 .plan-control-buttons {
   display: flex;
   gap: 10px;
@@ -3931,20 +4039,22 @@ h1 {
   gap: 18px;
 }
 
-.plan-card h3 {
+main .plan-card h3 {
   margin: 0;
-  color: #17202b;
-  font-family: "Times New Roman", Times, serif;
-  font-size: 27px;
+  color: #111;
+  font-family: "Jost", "Montserrat", sans-serif;
+  font-size: 28px;
   font-weight: 400;
+  letter-spacing: 0.2px;
+  line-height: 1.1;
 }
 
 .plan-card-type {
   display: block;
-  margin-top: 5px;
-  color: #252321;
-  font: 500 11px "Jost", "Montserrat", sans-serif;
-  letter-spacing: 1.2px;
+  margin-top: 7px;
+  color: #777;
+  font: 400 12px "Jost", "Montserrat", sans-serif;
+  letter-spacing: 1.15px;
   text-transform: uppercase;
 }
 
@@ -3959,8 +4069,9 @@ h1 {
   margin: 22px 0 0;
   color: #171717;
   font-family: "Jost", "Montserrat", sans-serif;
-  font-size: 16px;
-  font-weight: 500;
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0.1px;
 }
 
 .plan-card-specs {
@@ -3971,7 +4082,8 @@ h1 {
   padding: 0;
   border: 0;
   color: #171717;
-  font-size: 13px;
+  font: 400 14px "Jost", "Montserrat", sans-serif;
+  letter-spacing: 0.1px;
 }
 
 .plan-card-specs span {
@@ -4007,15 +4119,20 @@ h1 {
 }
 
 .plan-card-actions button {
-  min-height: 52px;
-  padding: 10px 14px;
+  min-height: 38px;
+  padding: 5px 12px;
   border: 1px solid #8d2637;
-  border-radius: 12px;
+  border-radius: 9px;
   background: #c71f35;
   color: white;
-  font: 500 14px "Jost", "Montserrat", sans-serif;
+  font: 400 15px "Jost", "Montserrat", sans-serif;
   cursor: pointer;
   transition: background-color 180ms ease, transform 180ms ease;
+}
+
+.plan-card-actions button:first-child {
+  background: white;
+  color: #8d2637;
 }
 
 .plan-card-actions button:hover,
