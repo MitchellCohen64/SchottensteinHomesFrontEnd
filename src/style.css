@@ -2386,7 +2386,8 @@ h1 {
 }
 
 .community-card-details b {
-  margin-top: 18px;
+  margin-top: auto;
+  padding-top: 18px;
   color: #17202b;
   font-size: 15px;
   font-weight: 400;
@@ -3952,6 +3953,23 @@ body.map-lightbox-open {
   font: 400 12px "Jost", "Montserrat", sans-serif;
 }
 
+.plan-ready-filter {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 18px;
+  color: #36383a;
+  font: 500 13px "Jost", "Montserrat", sans-serif;
+  cursor: pointer;
+}
+
+.plan-ready-filter input {
+  width: 17px;
+  height: 17px;
+  margin: 0;
+  accent-color: #8d2637;
+}
+
 .plan-clear-filters {
   margin-top: 18px;
   padding: 0;
@@ -4008,9 +4026,28 @@ body.map-lightbox-open {
 }
 
 .plan-card-media {
+  position: relative;
   overflow: hidden;
   aspect-ratio: 4 / 3;
   background: #eee;
+}
+
+.plan-card-ready-banner {
+  position: absolute;
+  z-index: 2;
+  top: 25px;
+  right: -48px;
+  width: 190px;
+  padding: 9px 0;
+  background: #c71f35;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.22);
+  color: white;
+  font: 500 12px "Jost", "Montserrat", sans-serif;
+  letter-spacing: 0.8px;
+  text-align: center;
+  text-transform: uppercase;
+  transform: rotate(45deg);
+  transform-origin: center;
 }
 
 .plan-card-media img {
@@ -4029,7 +4066,7 @@ body.map-lightbox-open {
   display: flex;
   flex: 1;
   flex-direction: column;
-  padding: 25px 25px 22px;
+  padding: 20px 22px 18px;
 }
 
 .plan-card-heading {
@@ -4060,13 +4097,13 @@ main .plan-card h3 {
 
 .plan-card-community {
   display: block;
-  margin-top: 6px;
+  margin-top: 4px;
   color: #716b64;
   font: 400 13px "Jost", "Montserrat", sans-serif;
 }
 
 .plan-card-price {
-  margin: 22px 0 0;
+  margin: 16px 0 0;
   color: #171717;
   font-family: "Jost", "Montserrat", sans-serif;
   font-size: 15px;
@@ -4078,7 +4115,7 @@ main .plan-card h3 {
   display: flex;
   flex-wrap: wrap;
   gap: 10px 0;
-  margin: 32px 0 0;
+  margin: 22px 0 0;
   padding: 0;
   border: 0;
   color: #171717;
@@ -4115,7 +4152,7 @@ main .plan-card h3 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
   margin-top: auto;
-  padding-top: 30px;
+  padding-top: 20px;
 }
 
 .plan-card-actions button {

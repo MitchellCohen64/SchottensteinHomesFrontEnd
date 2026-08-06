@@ -586,6 +586,11 @@ document.querySelectorAll('.plan-card').forEach((card) => {
   media.className = 'plan-card-media'
   media.innerHTML = '<img src="/media/home-hero/heroHomeImg2.png" alt="Temporary home exterior placeholder" />'
 
+  if (['The Chester', 'The Franklin'].includes(title.textContent.trim())) {
+    card.classList.add('is-move-in-ready')
+    media.insertAdjacentHTML('beforeend', '<span class="plan-card-ready-banner">Move-In Ready</span>')
+  }
+
   const body = document.createElement('div')
   body.className = 'plan-card-body'
 
@@ -733,6 +738,10 @@ document.querySelectorAll('.plan-grid').forEach((grid) => {
             <label>Baths<select class="plan-baths-filter">${optionMarkup('baths', 'Baths')}</select></label>
             <label>Stories<select class="plan-stories-filter">${optionMarkup('stories', 'Stories')}</select></label>
           </div>
+          <label class="plan-ready-filter">
+            <input class="plan-ready-only" type="checkbox" />
+            <span>Move-In Ready Only</span>
+          </label>
           <button class="plan-clear-filters" type="button">Clear Filters</button>
         </div>
       </div>
@@ -763,6 +772,7 @@ document.querySelectorAll('.plan-grid').forEach((grid) => {
   const bedsFilter = controls.querySelector('.plan-beds-filter')
   const bathsFilter = controls.querySelector('.plan-baths-filter')
   const storiesFilter = controls.querySelector('.plan-stories-filter')
+  const readyOnlyFilter = controls.querySelector('.plan-ready-only')
 
   const closePlanMenus = () => {
     filterTrigger.setAttribute('aria-expanded', 'false')
@@ -792,6 +802,7 @@ document.querySelectorAll('.plan-grid').forEach((grid) => {
         && (!bedsFilter.value || card.dataset.beds === bedsFilter.value)
         && (!bathsFilter.value || card.dataset.baths === bathsFilter.value)
         && (!storiesFilter.value || card.dataset.stories === storiesFilter.value)
+        && (!readyOnlyFilter.checked || card.classList.contains('is-move-in-ready'))
       card.classList.toggle('is-hidden', !matches)
       if (matches) visible += 1
     })
@@ -821,6 +832,7 @@ document.querySelectorAll('.plan-grid').forEach((grid) => {
     applyPlanFilters()
   }))
   ;[bedsFilter, bathsFilter, storiesFilter].forEach((select) => select.addEventListener('change', applyPlanFilters))
+  readyOnlyFilter.addEventListener('change', applyPlanFilters)
 
   controls.querySelector('.plan-clear-filters').addEventListener('click', () => {
     minRange.value = priceFloor
@@ -828,6 +840,7 @@ document.querySelectorAll('.plan-grid').forEach((grid) => {
     bedsFilter.value = ''
     bathsFilter.value = ''
     storiesFilter.value = ''
+    readyOnlyFilter.checked = false
     updateRange()
     applyPlanFilters()
   })
