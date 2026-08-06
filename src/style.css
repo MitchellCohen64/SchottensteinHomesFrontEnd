@@ -2422,6 +2422,10 @@ h1 {
   transform: translateY(0);
 }
 
+.home-page h2 {
+  font-family: "Times New Roman", Times, serif;
+}
+
 @media (max-width: 960px) {
   .about-intro {
     grid-template-columns: 1fr;
