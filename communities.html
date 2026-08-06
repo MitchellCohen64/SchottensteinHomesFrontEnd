@@ -18,11 +18,40 @@
       </div>
 
       <nav class="main-nav" aria-label="Main navigation">
-        <a class="nav-label is-active" href="/communities.html">Communities</a>
+        <div class="nav-group">
+          <a class="nav-label is-active" href="/communities.html">
+            COMMUNITIES <span class="chevron" aria-hidden="true"></span>
+          </a>
+          <div class="dropdown communities-dropdown" role="menu">
+            <a class="community-menu-all" href="/communities.html" role="menuitem">View All Communities <span aria-hidden="true">→</span></a>
+            <div class="community-menu-grid">
+              <section>
+                <h3>Plain City</h3>
+                <a href="/communities.html" role="menuitem">Jerome Village Aster</a>
+                <a href="/communities.html" role="menuitem">The Cottages at Verbena</a>
+                <a href="/communities.html" role="menuitem">The Reserve at New California</a>
+                <a href="/communities.html" role="menuitem">Glacier Pointe</a>
+              </section>
+              <section>
+                <h3>Grove City</h3>
+                <a href="/communities.html" role="menuitem">Holton Run</a>
+                <a href="/communities.html" role="menuitem">Hickory Creek</a>
+              </section>
+              <section>
+                <h3>Columbus</h3>
+                <a href="/communities.html" role="menuitem">Renner Park</a>
+              </section>
+              <section>
+                <h3>Pickerington</h3>
+                <a href="/communities.html" role="menuitem">The Retreat at Hickory Lakes</a>
+              </section>
+            </div>
+          </div>
+        </div>
 
         <div class="nav-group">
           <button type="button" class="nav-label" aria-haspopup="true">
-            Homes <span class="chevron" aria-hidden="true"></span>
+            HOMES <span class="chevron" aria-hidden="true"></span>
           </button>
           <div class="dropdown" role="menu">
             <button type="button" role="menuitem">Inventory Homes</button>
@@ -32,11 +61,11 @@
         </div>
 
         <div class="nav-group">
-          <button type="button" class="nav-label" aria-haspopup="true">
-            About <span class="chevron" aria-hidden="true"></span>
-          </button>
+          <a class="nav-label" href="/about.html">
+            ABOUT <span class="chevron" aria-hidden="true"></span>
+          </a>
           <div class="dropdown" role="menu">
-            <button type="button" role="menuitem">About Us</button>
+            <a href="/about.html" role="menuitem">About Us</a>
             <button type="button" role="menuitem">Energy Efficiency</button>
             <button type="button" role="menuitem">Contact Us</button>
           </div>
@@ -55,47 +84,18 @@
     <main class="hero communities-hero">
       <div class="hero-shade"></div>
       <section class="hero-content">
-        <p class="breadcrumb">Home / <span>Communities</span></p>
         <h1>Find Your Place<br />in Central Ohio.</h1>
-        <p>Eight thoughtfully planned neighborhoods, each with its own character, conveniences<br class="desktop-break" /> and collection of homes. Your next chapter starts here.</p>
-        <div class="accent-line" aria-hidden="true"></div>
-        <div class="hero-actions" aria-label="Featured actions">
-          <span class="button button-light">View All Homes <span class="arrow">→</span></span>
-          <span class="button button-outline">Schedule a Tour <span class="arrow">→</span></span>
-        </div>
       </section>
     </main>
 
-    <section class="stats" aria-label="Community statistics">
-      <div class="stat">
-        <strong>8</strong>
-        <span>Communities Across Central Ohio</span>
-      </div>
-      <div class="stat">
-        <strong>2</strong>
-        <span>Collections — Cottage &amp; Single Family</span>
-      </div>
-      <div class="stat">
-        <strong>$410s</strong>
-        <span>New Homes Starting From</span>
-      </div>
-    </section>
-
-    <section class="communities-map-page" aria-labelledby="communities-map-page-heading">
-      <div class="offer-heading">
-        <p class="eyebrow">Plan Your Visit</p>
-        <div class="section-accent" aria-hidden="true"></div>
-        <h2 id="communities-map-page-heading">See Where We Build</h2>
-      </div>
-
+    <div class="communities-browser">
+    <section class="communities-map-page" aria-label="Community locations">
       <div id="communities-map" class="communities-map" aria-label="Interactive map of Schottenstein Homes communities in Central Ohio"></div>
     </section>
 
     <section class="offer-section" aria-labelledby="communities-grid-heading">
       <div class="offer-heading">
-        <p class="eyebrow">Explore Our Neighborhoods</p>
-        <div class="section-accent" aria-hidden="true"></div>
-        <h2 id="communities-grid-heading">Find the Community<br />That Feels Like Home</h2>
+        <h2 id="communities-grid-heading">Communities in Columbus</h2>
       </div>
 
       <div class="communities-filter" role="group" aria-label="Filter communities by type">
@@ -109,7 +109,6 @@
           <div class="community-card-media">
             <img src="/media/communities/jerome-village-aster.jpg" alt="Homes at Jerome Village Aster in Plain City, Ohio" />
             <span class="community-card-tag">New Release</span>
-            <span class="community-card-price">From $540s</span>
           </div>
           <div class="community-card-body">
             <h3>Jerome Village Aster</h3>
@@ -117,8 +116,16 @@
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12Z"></path><circle cx="12" cy="9" r="2.5"></circle></svg>
               Plain City, OH · Dublin City Schools
             </p>
-            <p class="community-card-desc">The newest neighborhood within Jerome Village — elegant single-family homes with modern layouts, premium finishes and lasting comfort.</p>
-            <span class="community-card-link">View Community <span aria-hidden="true">→</span></span>
+            <div class="community-card-details">
+              <strong>New Release Homes</strong>
+              <span>Single Family Homes</span>
+              <span>12 Home Designs <i></i> 6 Quick Move-ins</span>
+              <b>$540k - $780k+</b>
+            </div>
+            <div class="community-card-actions">
+              <button type="button" class="community-card-link">View Details</button>
+              <button type="button" class="community-card-link">Schedule Tour</button>
+            </div>
           </div>
         </article>
 
@@ -126,7 +133,6 @@
           <div class="community-card-media">
             <img src="/media/communities/glacier-pointe.jpg" alt="Glacier Pointe clubhouse and amenities in Plain City, Ohio" />
             <span class="community-card-tag">Cottage</span>
-            <span class="community-card-price">From $440s</span>
           </div>
           <div class="community-card-body">
             <h3>Glacier Pointe</h3>
@@ -134,8 +140,16 @@
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12Z"></path><circle cx="12" cy="9" r="2.5"></circle></svg>
               Plain City, OH
             </p>
-            <p class="community-card-desc">Ranch-style cottage living with open-concept layouts and energy-efficient construction, set near quality schools and everyday conveniences.</p>
-            <span class="community-card-link">View Community <span aria-hidden="true">→</span></span>
+            <div class="community-card-details">
+              <strong>Low-Maintenance Living</strong>
+              <span>Ranch Cottage Homes</span>
+              <span>8 Home Designs <i></i> 4 Quick Move-ins</span>
+              <b>$440k - $610k+</b>
+            </div>
+            <div class="community-card-actions">
+              <button type="button" class="community-card-link">View Details</button>
+              <button type="button" class="community-card-link">Schedule Tour</button>
+            </div>
           </div>
         </article>
 
@@ -143,7 +157,6 @@
           <div class="community-card-media">
             <img src="/media/communities/cottages-at-verbena.jpg" alt="A home at The Cottages at Verbena in Jerome Village, Plain City" />
             <span class="community-card-tag">Cottage</span>
-            <span class="community-card-price">From $460s</span>
           </div>
           <div class="community-card-body">
             <h3>The Cottages at Verbena</h3>
@@ -151,8 +164,16 @@
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12Z"></path><circle cx="12" cy="9" r="2.5"></circle></svg>
               Jerome Village, Plain City, OH
             </p>
-            <p class="community-card-desc">Low-maintenance ranch residences with customizable floor plans and premium finishes in a historic village setting.</p>
-            <span class="community-card-link">View Community <span aria-hidden="true">→</span></span>
+            <div class="community-card-details">
+              <strong>Private Cottage Collection</strong>
+              <span>Ranch Cottage Homes</span>
+              <span>7 Home Designs <i></i> 3 Quick Move-ins</span>
+              <b>$460k - $640k+</b>
+            </div>
+            <div class="community-card-actions">
+              <button type="button" class="community-card-link">View Details</button>
+              <button type="button" class="community-card-link">Schedule Tour</button>
+            </div>
           </div>
         </article>
 
@@ -160,7 +181,6 @@
           <div class="community-card-media">
             <img src="/media/communities/retreat-at-hickory-lakes.jpg" alt="A home at The Retreat at Hickory Lakes in Pickerington, Ohio" />
             <span class="community-card-tag">Single Family</span>
-            <span class="community-card-price">From $460s</span>
           </div>
           <div class="community-card-body">
             <h3>The Retreat at Hickory Lakes</h3>
@@ -168,8 +188,16 @@
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12Z"></path><circle cx="12" cy="9" r="2.5"></circle></svg>
               Pickerington, OH
             </p>
-            <p class="community-card-desc">Quality single-family homes with flexible floor plans, conveniently located near top-rated local schools.</p>
-            <span class="community-card-link">View Community <span aria-hidden="true">→</span></span>
+            <div class="community-card-details">
+              <strong>Pickerington Schools</strong>
+              <span>Single Family Homes</span>
+              <span>10 Home Designs <i></i> 5 Quick Move-ins</span>
+              <b>$460k - $690k+</b>
+            </div>
+            <div class="community-card-actions">
+              <button type="button" class="community-card-link">View Details</button>
+              <button type="button" class="community-card-link">Schedule Tour</button>
+            </div>
           </div>
         </article>
 
@@ -177,7 +205,6 @@
           <div class="community-card-media">
             <img src="/media/communities/renner-park.jpg" alt="A home at Renner Park in Columbus, Ohio" />
             <span class="community-card-tag">Single Family</span>
-            <span class="community-card-price">From $410s</span>
           </div>
           <div class="community-card-body">
             <h3>Renner Park</h3>
@@ -185,8 +212,16 @@
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12Z"></path><circle cx="12" cy="9" r="2.5"></circle></svg>
               Columbus, OH · Hilliard Schools
             </p>
-            <p class="community-card-desc">Modern floor plans, premium finishes and lasting quality, minutes from I-70 and I-270.</p>
-            <span class="community-card-link">View Community <span aria-hidden="true">→</span></span>
+            <div class="community-card-details">
+              <strong>Convenient Columbus Living</strong>
+              <span>Single Family Homes</span>
+              <span>9 Home Designs <i></i> 4 Quick Move-ins</span>
+              <b>$410k - $620k+</b>
+            </div>
+            <div class="community-card-actions">
+              <button type="button" class="community-card-link">View Details</button>
+              <button type="button" class="community-card-link">Schedule Tour</button>
+            </div>
           </div>
         </article>
 
@@ -194,7 +229,6 @@
           <div class="community-card-media">
             <img src="/media/communities/reserve-at-new-california.jpg" alt="A home at The Reserve at New California in Plain City, Ohio" />
             <span class="community-card-tag">Single Family</span>
-            <span class="community-card-price">From $560s</span>
           </div>
           <div class="community-card-body">
             <h3>The Reserve at New California</h3>
@@ -202,8 +236,16 @@
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12Z"></path><circle cx="12" cy="9" r="2.5"></circle></svg>
               Plain City, OH · Fairbanks Schools
             </p>
-            <p class="community-card-desc">Beautifully crafted, spacious single-family homes with energy-efficient living and some of the lowest taxes around.</p>
-            <span class="community-card-link">View Community <span aria-hidden="true">→</span></span>
+            <div class="community-card-details">
+              <strong>Spacious Homesites</strong>
+              <span>Single Family Homes</span>
+              <span>11 Home Designs <i></i> 3 Quick Move-ins</span>
+              <b>$560k - $820k+</b>
+            </div>
+            <div class="community-card-actions">
+              <button type="button" class="community-card-link">View Details</button>
+              <button type="button" class="community-card-link">Schedule Tour</button>
+            </div>
           </div>
         </article>
 
@@ -211,7 +253,6 @@
           <div class="community-card-media">
             <img src="/media/communities/holton-run.jpg" alt="A model home at Holton Run in Grove City, Ohio" />
             <span class="community-card-tag">Single Family</span>
-            <span class="community-card-price">From $480s</span>
           </div>
           <div class="community-card-body">
             <h3>Holton Run</h3>
@@ -219,8 +260,16 @@
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12Z"></path><circle cx="12" cy="9" r="2.5"></circle></svg>
               Grove City, OH · South-Western Schools
             </p>
-            <p class="community-card-desc">Beautifully crafted single-family homes offering modern design, lasting value and quick access to I-270.</p>
-            <span class="community-card-link">View Community <span aria-hidden="true">→</span></span>
+            <div class="community-card-details">
+              <strong>Grove City Convenience</strong>
+              <span>Single Family Homes</span>
+              <span>10 Home Designs <i></i> 5 Quick Move-ins</span>
+              <b>$480k - $720k+</b>
+            </div>
+            <div class="community-card-actions">
+              <button type="button" class="community-card-link">View Details</button>
+              <button type="button" class="community-card-link">Schedule Tour</button>
+            </div>
           </div>
         </article>
 
@@ -228,7 +277,6 @@
           <div class="community-card-media">
             <img src="/media/communities/hickory-creek.jpg" alt="A home at Hickory Creek in Grove City, Ohio" />
             <span class="community-card-tag">Single Family</span>
-            <span class="community-card-price">From $540s</span>
           </div>
           <div class="community-card-body">
             <h3>Hickory Creek</h3>
@@ -236,12 +284,21 @@
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12Z"></path><circle cx="12" cy="9" r="2.5"></circle></svg>
               Grove City, OH · South-Western Schools
             </p>
-            <p class="community-card-desc">Sixteen distinctive floor plan designs across a charming, established Grove City neighborhood.</p>
-            <span class="community-card-link">View Community <span aria-hidden="true">→</span></span>
+            <div class="community-card-details">
+              <strong>Established Neighborhood</strong>
+              <span>Single Family Homes</span>
+              <span>16 Home Designs <i></i> 2 Quick Move-ins</span>
+              <b>$540k - $790k+</b>
+            </div>
+            <div class="community-card-actions">
+              <button type="button" class="community-card-link">View Details</button>
+              <button type="button" class="community-card-link">Schedule Tour</button>
+            </div>
           </div>
         </article>
       </div>
     </section>
+    </div>
 
     <section class="final-cta">
       <div class="final-cta-card">
@@ -262,7 +319,7 @@
             <h3>Information</h3>
             <div class="footer-list">
               <a href="/index.html">Home</a>
-              <span>About</span>
+              <a href="/about.html">About</a>
               <a href="/communities.html">Communities</a>
               <span>Design Center</span>
               <span>Articles</span>

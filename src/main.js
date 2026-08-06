@@ -10,6 +10,21 @@ const updateHeader = () => {
 updateHeader()
 window.addEventListener('scroll', updateHeader, { passive: true })
 
+const heroSlides = document.querySelectorAll('.hero-slideshow .hero-slide')
+const heroCommunityLabels = document.querySelectorAll('.hero-community-label span')
+
+if (heroSlides.length > 1) {
+  let activeHeroSlide = 0
+
+  window.setInterval(() => {
+    heroSlides[activeHeroSlide].classList.remove('is-active')
+    heroCommunityLabels[activeHeroSlide]?.classList.remove('is-active')
+    activeHeroSlide = (activeHeroSlide + 1) % heroSlides.length
+    heroSlides[activeHeroSlide].classList.add('is-active')
+    heroCommunityLabels[activeHeroSlide]?.classList.add('is-active')
+  }, 5000)
+}
+
 const mapElement = document.querySelector('#communities-map')
 
 if (mapElement) {
@@ -84,12 +99,35 @@ if (mapElement) {
       direction: 'top',
       className: 'community-tooltip',
       opacity: 1,
-      offset: [0, -5]
+      offset: [0, isHomeMap ? -5 : -13]
     })
     marker.on('mouseover', () => marker.openTooltip())
     marker.on('click', () => marker.openTooltip())
     return marker
   })
+
+  if (!isHomeMap) {
+    const markersByName = new Map(communities.map((community, index) => [community.name, markers[index]]))
+
+    document.querySelectorAll('.community-card').forEach((card) => {
+      const communityName = card.querySelector('h3')?.textContent.trim()
+      const marker = markersByName.get(communityName)
+
+      if (!marker) return
+
+      card.addEventListener('mouseenter', () => {
+        marker.getElement()?.classList.add('is-highlighted')
+        marker.setZIndexOffset(1000)
+        marker.openTooltip()
+      })
+
+      card.addEventListener('mouseleave', () => {
+        marker.getElement()?.classList.remove('is-highlighted')
+        marker.setZIndexOffset(0)
+        marker.closeTooltip()
+      })
+    })
+  }
 
   if (isHomeMap) {
     map.fitBounds(homeImageBounds)
@@ -101,6 +139,81 @@ if (mapElement) {
 
 const filterPills = document.querySelectorAll('.filter-pill')
 const communityCards = document.querySelectorAll('.community-card')
+
+const placeholderHouseIcon = `
+  <svg viewBox="0 0 64 64" aria-hidden="true">
+    <path d="M7 30 32 9l25 21-4 5-5-4v24H16V31l-5 4-4-5Zm17 19h16V34H24v15Z"></path>
+  </svg>
+`
+
+communityCards.forEach((card) => {
+  const media = card.querySelector('.community-card-media')
+  const image = media?.querySelector('img')
+  const communityName = card.querySelector('h3')?.textContent.trim() ?? 'community'
+
+  if (!media || !image) return
+
+  image.classList.add('community-card-slide', 'is-active')
+
+  const redPlaceholder = document.createElement('div')
+  redPlaceholder.className = 'community-card-slide community-card-placeholder is-red'
+  redPlaceholder.setAttribute('role', 'img')
+  redPlaceholder.setAttribute('aria-label', `Placeholder for ${communityName} image 2`)
+  redPlaceholder.innerHTML = placeholderHouseIcon
+
+  const bluePlaceholder = document.createElement('div')
+  bluePlaceholder.className = 'community-card-slide community-card-placeholder is-blue'
+  bluePlaceholder.setAttribute('role', 'img')
+  bluePlaceholder.setAttribute('aria-label', `Placeholder for ${communityName} image 3`)
+  bluePlaceholder.innerHTML = placeholderHouseIcon
+
+  const dots = document.createElement('div')
+  dots.className = 'community-card-dots'
+  dots.setAttribute('role', 'group')
+  dots.setAttribute('aria-label', `${communityName} photos`)
+
+  const slides = [image, redPlaceholder, bluePlaceholder]
+  let activeSlide = 0
+
+  const showSlide = (index) => {
+    activeSlide = (index + slides.length) % slides.length
+    slides.forEach((item, slideIndex) => item.classList.toggle('is-active', slideIndex === activeSlide))
+    dots.querySelectorAll('.community-card-dot').forEach((item, dotIndex) => {
+      item.classList.toggle('is-active', dotIndex === activeSlide)
+      item.setAttribute('aria-pressed', dotIndex === activeSlide ? 'true' : 'false')
+    })
+  }
+
+  slides.forEach((slide, index) => {
+    if (index > 0) media.append(slide)
+
+    const dot = document.createElement('button')
+    dot.type = 'button'
+    dot.className = `community-card-dot${index === 0 ? ' is-active' : ''}`
+    dot.setAttribute('aria-label', `Show ${communityName} image ${index + 1}`)
+    dot.setAttribute('aria-pressed', index === 0 ? 'true' : 'false')
+
+    dot.addEventListener('click', () => showSlide(index))
+
+    dots.append(dot)
+  })
+
+  const previous = document.createElement('button')
+  previous.type = 'button'
+  previous.className = 'community-card-arrow is-previous'
+  previous.setAttribute('aria-label', `Show previous ${communityName} photo`)
+  previous.innerHTML = '<span aria-hidden="true">‹</span>'
+  previous.addEventListener('click', () => showSlide(activeSlide - 1))
+
+  const next = document.createElement('button')
+  next.type = 'button'
+  next.className = 'community-card-arrow is-next'
+  next.setAttribute('aria-label', `Show next ${communityName} photo`)
+  next.innerHTML = '<span aria-hidden="true">›</span>'
+  next.addEventListener('click', () => showSlide(activeSlide + 1))
+
+  media.append(dots, previous, next)
+})
 
 if (filterPills.length && communityCards.length) {
   filterPills.forEach((pill) => {

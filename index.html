@@ -18,11 +18,40 @@
       </div>
 
       <nav class="main-nav" aria-label="Main navigation">
-        <a class="nav-label" href="/communities.html">Communities</a>
+        <div class="nav-group">
+          <a class="nav-label" href="/communities.html">
+            COMMUNITIES <span class="chevron" aria-hidden="true"></span>
+          </a>
+          <div class="dropdown communities-dropdown" role="menu">
+            <a class="community-menu-all" href="/communities.html" role="menuitem">View All Communities <span aria-hidden="true">→</span></a>
+            <div class="community-menu-grid">
+              <section>
+                <h3>Plain City</h3>
+                <a href="/communities.html" role="menuitem">Jerome Village Aster</a>
+                <a href="/communities.html" role="menuitem">The Cottages at Verbena</a>
+                <a href="/communities.html" role="menuitem">The Reserve at New California</a>
+                <a href="/communities.html" role="menuitem">Glacier Pointe</a>
+              </section>
+              <section>
+                <h3>Grove City</h3>
+                <a href="/communities.html" role="menuitem">Holton Run</a>
+                <a href="/communities.html" role="menuitem">Hickory Creek</a>
+              </section>
+              <section>
+                <h3>Columbus</h3>
+                <a href="/communities.html" role="menuitem">Renner Park</a>
+              </section>
+              <section>
+                <h3>Pickerington</h3>
+                <a href="/communities.html" role="menuitem">The Retreat at Hickory Lakes</a>
+              </section>
+            </div>
+          </div>
+        </div>
 
         <div class="nav-group">
           <button type="button" class="nav-label" aria-haspopup="true">
-            Homes <span class="chevron" aria-hidden="true"></span>
+            HOMES <span class="chevron" aria-hidden="true"></span>
           </button>
           <div class="dropdown" role="menu">
             <button type="button" role="menuitem">Inventory Homes</button>
@@ -32,11 +61,11 @@
         </div>
 
         <div class="nav-group">
-          <button type="button" class="nav-label" aria-haspopup="true">
-            About <span class="chevron" aria-hidden="true"></span>
-          </button>
+          <a class="nav-label" href="/about.html">
+            ABOUT <span class="chevron" aria-hidden="true"></span>
+          </a>
           <div class="dropdown" role="menu">
-            <button type="button" role="menuitem">About Us</button>
+            <a href="/about.html" role="menuitem">About Us</a>
             <button type="button" role="menuitem">Energy Efficiency</button>
             <button type="button" role="menuitem">Contact Us</button>
           </div>
@@ -53,14 +82,21 @@
     </header>
 
     <main class="hero">
+      <div class="hero-slideshow" aria-hidden="true">
+        <span class="hero-slide is-active"></span>
+        <span class="hero-slide"></span>
+        <span class="hero-slide"></span>
+      </div>
       <div class="hero-shade"></div>
+      <div class="hero-community-label" aria-live="polite">
+        <span class="is-active">Jerome Village Aster</span>
+        <span>The Reserve at New California</span>
+        <span>Renner Park</span>
+      </div>
       <section class="hero-content">
         <h1>Homes of Distinction.<br />Built for Life.</h1>
-        <p>Timeless architecture. Thoughtful design. Quality craftsmanship.<br class="desktop-break" /> Welcome to the Schottenstein Homes difference.</p>
-        <div class="accent-line" aria-hidden="true"></div>
         <div class="hero-actions" aria-label="Featured actions">
-          <a class="button button-light" href="/communities.html">Explore Communities <span class="arrow">→</span></a>
-          <span class="button button-outline">Schedule a Tour <span class="arrow">→</span></span>
+          <a class="button button-light hero-communities-button" href="/communities.html">Explore Communities</a>
         </div>
       </section>
     </main>
@@ -90,7 +126,7 @@
         <p class="home-intro-copy">Explore thoughtful floor plans, elevated interiors<br class="desktop-break" /> and opportunities to make the home distinctly yours.</p>
 
         <div class="home-intro-actions" aria-label="Explore our homes">
-          <a class="text-action" href="/communities.html">Explore Communities <span aria-hidden="true">→</span></a>
+          <a class="feature-action" href="/communities.html">Explore Communities <span aria-hidden="true">→</span></a>
           <span class="text-action">Browse Floor Plans <span aria-hidden="true">→</span></span>
           <span class="text-action">Visit the Design Center <span aria-hidden="true">→</span></span>
         </div>
@@ -160,7 +196,7 @@
             <h3>Information</h3>
             <div class="footer-list">
               <a href="/index.html">Home</a>
-              <span>About</span>
+              <a href="/about.html">About</a>
               <a href="/communities.html">Communities</a>
               <span>Design Center</span>
               <span>Articles</span>
