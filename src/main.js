@@ -2,23 +2,46 @@ import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 
 const header = document.querySelector('.site-header')
-const isCommunitiesPage = document.body.classList.contains('communities-page')
-let previousScrollY = window.scrollY
+const headerLogo = header?.querySelector('.brand img')
+const isHomePage = document.body.classList.contains('home-page')
 
 const updateHeader = () => {
-  const currentScrollY = window.scrollY
-  header?.classList.toggle('is-scrolled', currentScrollY > 40)
+  const isScrolled = window.scrollY > 40
+  header?.classList.toggle('is-scrolled', isScrolled)
 
-  if (isCommunitiesPage && header) {
-    const isScrollingDown = currentScrollY > previousScrollY
-    header.classList.toggle('is-hidden', isScrollingDown && currentScrollY > 112)
+  if (isHomePage && headerLogo) {
+    headerLogo.src = isScrolled ? '/media/SH_logo.png' : '/media/SH_logo_white.png'
   }
-
-  previousScrollY = currentScrollY
 }
 
 updateHeader()
 window.addEventListener('scroll', updateHeader, { passive: true })
+
+const heroMenuTrigger = document.querySelector('.hero-menu-trigger')
+const heroMenuDrawer = document.querySelector('.hero-menu-drawer')
+const heroMenuBackdrop = document.querySelector('.hero-menu-backdrop')
+const heroMenuClose = document.querySelector('.hero-menu-close')
+
+if (heroMenuTrigger && heroMenuDrawer && heroMenuBackdrop && heroMenuClose) {
+  const setHeroMenuOpen = (isOpen) => {
+    document.body.classList.toggle('is-hero-menu-open', isOpen)
+    heroMenuTrigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false')
+    heroMenuDrawer.setAttribute('aria-hidden', isOpen ? 'false' : 'true')
+
+    if (isOpen) heroMenuClose.focus()
+    else heroMenuTrigger.focus()
+  }
+
+  heroMenuTrigger.addEventListener('click', () => setHeroMenuOpen(true))
+  heroMenuClose.addEventListener('click', () => setHeroMenuOpen(false))
+  heroMenuBackdrop.addEventListener('click', () => setHeroMenuOpen(false))
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && document.body.classList.contains('is-hero-menu-open')) {
+      setHeroMenuOpen(false)
+    }
+  })
+}
 
 const heroSlides = document.querySelectorAll('.hero-slideshow .hero-slide')
 const heroCommunityLabels = document.querySelectorAll('.hero-community-label span')
@@ -43,7 +66,7 @@ if (featuredCommunitySlides.length > 1 && featuredCommunityPrevious && featuredC
   let activeFeaturedCommunity = 0
 
   const showFeaturedCommunity = (index) => {
-    activeFeaturedCommunity = (index + featuredCommunitySlides.length) % featuredCommunitySlides.length
+    activeFeaturedCommunity = Math.max(0, Math.min(index, featuredCommunitySlides.length - 1))
 
     featuredCommunitySlides.forEach((slide, slideIndex) => {
       const isActive = slideIndex === activeFeaturedCommunity
@@ -54,6 +77,9 @@ if (featuredCommunitySlides.length > 1 && featuredCommunityPrevious && featuredC
         link.tabIndex = isActive ? 0 : -1
       })
     })
+
+    featuredCommunityPrevious.disabled = activeFeaturedCommunity === 0
+    featuredCommunityNext.disabled = activeFeaturedCommunity === featuredCommunitySlides.length - 1
   }
 
   featuredCommunityPrevious.addEventListener('click', () => {

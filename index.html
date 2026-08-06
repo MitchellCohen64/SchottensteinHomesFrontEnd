@@ -13,8 +13,13 @@
   </head>
   <body class="home-page">
     <header class="site-header">
+      <button class="hero-menu-trigger" type="button" aria-label="Open menu" aria-controls="hero-menu-drawer" aria-expanded="false">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
+        <span>Menu</span>
+      </button>
+
       <div class="brand">
-        <a href="/index.html"><img src="/media/SH_logo.png" alt="Schottenstein Homes" /></a>
+        <a href="/index.html"><img src="/media/SH_logo_white.png" alt="Schottenstein Homes" /></a>
       </div>
 
       <nav class="main-nav" aria-label="Main navigation">
@@ -73,13 +78,57 @@
       </nav>
 
       <div class="login" aria-label="Homeowner Login">
+        <span>Homeowner Login</span>
+      </div>
+
+      <button class="hero-account" type="button" aria-label="Homeowner login">
         <svg aria-hidden="true" viewBox="0 0 24 24">
           <circle cx="12" cy="7" r="4"></circle>
           <path d="M4.5 21c.4-5.1 3-8 7.5-8s7.1 2.9 7.5 8H4.5Z"></path>
         </svg>
-        <span>Homeowner Login</span>
-      </div>
+      </button>
     </header>
+
+    <div class="hero-menu-backdrop" aria-hidden="true"></div>
+    <aside id="hero-menu-drawer" class="hero-menu-drawer" aria-label="Main menu" aria-hidden="true">
+      <div class="hero-menu-drawer-header">
+        <img src="/media/SH_logo.png" alt="Schottenstein Homes" />
+        <button class="hero-menu-close" type="button" aria-label="Close menu">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" /></svg>
+        </button>
+      </div>
+
+      <nav class="hero-drawer-nav" aria-label="Hero navigation">
+        <section>
+          <a class="hero-drawer-heading" href="/communities.html">Communities</a>
+          <a href="/communities.html">View All Communities</a>
+          <a href="/communities.html">Jerome Village Aster</a>
+          <a href="/communities.html">The Cottages at Verbena</a>
+          <a href="/communities.html">The Reserve at New California</a>
+          <a href="/communities.html">Glacier Pointe</a>
+          <a href="/communities.html">Holton Run</a>
+          <a href="/communities.html">Hickory Creek</a>
+          <a href="/communities.html">Renner Park</a>
+          <a href="/communities.html">The Retreat at Hickory Lakes</a>
+        </section>
+
+        <section>
+          <span class="hero-drawer-heading">Homes</span>
+          <button type="button">Inventory Homes</button>
+          <button type="button">Design Center</button>
+          <button type="button">Virtual Tours</button>
+        </section>
+
+        <section>
+          <a class="hero-drawer-heading" href="/about.html">About</a>
+          <a href="/about.html">About Us</a>
+          <button type="button">Energy Efficiency</button>
+          <button type="button">Contact Us</button>
+        </section>
+
+        <a class="hero-drawer-login" href="#">Homeowner Login</a>
+      </nav>
+    </aside>
 
     <main class="hero">
       <div class="hero-slideshow" aria-hidden="true">
@@ -125,8 +174,8 @@
         <p class="home-intro-copy">Explore thoughtful floor plans, elevated interiors<br class="desktop-break" /> and opportunities to make the home distinctly yours.</p>
 
         <div class="home-intro-actions" aria-label="Explore our homes">
-          <a class="feature-action" href="/communities.html">Explore Communities <span aria-hidden="true">→</span></a>
-          <span class="text-action">Visit the Design Center <span aria-hidden="true">→</span></span>
+          <a class="feature-action" href="/communities.html">Explore Communities</a>
+          <span class="feature-action">Visit the Design Center</span>
         </div>
       </div>
     </section>
@@ -139,7 +188,8 @@
             <p>Featured community</p>
             <h2>Jerome Village Aster</h2>
             <div class="featured-community-description">Discover spacious new homes in a thoughtfully planned Plain City neighborhood surrounded by parks, trails and community amenities.</div>
-            <a href="/communities.html">View Jerome Village Aster</a>
+            <a class="featured-community-link" href="/communities.html">View Jerome Village Aster</a>
+            <a class="featured-community-all" href="/communities.html">View All Communities</a>
           </div>
         </article>
 
@@ -149,7 +199,8 @@
             <p>Featured community</p>
             <h2>The Cottages at Verbena</h2>
             <div class="featured-community-description">Enjoy low-maintenance ranch living with inviting streetscapes and modern comforts in a convenient Plain City setting.</div>
-            <a href="/communities.html">View The Cottages at Verbena</a>
+            <a class="featured-community-link" href="/communities.html">View The Cottages at Verbena</a>
+            <a class="featured-community-all" href="/communities.html">View All Communities</a>
           </div>
         </article>
 
@@ -159,7 +210,8 @@
             <p>Featured community</p>
             <h2>The Reserve at New California</h2>
             <div class="featured-community-description">Find beautifully designed homes, generous homesites and an easy connection to everything Central Ohio has to offer.</div>
-            <a href="/communities.html">View The Reserve at New California</a>
+            <a class="featured-community-link" href="/communities.html">View The Reserve at New California</a>
+            <a class="featured-community-all" href="/communities.html">View All Communities</a>
           </div>
         </article>
 
@@ -169,7 +221,8 @@
             <p>Featured community</p>
             <h2>The Retreat at Hickory Lakes</h2>
             <div class="featured-community-description">Explore a welcoming Pickerington community pairing distinctive homes with peaceful surroundings and everyday convenience.</div>
-            <a href="/communities.html">View The Retreat at Hickory Lakes</a>
+            <a class="featured-community-link" href="/communities.html">View The Retreat at Hickory Lakes</a>
+            <a class="featured-community-all" href="/communities.html">View All Communities</a>
           </div>
         </article>
       </div>
@@ -189,7 +242,7 @@
         <p class="eyebrow">Our Communities</p>
         <h2 id="communities-map-heading">See where<br />Schottenstein builds</h2>
         <p class="communities-map-description">We build thoughtfully planned communities across Central Ohio—each with its own character, conveniences and collection of homes. Explore the map to see where you can find your future home.</p>
-        <a class="map-communities-button" href="/communities.html">Our Communities <span aria-hidden="true">→</span></a>
+        <a class="map-communities-button" href="/communities.html">Our Communities</a>
 
       </div>
 
@@ -199,7 +252,6 @@
     <section class="final-cta">
       <div class="final-cta-card">
         <div class="final-cta-content">
-          <p class="final-cta-eyebrow">Ready to Find Your Dream Home?</p>
           <h2>Your New Home<br />is Waiting</h2>
           <p>Take the first step today—schedule a tour, explore our communities, or connect with our sales team.</p>
           <span class="final-cta-button">Let's Get Started <span aria-hidden="true">→</span></span>
