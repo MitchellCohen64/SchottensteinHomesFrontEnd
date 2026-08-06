@@ -2,6 +2,7 @@ import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import standardLogoUrl from '../media/SH_logo.png'
 import whiteLogoUrl from '../media/SH_logo_white.png'
+import homePlaceholderUrl from '../media/home-hero/heroHomeImg2.png'
 
 const header = document.querySelector('.site-header')
 const headerLogo = header?.querySelector('.brand img')
@@ -584,7 +585,7 @@ document.querySelectorAll('.plan-card').forEach((card) => {
 
   const media = document.createElement('div')
   media.className = 'plan-card-media'
-  media.innerHTML = '<img src="/media/home-hero/heroHomeImg2.png" alt="Temporary home exterior placeholder" />'
+  media.innerHTML = `<img src="${homePlaceholderUrl}" alt="Home exterior" />`
 
   if (['The Chester', 'The Franklin'].includes(title.textContent.trim())) {
     card.classList.add('is-move-in-ready')
