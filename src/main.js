@@ -25,10 +25,42 @@ if (heroSlides.length > 1) {
   }, 5000)
 }
 
+const featuredCommunitySlides = [...document.querySelectorAll('.featured-community-slide')]
+const featuredCommunityPrevious = document.querySelector('.featured-community-previous')
+const featuredCommunityNext = document.querySelector('.featured-community-next')
+
+if (featuredCommunitySlides.length > 1 && featuredCommunityPrevious && featuredCommunityNext) {
+  let activeFeaturedCommunity = 0
+
+  const showFeaturedCommunity = (index) => {
+    activeFeaturedCommunity = (index + featuredCommunitySlides.length) % featuredCommunitySlides.length
+
+    featuredCommunitySlides.forEach((slide, slideIndex) => {
+      const isActive = slideIndex === activeFeaturedCommunity
+      slide.classList.toggle('is-active', isActive)
+      slide.setAttribute('aria-hidden', isActive ? 'false' : 'true')
+
+      slide.querySelectorAll('a').forEach((link) => {
+        link.tabIndex = isActive ? 0 : -1
+      })
+    })
+  }
+
+  featuredCommunityPrevious.addEventListener('click', () => {
+    showFeaturedCommunity(activeFeaturedCommunity - 1)
+  })
+
+  featuredCommunityNext.addEventListener('click', () => {
+    showFeaturedCommunity(activeFeaturedCommunity + 1)
+  })
+
+  showFeaturedCommunity(0)
+}
+
 const mapElement = document.querySelector('#communities-map')
 
 if (mapElement) {
-  const isHomeMap = Boolean(mapElement.closest('.communities-map-section'))
+  const isHomeMap = mapElement.dataset.mapStyle === 'illustrated'
 
   const communities = [
     { name: 'Jerome Village Aster', address: '6971 Aster Way, Plain City', coords: [40.1930731, -83.1743563] },
@@ -47,6 +79,8 @@ if (mapElement) {
     scrollWheelZoom: false,
     attributionControl: !isHomeMap
   })
+
+  map.attributionControl?.setPrefix(false)
 
   mapElement.classList.toggle('is-home-map', isHomeMap)
 

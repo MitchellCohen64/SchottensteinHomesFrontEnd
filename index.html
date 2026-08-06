@@ -54,9 +54,9 @@
             HOMES <span class="chevron" aria-hidden="true"></span>
           </button>
           <div class="dropdown" role="menu">
-            <button type="button" role="menuitem">Inventory Homes</button>
-            <button type="button" role="menuitem">Design Center</button>
-            <button type="button" role="menuitem">Virtual Tours</button>
+            <button type="button" role="menuitem"><span>Inventory Homes</span></button>
+            <button type="button" role="menuitem"><span>Design Center</span></button>
+            <button type="button" role="menuitem"><span>Virtual Tours</span></button>
           </div>
         </div>
 
@@ -65,9 +65,9 @@
             ABOUT <span class="chevron" aria-hidden="true"></span>
           </a>
           <div class="dropdown" role="menu">
-            <a href="/about.html" role="menuitem">About Us</a>
-            <button type="button" role="menuitem">Energy Efficiency</button>
-            <button type="button" role="menuitem">Contact Us</button>
+            <a href="/about.html" role="menuitem"><span>About Us</span></a>
+            <button type="button" role="menuitem"><span>Energy Efficiency</span></button>
+            <button type="button" role="menuitem"><span>Contact Us</span></button>
           </div>
         </div>
       </nav>
@@ -121,53 +121,72 @@
 
       <div class="home-intro-content">
         <p class="eyebrow">Designed Around Real Life</p>
-        <div class="section-accent" aria-hidden="true"></div>
         <h2>Step inside a home<br />that feels considered<br />from every angle.</h2>
         <p class="home-intro-copy">Explore thoughtful floor plans, elevated interiors<br class="desktop-break" /> and opportunities to make the home distinctly yours.</p>
 
         <div class="home-intro-actions" aria-label="Explore our homes">
           <a class="feature-action" href="/communities.html">Explore Communities <span aria-hidden="true">→</span></a>
-          <span class="text-action">Browse Floor Plans <span aria-hidden="true">→</span></span>
           <span class="text-action">Visit the Design Center <span aria-hidden="true">→</span></span>
         </div>
       </div>
     </section>
 
-    <section class="offer-section" aria-labelledby="offer-heading">
-      <div class="offer-heading">
-        <p class="eyebrow">Explore the Possibilities</p>
-        <div class="section-accent" aria-hidden="true"></div>
-        <h2 id="offer-heading">What We Offer</h2>
+    <section class="featured-communities" aria-label="Featured communities">
+      <div class="featured-community-slides" aria-live="polite">
+        <article class="featured-community-slide is-active">
+          <img src="/media/communities/jerome-village-aster.jpg" alt="Homes at Jerome Village Aster in Plain City, Ohio" />
+          <div class="featured-community-copy">
+            <p>Featured community</p>
+            <h2>Jerome Village Aster</h2>
+            <div class="featured-community-description">Discover spacious new homes in a thoughtfully planned Plain City neighborhood surrounded by parks, trails and community amenities.</div>
+            <a href="/communities.html">View Jerome Village Aster</a>
+          </div>
+        </article>
+
+        <article class="featured-community-slide" aria-hidden="true">
+          <img src="/media/communities/cottages-at-verbena.jpg" alt="Homes at The Cottages at Verbena in Plain City, Ohio" />
+          <div class="featured-community-copy">
+            <p>Featured community</p>
+            <h2>The Cottages at Verbena</h2>
+            <div class="featured-community-description">Enjoy low-maintenance ranch living with inviting streetscapes and modern comforts in a convenient Plain City setting.</div>
+            <a href="/communities.html">View The Cottages at Verbena</a>
+          </div>
+        </article>
+
+        <article class="featured-community-slide" aria-hidden="true">
+          <img src="/media/communities/reserve-at-new-california.jpg" alt="Homes at The Reserve at New California in Plain City, Ohio" />
+          <div class="featured-community-copy">
+            <p>Featured community</p>
+            <h2>The Reserve at New California</h2>
+            <div class="featured-community-description">Find beautifully designed homes, generous homesites and an easy connection to everything Central Ohio has to offer.</div>
+            <a href="/communities.html">View The Reserve at New California</a>
+          </div>
+        </article>
+
+        <article class="featured-community-slide" aria-hidden="true">
+          <img src="/media/communities/retreat-at-hickory-lakes.jpg" alt="Homes at The Retreat at Hickory Lakes in Pickerington, Ohio" />
+          <div class="featured-community-copy">
+            <p>Featured community</p>
+            <h2>The Retreat at Hickory Lakes</h2>
+            <div class="featured-community-description">Explore a welcoming Pickerington community pairing distinctive homes with peaceful surroundings and everyday convenience.</div>
+            <a href="/communities.html">View The Retreat at Hickory Lakes</a>
+          </div>
+        </article>
       </div>
 
-      <div class="offer-grid">
-        <article class="offer-card">
-          <img src="/media/cottages.png" alt="Bright cottage living room with fireplace and staircase" />
-          <div class="offer-overlay"></div>
-          <h3>Cottages</h3>
-          <span class="offer-arrow" aria-hidden="true">→</span>
-        </article>
-
-        <article class="offer-card">
-          <img src="/media/singleFamilyHomes.png" alt="Open single-family home living room with tall windows" />
-          <div class="offer-overlay"></div>
-          <h3>Single Family Homes</h3>
-          <span class="offer-arrow" aria-hidden="true">→</span>
-        </article>
-
-        <article class="offer-card">
-          <img src="/media/designCenter.png" alt="Lighting displays inside the Schottenstein Homes Design Center" />
-          <div class="offer-overlay"></div>
-          <h3>Design Center</h3>
-          <span class="offer-arrow" aria-hidden="true">→</span>
-        </article>
+      <div class="featured-community-controls" aria-label="Featured community controls">
+        <button class="featured-community-previous" type="button" aria-label="Show previous featured community">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M15 5 8 12l7 7" /></svg>
+        </button>
+        <button class="featured-community-next" type="button" aria-label="Show next featured community">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7" /></svg>
+        </button>
       </div>
     </section>
 
     <section class="communities-map-section" aria-labelledby="communities-map-heading">
       <div class="communities-map-copy">
         <p class="eyebrow">Our Communities</p>
-        <div class="section-accent" aria-hidden="true"></div>
         <h2 id="communities-map-heading">See where<br />Schottenstein builds</h2>
         <p class="communities-map-description">We build thoughtfully planned communities across Central Ohio—each with its own character, conveniences and collection of homes. Explore the map to see where you can find your future home.</p>
         <a class="map-communities-button" href="/communities.html">Our Communities <span aria-hidden="true">→</span></a>
