@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Browse available Schottenstein home designs and filter by price, bedrooms, bathrooms, and stories." />
+    <title>Inventory Homes | Schottenstein Homes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Jost:wght@400;500&family=Manrope:wght@500&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/src/style.css" />
+    <script type="module" src="/src/main.js"></script>
+  </head>
+  <body class="inventory-page">
+    <header class="site-header">
+      <div class="brand">
+        <a href="/index.html"><img src="/media/SH_logo.png" alt="Schottenstein Homes" /></a>
+      </div>
+
+      <nav class="main-nav" aria-label="Main navigation">
+        <div class="nav-group">
+          <a class="nav-label" href="/communities.html">
+            COMMUNITIES <span class="chevron" aria-hidden="true"></span>
+          </a>
+          <div class="dropdown communities-dropdown" role="menu">
+            <a class="community-menu-all" href="/communities.html" role="menuitem">View All Communities <span aria-hidden="true">→</span></a>
+            <div class="community-menu-grid">
+              <section>
+                <h3>Plain City</h3>
+                <a href="/jerome-village-aster.html" role="menuitem">Jerome Village Aster</a>
+                <a href="/cottages-at-verbena.html" role="menuitem">The Cottages at Verbena</a>
+                <a href="/reserve-at-new-california.html" role="menuitem">The Reserve at New California</a>
+                <a href="/glacier-pointe.html" role="menuitem">Glacier Pointe</a>
+              </section>
+              <section>
+                <h3>Grove City</h3>
+                <a href="/holton-run.html" role="menuitem">Holton Run</a>
+                <a href="/hickory-creek.html" role="menuitem">Hickory Creek</a>
+              </section>
+              <section>
+                <h3>Columbus</h3>
+                <a href="/renner-park.html" role="menuitem">Renner Park</a>
+              </section>
+              <section>
+                <h3>Pickerington</h3>
+                <a href="/retreat-at-hickory-lakes.html" role="menuitem">The Retreat at Hickory Lakes</a>
+              </section>
+            </div>
+          </div>
+        </div>
+
+        <div class="nav-group">
+          <button type="button" class="nav-label is-active" aria-haspopup="true">
+            HOMES <span class="chevron" aria-hidden="true"></span>
+          </button>
+          <div class="dropdown" role="menu">
+            <button type="button" role="menuitem"><span>Inventory Homes</span></button>
+            <a href="/design-center.html" role="menuitem"><span>Design Center</span></a>
+            <a href="/virtual-tours.html" role="menuitem"><span>Virtual Tours</span></a>
+          </div>
+        </div>
+
+        <div class="nav-group">
+          <a class="nav-label" href="/about.html">
+            ABOUT <span class="chevron" aria-hidden="true"></span>
+          </a>
+          <div class="dropdown" role="menu">
+            <a href="/about.html" role="menuitem"><span>About Us</span></a>
+            <a href="/energy-efficiency.html" role="menuitem"><span>Energy Efficiency</span></a>
+            <a href="/contact.html" role="menuitem"><span>Contact Us</span></a>
+          </div>
+        </div>
+      </nav>
+
+      <a class="login" href="https://www.homeinformationpackages.com/" target="_blank" rel="noopener noreferrer" aria-label="Homeowner Login">
+        <span>Homeowner Login</span>
+      </a>
+    </header>
+
+    <main>
+      <section class="page-title"><div class="page-title-inner"><h1>Inventory Homes</h1></div></section>
+      <section class="offer-section" aria-labelledby="inventory-heading">
+        <div class="offer-heading">
+          <h2 id="inventory-heading">Find Your Home</h2>
+          <p class="offer-heading-copy">Browse our complete collection of available home designs. Filter by price, bedrooms, bathrooms, and stories to find the right fit.</p>
+        </div>
+        <div class="plan-grid inventory-grid" data-inventory-catalog></div>
+      </section>
+    </main>
+
+    <section class="final-cta">
+      <div class="final-cta-card"><div class="final-cta-content"><h2>Your New Home<br />is Waiting</h2><p>Take the first step today—schedule a tour, explore our communities, or connect with our sales team.</p><span class="final-cta-button">Let's Get Started <span aria-hidden="true">→</span></span></div><div class="final-cta-image" aria-hidden="true"></div></div>
+    </section>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-columns">
+          <div class="footer-column"><h3>Information</h3><div class="footer-list"><a href="/index.html">Home</a><a href="/about.html">About</a><a href="/communities.html">Communities</a><a href="/inventory-homes.html">Inventory Homes</a><a href="/design-center.html">Design Center</a><a href="/virtual-tours.html">Virtual Tours</a><a href="/energy-efficiency.html">Energy Efficiency</a><span>Articles</span></div></div>
+          <div class="footer-column"><h3>Communities</h3><div class="footer-list"><a href="/glacier-pointe.html">Glacier Pointe</a><a href="/hickory-creek.html">Hickory Creek</a><a href="/holton-run.html">Holton Run</a><a href="/jerome-village-aster.html">Jerome Village Aster</a><a href="/renner-park.html">Renner Park</a><a href="/cottages-at-verbena.html">The Cottages at Verbena</a><a href="/reserve-at-new-california.html">The Reserve at New California</a><a href="/retreat-at-hickory-lakes.html">The Retreat at Hickory Lakes</a></div></div>
+          <div class="footer-column footer-contact"><h3>Contact Us</h3><div class="footer-list"><span>614.478.1100</span><span>dp@schottensteinhomes.com</span><span>81 Mill Street, Suite 100<br />Gahanna, OH 43230</span></div></div>
+        </div>
+        <div class="footer-legal"><p class="copyright">© Copyright 2025 Schottenstein Homes</p><p>At Schottenstein Homes, we value your privacy. Our website uses cookies and tracking technologies strictly for analytics purposes, allowing us to improve the user experience.</p></div>
+      </div>
+    </footer>
+  </body>
+</html>

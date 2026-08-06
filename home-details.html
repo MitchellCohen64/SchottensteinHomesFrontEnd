@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Explore a Schottenstein Homes home design, specifications, floor plans, and schedule a tour." />
+    <title>Home Design | Schottenstein Homes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Jost:wght@400;500&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/src/style.css" />
+    <script type="module" src="/src/main.js"></script>
+  </head>
+  <body class="home-details-page">
+    <header class="site-header">
+      <div class="brand"><a href="/index.html"><img src="/media/SH_logo.png" alt="Schottenstein Homes" /></a></div>
+      <nav class="main-nav" aria-label="Main navigation">
+        <div class="nav-group"><a class="nav-label" href="/communities.html">COMMUNITIES <span class="chevron" aria-hidden="true"></span></a><div class="dropdown communities-dropdown" role="menu"><a class="community-menu-all" href="/communities.html" role="menuitem">View All Communities <span aria-hidden="true">→</span></a><div class="community-menu-grid"><section><h3>Plain City</h3><a href="/jerome-village-aster.html" role="menuitem">Jerome Village Aster</a><a href="/cottages-at-verbena.html" role="menuitem">The Cottages at Verbena</a><a href="/reserve-at-new-california.html" role="menuitem">The Reserve at New California</a><a href="/glacier-pointe.html" role="menuitem">Glacier Pointe</a></section><section><h3>Grove City</h3><a href="/holton-run.html" role="menuitem">Holton Run</a><a href="/hickory-creek.html" role="menuitem">Hickory Creek</a></section><section><h3>Columbus</h3><a href="/renner-park.html" role="menuitem">Renner Park</a></section><section><h3>Pickerington</h3><a href="/retreat-at-hickory-lakes.html" role="menuitem">The Retreat at Hickory Lakes</a></section></div></div></div>
+        <div class="nav-group"><button type="button" class="nav-label is-active" aria-haspopup="true">HOMES <span class="chevron" aria-hidden="true"></span></button><div class="dropdown" role="menu"><button type="button" role="menuitem"><span>Inventory Homes</span></button><a href="/design-center.html" role="menuitem"><span>Design Center</span></a><a href="/virtual-tours.html" role="menuitem"><span>Virtual Tours</span></a></div></div>
+        <div class="nav-group"><a class="nav-label" href="/about.html">ABOUT <span class="chevron" aria-hidden="true"></span></a><div class="dropdown" role="menu"><a href="/about.html" role="menuitem"><span>About Us</span></a><a href="/energy-efficiency.html" role="menuitem"><span>Energy Efficiency</span></a><a href="/contact.html" role="menuitem"><span>Contact Us</span></a></div></div>
+      </nav>
+      <a class="login" href="https://www.homeinformationpackages.com/" target="_blank" rel="noopener noreferrer"><span>Homeowner Login</span></a>
+    </header>
+
+    <main data-home-details>
+      <section class="home-detail-hero"><img src="/media/home-hero/heroHomeImg2.png" alt="Home exterior" /></section>
+      <section class="home-detail-overview">
+        <h1 data-detail-name>Home Design</h1>
+        <div class="home-detail-layout">
+          <div>
+            <p class="home-detail-community" data-detail-community>Community</p>
+            <p class="home-detail-price" data-detail-price>Starting at</p>
+            <div class="home-detail-specs">
+              <span class="home-detail-spec"><svg viewBox="0 0 24 24"><path d="M3 18v-7m18 7v-5a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v5M6 11V8a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v3M3 16h18"></path></svg><b data-detail-beds></b></span>
+              <span class="home-detail-spec"><svg viewBox="0 0 24 24"><path d="M4 13h16v2a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5v-2Zm3 0V6a3 3 0 0 1 6 0"></path></svg><b data-detail-baths></b></span>
+              <span class="home-detail-spec"><svg viewBox="0 0 24 24"><path d="M4 20V8l8-5 8 5v12H4Zm4 0v-6h8v6"></path></svg><b data-detail-sqft></b></span>
+              <span class="home-detail-spec"><svg viewBox="0 0 24 24"><path d="M4 20V7h16v13H4Zm4-9h8M8 15h8"></path></svg><b data-detail-stories></b></span>
+            </div>
+          </div>
+          <p class="home-detail-copy">Thoughtfully designed for modern living, this Schottenstein home combines comfortable gathering spaces, flexible rooms, quality craftsmanship, and energy-efficient features. Personalize your home with selections from our Design Center and create a space that fits the way you live.</p>
+        </div>
+      </section>
+      <section class="home-detail-tour" data-detail-tour hidden>
+        <div class="home-detail-tour-inner">
+          <h2>Virtual Tour</h2>
+          <div class="home-detail-tour-video">
+            <iframe data-detail-tour-frame title="Home design virtual tour" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+        </div>
+      </section>
+      <section class="floor-plan-section"><h2>Floor Plans</h2><div class="floor-plan-placeholder">Floor Plans</div></section>
+      <section class="tour-form-section"><div class="tour-form-inner"><h2>Ready for a Tour?</h2><p>Fill out your information and a member of our team will contact you to schedule your personal tour.</p><form class="tour-request-form"><input type="hidden" name="home" data-tour-home /><label>First Name<input type="text" name="firstName" autocomplete="given-name" required /></label><label>Last Name<input type="text" name="lastName" autocomplete="family-name" required /></label><label>Email<input type="email" name="email" autocomplete="email" required /></label><label>Phone<input type="tel" name="phone" autocomplete="tel" required /></label><label class="is-full">Message<textarea name="message"></textarea></label><button type="submit">Request a Tour</button></form></div></section>
+    </main>
+    <footer class="site-footer"><div class="footer-inner"><div class="footer-columns"><div class="footer-column"><h3>Information</h3><div class="footer-list"><a href="/index.html">Home</a><a href="/about.html">About</a><a href="/communities.html">Communities</a><a href="/inventory-homes.html">Inventory Homes</a><a href="/design-center.html">Design Center</a><a href="/virtual-tours.html">Virtual Tours</a><a href="/energy-efficiency.html">Energy Efficiency</a></div></div><div class="footer-column"><h3>Communities</h3><div class="footer-list"><a href="/glacier-pointe.html">Glacier Pointe</a><a href="/hickory-creek.html">Hickory Creek</a><a href="/holton-run.html">Holton Run</a><a href="/jerome-village-aster.html">Jerome Village Aster</a></div></div><div class="footer-column footer-contact"><h3>Contact Us</h3><div class="footer-list"><span>614.478.1100</span><span>dp@schottensteinhomes.com</span><span>81 Mill Street, Suite 100<br />Gahanna, OH 43230</span></div></div></div></div></footer>
+  </body>
+</html>
