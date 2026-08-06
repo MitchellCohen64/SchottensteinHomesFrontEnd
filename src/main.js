@@ -1,5 +1,7 @@
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
+import standardLogoUrl from '../media/SH_logo.png'
+import whiteLogoUrl from '../media/SH_logo_white.png'
 
 const header = document.querySelector('.site-header')
 const headerLogo = header?.querySelector('.brand img')
@@ -10,7 +12,7 @@ const updateHeader = () => {
   header?.classList.toggle('is-scrolled', isScrolled)
 
   if (isHomePage && headerLogo) {
-    headerLogo.src = isScrolled ? '/media/SH_logo.png' : '/media/SH_logo_white.png'
+    headerLogo.src = isScrolled ? standardLogoUrl : whiteLogoUrl
   }
 }
 

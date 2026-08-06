@@ -920,6 +920,7 @@ h1 {
 .feature-action {
   min-height: 70px;
   justify-content: center;
+  border-radius: 6px;
   background: #18222c;
   color: white;
   font-size: 17px;
