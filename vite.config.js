@@ -21,7 +21,13 @@ export default defineConfig({
         rennerPark: resolve(__dirname, 'renner-park.html'),
         cottagesAtVerbena: resolve(__dirname, 'cottages-at-verbena.html'),
         reserveAtNewCalifornia: resolve(__dirname, 'reserve-at-new-california.html'),
-        retreatAtHickoryLakes: resolve(__dirname, 'retreat-at-hickory-lakes.html')
+        retreatAtHickoryLakes: resolve(__dirname, 'retreat-at-hickory-lakes.html'),
+        test1: resolve(__dirname, 'test1.html'),
+        test2: resolve(__dirname, 'test2.html'),
+        test3: resolve(__dirname, 'test3.html'),
+        test4: resolve(__dirname, 'test4.html'),
+        test5: resolve(__dirname, 'test5.html'),
+        test6: resolve(__dirname, 'test6.html')
       }
     }
   }

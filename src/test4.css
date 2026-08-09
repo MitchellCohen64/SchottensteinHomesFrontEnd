@@ -1,0 +1,839 @@
+/* ================================================================
+   TEST 4 — "A Story of Home"
+   Fashion-editorial luxury concept inspired by Louis Vuitton, Hermès
+   and Cartier magazine spreads: offset compositions, asymmetric
+   whitespace, layered imagery, strong serif typographic rhythm.
+   Scoped entirely under .test4-page.
+   ================================================================ */
+
+.test4-page {
+  --t4-cream: #f8f1e8;
+  --t4-cream-deep: #f3e8dc;
+  --t4-card: #fffbf5;
+  --t4-ink: #2a231d;
+  --t4-ink-soft: #4a4038;
+  --t4-muted: #7a6c5c;
+  --t4-gold: #c2a068;
+  --t4-gold-deep: #a9834a;
+  --t4-rule: #e3d6c4;
+  background: var(--t4-cream);
+  color: var(--t4-ink);
+}
+
+.test4-page * {
+  box-sizing: border-box;
+}
+
+.test4-page section {
+  position: relative;
+}
+
+.test4-page .feature-link,
+.test4-page .closing-link {
+  font-family: "Jost", "Montserrat", sans-serif;
+}
+
+/* ---------------------------------------------------------------
+   Shared editorial link underline-reveal
+   --------------------------------------------------------------- */
+
+.test4-page .feature-link,
+.test4-page .closing-link,
+.test4-page .film-item span {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  color: var(--t4-ink);
+}
+
+.test4-page .feature-link::after,
+.test4-page .closing-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 100%;
+  height: 1px;
+  background: var(--t4-gold-deep);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.test4-page .feature-link:hover::after,
+.test4-page .closing-link:hover::after {
+  transform: scaleX(1);
+}
+
+/* ---------------------------------------------------------------
+   Reveal-on-scroll personality: pages arriving slightly out of sync
+   --------------------------------------------------------------- */
+
+.test4-page [data-reveal] {
+  opacity: 0;
+  transform: translateY(34px);
+  transition: opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1), transform 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.test4-page [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.test4-page .maker-row-b[data-reveal] {
+  transition-delay: 0.08s;
+}
+
+.test4-page .intro-spread-card[data-reveal] {
+  transition-delay: 0.18s;
+}
+
+.test4-page .feature-copy[data-reveal] {
+  transition-delay: 0.1s;
+}
+
+.test4-page .filmstrip[data-reveal] {
+  transition-delay: 0.05s;
+}
+
+.test4-page .collage-grid[data-reveal] {
+  transition-delay: 0.12s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .test4-page [data-reveal] {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ================================================================
+   1. Magazine masthead opening
+   ================================================================ */
+
+.test4-page .masthead {
+  padding: clamp(90px, 14vw, 170px) 6vw clamp(70px, 10vw, 130px);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.test4-page .masthead-issue {
+  position: absolute;
+  top: clamp(36px, 6vw, 64px);
+  left: 6vw;
+  margin: 0;
+  font-family: "Jost", "Montserrat", sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--t4-muted);
+}
+
+.test4-page .masthead-block {
+  max-width: 620px;
+  width: 60%;
+  min-width: 300px;
+  text-align: right;
+  margin-right: 4vw;
+}
+
+.test4-page .masthead-eyebrow {
+  margin: 0 0 18px;
+  font-family: "Jost", "Montserrat", sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--t4-gold-deep);
+}
+
+.test4-page .masthead-quote {
+  margin: 0 0 22px;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(34px, 4.6vw, 58px);
+  line-height: 1.18;
+  color: var(--t4-ink);
+}
+
+.test4-page .masthead-attribution {
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--t4-muted);
+}
+
+/* ================================================================
+   2. Offset / layered intro spread
+   ================================================================ */
+
+.test4-page .intro-spread {
+  padding: clamp(40px, 6vw, 90px) 6vw clamp(110px, 12vw, 170px);
+}
+
+.test4-page .intro-spread-inner {
+  display: flex;
+  align-items: flex-start;
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+.test4-page .intro-spread-image {
+  width: 64%;
+  margin: 0;
+  height: clamp(420px, 46vw, 620px);
+  flex-shrink: 0;
+}
+
+.test4-page .intro-spread-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.test4-page .intro-spread-card {
+  width: 46%;
+  margin-left: -14%;
+  margin-top: 9%;
+  background: var(--t4-card);
+  padding: clamp(32px, 4vw, 56px);
+  box-shadow: 0 30px 70px -30px rgba(42, 35, 29, 0.35), 0 2px 0 var(--t4-rule);
+  position: relative;
+  z-index: 2;
+}
+
+.test4-page .intro-eyebrow {
+  margin: 0 0 14px;
+  font-family: "Jost", "Montserrat", sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--t4-gold-deep);
+}
+
+.test4-page .intro-spread-card h2 {
+  margin: 0 0 22px;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(30px, 3.2vw, 44px);
+  line-height: 1.22;
+  color: var(--t4-ink);
+}
+
+.test4-page .intro-drop-cap {
+  margin: 0 0 22px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--t4-ink-soft);
+}
+
+.test4-page .intro-drop-cap::first-letter {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 66px;
+  font-weight: 500;
+  float: left;
+  line-height: 0.78;
+  padding: 6px 8px 0 0;
+  color: var(--t4-gold-deep);
+}
+
+.test4-page .intro-stats {
+  margin: 20px 0 0;
+  padding-top: 18px;
+  border-top: 1px solid var(--t4-rule);
+  font-family: "Jost", "Montserrat", sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--t4-muted);
+}
+
+/* ================================================================
+   3. Featured community spread + filmstrip
+   ================================================================ */
+
+.test4-page .feature-spread {
+  padding: 0 6vw clamp(90px, 10vw, 140px);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.test4-page .feature-spread-top {
+  display: flex;
+  align-items: flex-end;
+  gap: 0;
+  margin-bottom: clamp(60px, 8vw, 110px);
+}
+
+.test4-page .feature-photo {
+  width: 58%;
+  margin: 0;
+  height: clamp(360px, 42vw, 560px);
+  flex-shrink: 0;
+}
+
+.test4-page .feature-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.test4-page .feature-copy {
+  width: 48%;
+  margin-left: -6%;
+  margin-bottom: -8%;
+  background: var(--t4-card);
+  padding: clamp(30px, 3.6vw, 54px);
+  box-shadow: 0 24px 60px -28px rgba(42, 35, 29, 0.32);
+  position: relative;
+  z-index: 2;
+}
+
+.test4-page .feature-kicker {
+  margin: 0 0 14px;
+  font-family: "Jost", "Montserrat", sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--t4-gold-deep);
+}
+
+.test4-page .feature-headline {
+  margin: 0 0 10px;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(40px, 5.4vw, 72px);
+  line-height: 1.02;
+  color: var(--t4-ink);
+}
+
+.test4-page .feature-tagline {
+  margin: 0 0 20px;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  font-size: clamp(20px, 2vw, 26px);
+  color: var(--t4-gold-deep);
+}
+
+.test4-page .feature-body {
+  margin: 0 0 24px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--t4-ink-soft);
+  max-width: 46ch;
+}
+
+.test4-page .feature-link {
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.test4-page .feature-margin-note {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid var(--t4-rule);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.test4-page .feature-margin-note span {
+  font-family: "Jost", "Montserrat", sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--t4-muted);
+}
+
+.test4-page .filmstrip-heading {
+  margin: 0 0 26px;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  font-size: clamp(22px, 2.4vw, 30px);
+  color: var(--t4-ink);
+}
+
+.test4-page .filmstrip-track {
+  display: flex;
+  align-items: flex-end;
+  gap: clamp(16px, 2vw, 28px);
+  overflow-x: auto;
+  padding-bottom: 18px;
+  scroll-snap-type: x proximity;
+}
+
+.test4-page .filmstrip-track::-webkit-scrollbar {
+  height: 6px;
+}
+
+.test4-page .filmstrip-track::-webkit-scrollbar-thumb {
+  background: var(--t4-rule);
+}
+
+.test4-page .film-item {
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+.test4-page .film-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.test4-page .film-item:hover img {
+  transform: scale(1.06);
+}
+
+.test4-page .film-item span {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 12px;
+  color: #fff;
+  font-family: "Jost", "Montserrat", sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+}
+
+.test4-page .film-item span::after {
+  display: none;
+}
+
+.test4-page .film-item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(20, 15, 10, 0.72) 0%, rgba(20, 15, 10, 0) 55%);
+  z-index: 1;
+}
+
+.test4-page .film-item span {
+  z-index: 2;
+}
+
+.test4-page .film-tall {
+  width: 220px;
+  height: 400px;
+}
+
+.test4-page .film-wide {
+  width: 340px;
+  height: 260px;
+}
+
+.test4-page .film-square {
+  width: 250px;
+  height: 250px;
+}
+
+/* ================================================================
+   4. Meet the Makers
+   ================================================================ */
+
+.test4-page .makers {
+  padding: clamp(40px, 6vw, 70px) 6vw clamp(100px, 10vw, 150px);
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+.test4-page .makers-heading {
+  margin: 0 0 clamp(50px, 7vw, 90px);
+  text-align: center;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 400;
+  font-style: italic;
+  font-size: clamp(32px, 4vw, 52px);
+  color: var(--t4-ink);
+}
+
+.test4-page .maker-row {
+  display: flex;
+  align-items: center;
+  gap: clamp(30px, 5vw, 70px);
+  margin-bottom: clamp(60px, 7vw, 100px);
+}
+
+.test4-page .maker-row:last-child {
+  margin-bottom: 0;
+}
+
+.test4-page .maker-row-b {
+  flex-direction: row-reverse;
+}
+
+.test4-page .maker-photo {
+  margin: 0;
+  width: 34%;
+  flex-shrink: 0;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+}
+
+.test4-page .maker-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.test4-page .maker-copy {
+  width: 66%;
+}
+
+.test4-page .maker-quote {
+  margin: 0 0 20px;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  font-size: clamp(24px, 2.8vw, 34px);
+  line-height: 1.3;
+  color: var(--t4-gold-deep);
+}
+
+.test4-page .maker-copy h3 {
+  margin: 0 0 4px;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(24px, 2.4vw, 30px);
+  color: var(--t4-ink);
+}
+
+.test4-page .maker-title {
+  margin: 0 0 16px;
+  font-family: "Jost", "Montserrat", sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--t4-muted);
+}
+
+.test4-page .maker-bio {
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--t4-ink-soft);
+  max-width: 54ch;
+}
+
+/* ================================================================
+   5. Make It Yours — collage
+   ================================================================ */
+
+.test4-page .collage-section {
+  background: var(--t4-cream-deep);
+  padding: clamp(80px, 9vw, 130px) 6vw;
+}
+
+.test4-page .collage-heading {
+  max-width: 680px;
+  margin: 0 auto clamp(50px, 6vw, 80px);
+  text-align: center;
+}
+
+.test4-page .collage-eyebrow {
+  margin: 0 0 14px;
+  font-family: "Jost", "Montserrat", sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--t4-gold-deep);
+}
+
+.test4-page .collage-heading h2 {
+  margin: 0 0 20px;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(34px, 4.2vw, 52px);
+  line-height: 1.15;
+  color: var(--t4-ink);
+}
+
+.test4-page .collage-body {
+  margin: 0 0 26px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--t4-ink-soft);
+}
+
+.test4-page .collage-grid {
+  max-width: 1300px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 150px;
+  gap: 14px;
+}
+
+.test4-page .collage-tile {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+}
+
+.test4-page .collage-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.test4-page .collage-tile:hover img {
+  transform: scale(1.05);
+}
+
+.test4-page .collage-tile figcaption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 16px 18px;
+  background: linear-gradient(to top, rgba(20, 15, 10, 0.78) 0%, rgba(20, 15, 10, 0) 70%);
+  color: #fff;
+  font-family: "Montserrat", sans-serif;
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+.test4-page .collage-tile figcaption span {
+  display: block;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  font-size: 19px;
+  margin-bottom: 4px;
+}
+
+.test4-page .tile-exteriors {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.test4-page .tile-cabinets {
+  grid-column: span 2;
+  grid-row: span 1;
+}
+
+.test4-page .tile-flooring {
+  grid-column: span 1;
+  grid-row: span 2;
+}
+
+.test4-page .tile-sinks {
+  grid-column: span 1;
+  grid-row: span 1;
+}
+
+.test4-page .tile-lighting {
+  grid-column: span 2;
+  grid-row: span 1;
+}
+
+.test4-page .tile-fireplaces {
+  grid-column: span 1;
+  grid-row: span 1;
+}
+
+/* ================================================================
+   6. Warm closing spread
+   ================================================================ */
+
+.test4-page .closing-spread {
+  background: linear-gradient(180deg, var(--t4-cream) 0%, #efe2d2 100%);
+  padding: clamp(100px, 13vw, 170px) 6vw;
+  text-align: center;
+}
+
+.test4-page .closing-inner {
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+.test4-page .closing-eyebrow {
+  margin: 0 0 18px;
+  font-family: "Jost", "Montserrat", sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--t4-gold-deep);
+}
+
+.test4-page .closing-spread h2 {
+  margin: 0 0 22px;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(38px, 5.6vw, 74px);
+  line-height: 1.1;
+  color: var(--t4-ink);
+}
+
+.test4-page .closing-body {
+  margin: 0 auto 32px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--t4-ink-soft);
+  max-width: 48ch;
+}
+
+.test4-page .closing-link {
+  font-family: "Jost", "Montserrat", sans-serif;
+  font-size: 15px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--t4-ink);
+}
+
+.test4-page .closing-link span {
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  display: inline-block;
+}
+
+.test4-page .closing-link:hover span {
+  transform: translateX(6px);
+}
+
+/* ---------------------------------------------------------------
+   Footer — recolored to sit warm against the editorial page
+   --------------------------------------------------------------- */
+
+.test4-page .site-footer {
+  background: var(--t4-cream-deep);
+  border-top: 1px solid var(--t4-rule);
+  color: var(--t4-ink);
+}
+
+.test4-page .site-footer h3 {
+  color: var(--t4-gold-deep);
+  font-family: "Jost", "Montserrat", sans-serif;
+  letter-spacing: 0.14em;
+}
+
+.test4-page .footer-list a:hover {
+  color: var(--t4-gold-deep);
+}
+
+/* ================================================================
+   Responsive
+   ================================================================ */
+
+@media (max-width: 1080px) {
+  .test4-page .maker-photo {
+    width: 40%;
+  }
+}
+
+@media (max-width: 900px) {
+  .test4-page .masthead {
+    justify-content: flex-start;
+  }
+
+  .test4-page .masthead-block {
+    width: 100%;
+    max-width: 100%;
+    text-align: left;
+    margin-right: 0;
+  }
+
+  .test4-page .intro-spread-inner {
+    flex-direction: column;
+  }
+
+  .test4-page .intro-spread-image {
+    width: 100%;
+  }
+
+  .test4-page .intro-spread-card {
+    width: 88%;
+    margin-left: 6%;
+    margin-top: -14%;
+  }
+
+  .test4-page .feature-spread-top {
+    flex-direction: column;
+  }
+
+  .test4-page .feature-photo {
+    width: 100%;
+  }
+
+  .test4-page .feature-copy {
+    width: 90%;
+    margin-left: 5%;
+    margin-top: -12%;
+    margin-bottom: 0;
+  }
+
+  .test4-page .maker-row,
+  .test4-page .maker-row-b {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .test4-page .maker-photo {
+    width: 60%;
+  }
+
+  .test4-page .maker-copy {
+    width: 100%;
+  }
+
+  .test4-page .collage-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .test4-page .tile-exteriors {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+
+  .test4-page .tile-cabinets,
+  .test4-page .tile-lighting {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 560px) {
+  .test4-page .intro-spread-card,
+  .test4-page .feature-copy {
+    width: 100%;
+    margin-left: 0;
+    padding: 28px 22px;
+  }
+
+  .test4-page .intro-spread-card {
+    margin-top: -10%;
+  }
+
+  .test4-page .maker-photo {
+    width: 100%;
+  }
+
+  .test4-page .film-tall {
+    width: 170px;
+    height: 320px;
+  }
+
+  .test4-page .film-wide {
+    width: 260px;
+    height: 200px;
+  }
+
+  .test4-page .film-square {
+    width: 200px;
+    height: 200px;
+  }
+}

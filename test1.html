@@ -4,14 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Schottenstein Homes — homes of distinction, built for life." />
-    <title>Schottenstein Homes</title>
+    <title>Test 1 — The Perpetual Standard | Schottenstein Homes</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Jost:wght@400;500&family=Manrope:wght@500&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/src/style.css" />
+    <link rel="stylesheet" href="/src/test1.css" />
     <script type="module" src="/src/main.js"></script>
   </head>
-  <body class="home-page">
+  <body class="home-page test1-page">
     <header class="site-header">
       <button class="hero-menu-trigger" type="button" aria-label="Open menu" aria-controls="hero-menu-drawer" aria-expanded="false">
         <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
@@ -77,7 +78,7 @@
         </div>
 
         <div class="nav-group">
-          <button type="button" class="nav-label" aria-haspopup="true">
+          <button type="button" class="nav-label is-active" aria-haspopup="true">
             TEST <span class="chevron" aria-hidden="true"></span>
           </button>
           <div class="dropdown" role="menu">
@@ -142,7 +143,7 @@
         </section>
 
         <section>
-          <a class="hero-drawer-heading" href="/test1.html">Test</a>
+          <a class="hero-drawer-heading is-active" href="/test1.html">Test</a>
           <a href="/test1.html">Test 1</a>
           <a href="/test2.html">Test 2</a>
           <a href="/test3.html">Test 3</a>
@@ -179,116 +180,162 @@
       </section>
     </main>
 
-    <section class="home-intro">
-      <div class="home-intro-heading">
-        <p class="eyebrow">Designed Around Real Life</p>
-        <h2 class="home-intro-title">
-          <span class="home-intro-title-line"><span>Step inside a home</span></span>
-          <span class="home-intro-title-line"><span>considered from</span></span>
-          <span class="home-intro-title-line"><span>every angle.</span></span>
-        </h2>
-      </div>
-
-      <p class="home-intro-copy">Explore thoughtful floor plans, elevated interiors and opportunities to make your new home distinctly yours.</p>
-
-      <div class="home-intro-options" aria-label="Explore our homes">
-        <a class="home-intro-card" href="/communities.html">
-          <span>
-            <strong>Find your community</strong>
-            <small>Explore thoughtfully planned neighborhoods and discover where your next chapter can take shape.</small>
-          </span>
-          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7" /></svg>
-        </a>
-        <a class="home-intro-card home-intro-card--design" href="/design-center.html">
-          <span>
-            <strong>Personalize your home</strong>
-            <small>Bring your vision to life with curated finishes, fixtures and details selected around your style.</small>
-          </span>
-          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7" /></svg>
-        </a>
-      </div>
-
-      <div class="home-intro-image" role="img" aria-label="Warm, thoughtfully designed open-plan kitchen and living room"></div>
-    </section>
-
-    <section class="featured-communities" aria-label="Featured communities">
-      <div class="featured-community-slides" aria-live="polite">
-        <article class="featured-community-slide is-active">
-          <img src="/media/communities/jerome-village-aster.jpg" alt="Homes at Jerome Village Aster in Plain City, Ohio" />
-          <div class="featured-community-copy">
-            <p>Featured community</p>
-            <h2>Jerome Village Aster</h2>
-            <div class="featured-community-description">Discover spacious new homes in a thoughtfully planned Plain City neighborhood surrounded by parks, trails and community amenities.</div>
-            <a class="featured-community-link" href="/communities.html">View Jerome Village Aster</a>
-            <a class="featured-community-all" href="/communities.html">View All Communities</a>
-          </div>
-        </article>
-
-        <article class="featured-community-slide" aria-hidden="true">
-          <img src="/media/communities/cottages-at-verbena.jpg" alt="Homes at The Cottages at Verbena in Plain City, Ohio" />
-          <div class="featured-community-copy">
-            <p>Featured community</p>
-            <h2>The Cottages at Verbena</h2>
-            <div class="featured-community-description">Enjoy low-maintenance ranch living with inviting streetscapes and modern comforts in a convenient Plain City setting.</div>
-            <a class="featured-community-link" href="/communities.html">View The Cottages at Verbena</a>
-            <a class="featured-community-all" href="/communities.html">View All Communities</a>
-          </div>
-        </article>
-
-        <article class="featured-community-slide" aria-hidden="true">
-          <img src="/media/communities/reserve-at-new-california.jpg" alt="Homes at The Reserve at New California in Plain City, Ohio" />
-          <div class="featured-community-copy">
-            <p>Featured community</p>
-            <h2>The Reserve at New California</h2>
-            <div class="featured-community-description">Find beautifully designed homes, generous homesites and an easy connection to everything Central Ohio has to offer.</div>
-            <a class="featured-community-link" href="/communities.html">View The Reserve at New California</a>
-            <a class="featured-community-all" href="/communities.html">View All Communities</a>
-          </div>
-        </article>
-
-        <article class="featured-community-slide" aria-hidden="true">
-          <img src="/media/communities/retreat-at-hickory-lakes.jpg" alt="Homes at The Retreat at Hickory Lakes in Pickerington, Ohio" />
-          <div class="featured-community-copy">
-            <p>Featured community</p>
-            <h2>The Retreat at Hickory Lakes</h2>
-            <div class="featured-community-description">Explore a welcoming Pickerington community pairing distinctive homes with peaceful surroundings and everyday convenience.</div>
-            <a class="featured-community-link" href="/communities.html">View The Retreat at Hickory Lakes</a>
-            <a class="featured-community-all" href="/communities.html">View All Communities</a>
-          </div>
-        </article>
-      </div>
-
-      <div class="featured-community-controls" aria-label="Featured community controls">
-        <button class="featured-community-previous" type="button" aria-label="Show previous featured community">
-          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M15 5 8 12l7 7" /></svg>
-        </button>
-        <button class="featured-community-next" type="button" aria-label="Show next featured community">
-          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7" /></svg>
-        </button>
-      </div>
-    </section>
-
-    <section class="communities-map-section" aria-labelledby="communities-map-heading">
-      <div class="communities-map-copy">
-        <p class="eyebrow">Our Communities</p>
-        <h2 id="communities-map-heading">See where<br />Schottenstein builds</h2>
-        <p class="communities-map-description">We build thoughtfully planned communities across Central Ohio—each with its own character, conveniences and collection of homes. Explore the map to see where you can find your future home.</p>
-        <a class="map-communities-button" href="/communities.html">Our Communities</a>
-
-      </div>
-
-      <div id="communities-map" class="communities-map" aria-label="Interactive map of Schottenstein Homes communities in Central Ohio"></div>
-    </section>
-
-    <section class="final-cta">
-      <div class="final-cta-card">
-        <div class="final-cta-content">
-          <h2>Your New Home<br />is Waiting</h2>
-          <p>Take the first step today—schedule a tour, explore our communities, or connect with our sales team.</p>
-          <span class="final-cta-button">Let's Get Started <span aria-hidden="true">→</span></span>
+    <section class="t1-stats" data-reveal aria-label="Company milestones">
+      <div class="t1-stats-inner">
+        <div class="t1-stat">
+          <span class="t1-stat-num">50+</span>
+          <span class="t1-stat-label">Years of Combined Experience</span>
         </div>
-        <div class="final-cta-image" role="img" aria-label="Bright open-plan living room in a Schottenstein home"></div>
+        <div class="t1-stat">
+          <span class="t1-stat-num">70,000+</span>
+          <span class="t1-stat-label">Homes Sold</span>
+        </div>
+        <div class="t1-stat">
+          <span class="t1-stat-num">2007</span>
+          <span class="t1-stat-label">Established</span>
+        </div>
       </div>
+    </section>
+
+    <section class="t1-intro" data-reveal>
+      <div class="t1-intro-media">
+        <img src="/media/kitchen_homepage.png" alt="A warm, open-plan kitchen and living space in a Schottenstein Homes residence" loading="lazy" />
+      </div>
+      <div class="t1-intro-copy">
+        <p class="t1-eyebrow">Designed Around Real Life</p>
+        <h2>Step inside a home that feels considered from every angle.</h2>
+        <p class="t1-body">Explore thoughtful floor plans, elevated interiors and opportunities to make the home distinctly yours.</p>
+        <a class="t1-textlink" href="/communities.html">Explore Communities</a>
+      </div>
+    </section>
+
+    <section class="t1-collection" aria-label="The Collection">
+      <div class="t1-collection-head" data-reveal>
+        <p class="t1-eyebrow">The Collection</p>
+        <h2>Eight communities, each with its own quiet character.</h2>
+      </div>
+
+      <div class="t1-rows">
+        <article class="t1-row" data-reveal style="transition-delay: 0.05s">
+          <div class="t1-row-media">
+            <img src="/media/communities/jerome-village-aster.jpg" alt="Jerome Village Aster community" loading="lazy" />
+          </div>
+          <div class="t1-row-copy">
+            <h3>Jerome Village Aster</h3>
+            <p class="t1-meta">Plain City, OH &middot; Dublin City Schools</p>
+            <p class="t1-price">$540k&ndash;$780k+</p>
+            <a class="t1-textlink" href="/jerome-village-aster.html">View Jerome Village Aster</a>
+          </div>
+        </article>
+
+        <article class="t1-row t1-row-reverse" data-reveal style="transition-delay: 0.1s">
+          <div class="t1-row-media">
+            <img src="/media/communities/glacier-pointe.jpg" alt="Glacier Pointe community" loading="lazy" />
+          </div>
+          <div class="t1-row-copy">
+            <h3>Glacier Pointe</h3>
+            <p class="t1-meta">Plain City, OH &middot; Jonathan Alder Local Schools</p>
+            <p class="t1-price">$440k&ndash;$610k+</p>
+            <a class="t1-textlink" href="/glacier-pointe.html">View Glacier Pointe</a>
+          </div>
+        </article>
+
+        <article class="t1-row" data-reveal style="transition-delay: 0.05s">
+          <div class="t1-row-media">
+            <img src="/media/communities/cottages-at-verbena.jpg" alt="The Cottages at Verbena community" loading="lazy" />
+          </div>
+          <div class="t1-row-copy">
+            <h3>The Cottages at Verbena</h3>
+            <p class="t1-meta">Plain City, OH &middot; Dublin City Schools</p>
+            <p class="t1-price">$460k&ndash;$640k+</p>
+            <a class="t1-textlink" href="/cottages-at-verbena.html">View The Cottages at Verbena</a>
+          </div>
+        </article>
+
+        <article class="t1-row t1-row-reverse" data-reveal style="transition-delay: 0.1s">
+          <div class="t1-row-media">
+            <img src="/media/communities/retreat-at-hickory-lakes.jpg" alt="The Retreat at Hickory Lakes community" loading="lazy" />
+          </div>
+          <div class="t1-row-copy">
+            <h3>The Retreat at Hickory Lakes</h3>
+            <p class="t1-meta">Pickerington, OH &middot; Pickerington Local Schools</p>
+            <p class="t1-price">$460k&ndash;$690k+</p>
+            <a class="t1-textlink" href="/retreat-at-hickory-lakes.html">View The Retreat at Hickory Lakes</a>
+          </div>
+        </article>
+
+        <article class="t1-row" data-reveal style="transition-delay: 0.05s">
+          <div class="t1-row-media">
+            <img src="/media/communities/renner-park.jpg" alt="Renner Park community" loading="lazy" />
+          </div>
+          <div class="t1-row-copy">
+            <h3>Renner Park</h3>
+            <p class="t1-meta">Columbus, OH &middot; Hilliard Schools</p>
+            <p class="t1-price">$410k&ndash;$620k+</p>
+            <a class="t1-textlink" href="/renner-park.html">View Renner Park</a>
+          </div>
+        </article>
+
+        <article class="t1-row t1-row-reverse" data-reveal style="transition-delay: 0.1s">
+          <div class="t1-row-media">
+            <img src="/media/communities/reserve-at-new-california.jpg" alt="The Reserve at New California community" loading="lazy" />
+          </div>
+          <div class="t1-row-copy">
+            <h3>The Reserve at New California</h3>
+            <p class="t1-meta">Plain City, OH &middot; Fairbanks Schools</p>
+            <p class="t1-price">$560k&ndash;$820k+</p>
+            <a class="t1-textlink" href="/reserve-at-new-california.html">View The Reserve at New California</a>
+          </div>
+        </article>
+
+        <article class="t1-row" data-reveal style="transition-delay: 0.05s">
+          <div class="t1-row-media">
+            <img src="/media/communities/holton-run.jpg" alt="Holton Run community" loading="lazy" />
+          </div>
+          <div class="t1-row-copy">
+            <h3>Holton Run</h3>
+            <p class="t1-meta">Grove City, OH &middot; South-Western Schools</p>
+            <p class="t1-price">$480k&ndash;$720k+</p>
+            <a class="t1-textlink" href="/holton-run.html">View Holton Run</a>
+          </div>
+        </article>
+
+        <article class="t1-row t1-row-reverse" data-reveal style="transition-delay: 0.1s">
+          <div class="t1-row-media">
+            <img src="/media/communities/hickory-creek.jpg" alt="Hickory Creek community" loading="lazy" />
+          </div>
+          <div class="t1-row-copy">
+            <h3>Hickory Creek</h3>
+            <p class="t1-meta">Grove City, OH &middot; South-Western Schools</p>
+            <p class="t1-price">$540k&ndash;$790k+</p>
+            <a class="t1-textlink" href="/hickory-creek.html">View Hickory Creek</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="t1-legacy" data-reveal>
+      <div class="t1-legacy-media">
+        <img src="/media/about/house-construction.jpg" alt="Craftsmanship during the construction of a Schottenstein Homes residence" loading="lazy" />
+      </div>
+      <div class="t1-legacy-copy">
+        <p class="t1-eyebrow">Since 2007</p>
+        <p class="t1-legacy-text">Founded in 2007 by industry veterans Paul Coppel and Steve Schottenstein, Schottenstein Homes builds on nearly 50 years of combined experience and a legacy of constructing and selling more than 70,000 homes in communities across the nation. At the heart of everything is a commitment to customer satisfaction &mdash; from selecting the finest land for development to carefully crafting homes that reflect each buyer&rsquo;s needs.</p>
+      </div>
+    </section>
+
+    <section class="t1-map" data-reveal>
+      <div class="t1-map-head">
+        <p class="t1-eyebrow">Our Communities</p>
+        <h2>See where Schottenstein builds.</h2>
+      </div>
+      <div id="communities-map" class="communities-map" data-map-style="illustrated" aria-label="Interactive map of Schottenstein Homes communities in Central Ohio"></div>
+    </section>
+
+    <section class="t1-cta" data-reveal>
+      <h2>Your New Home is Waiting.</h2>
+      <p>Take the first step today&mdash;schedule a tour, explore our communities, or connect with our sales team.</p>
+      <a class="t1-textlink t1-cta-link" href="/contact.html">Let&rsquo;s Get Started <span aria-hidden="true">&rarr;</span></a>
     </section>
 
     <footer class="site-footer">

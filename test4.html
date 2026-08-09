@@ -4,14 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Schottenstein Homes — homes of distinction, built for life." />
-    <title>Schottenstein Homes</title>
+    <title>A Story of Home | Schottenstein Homes</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Jost:wght@400;500&family=Manrope:wght@500&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/src/style.css" />
+    <link rel="stylesheet" href="/src/test4.css" />
     <script type="module" src="/src/main.js"></script>
   </head>
-  <body class="home-page">
+  <body class="home-page test4-page">
     <header class="site-header">
       <button class="hero-menu-trigger" type="button" aria-label="Open menu" aria-controls="hero-menu-drawer" aria-expanded="false">
         <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
@@ -77,7 +78,7 @@
         </div>
 
         <div class="nav-group">
-          <button type="button" class="nav-label" aria-haspopup="true">
+          <button type="button" class="nav-label is-active" aria-haspopup="true">
             TEST <span class="chevron" aria-hidden="true"></span>
           </button>
           <div class="dropdown" role="menu">
@@ -142,7 +143,7 @@
         </section>
 
         <section>
-          <a class="hero-drawer-heading" href="/test1.html">Test</a>
+          <a class="hero-drawer-heading is-active" href="/test1.html">Test</a>
           <a href="/test1.html">Test 1</a>
           <a href="/test2.html">Test 2</a>
           <a href="/test3.html">Test 3</a>
@@ -179,115 +180,198 @@
       </section>
     </main>
 
-    <section class="home-intro">
-      <div class="home-intro-heading">
-        <p class="eyebrow">Designed Around Real Life</p>
-        <h2 class="home-intro-title">
-          <span class="home-intro-title-line"><span>Step inside a home</span></span>
-          <span class="home-intro-title-line"><span>considered from</span></span>
-          <span class="home-intro-title-line"><span>every angle.</span></span>
-        </h2>
-      </div>
+    <!-- ============================================================ -->
+    <!-- TEST 4 — Editorial / Louis Vuitton × Hermès × Cartier concept -->
+    <!-- ============================================================ -->
 
-      <p class="home-intro-copy">Explore thoughtful floor plans, elevated interiors and opportunities to make your new home distinctly yours.</p>
-
-      <div class="home-intro-options" aria-label="Explore our homes">
-        <a class="home-intro-card" href="/communities.html">
-          <span>
-            <strong>Find your community</strong>
-            <small>Explore thoughtfully planned neighborhoods and discover where your next chapter can take shape.</small>
-          </span>
-          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7" /></svg>
-        </a>
-        <a class="home-intro-card home-intro-card--design" href="/design-center.html">
-          <span>
-            <strong>Personalize your home</strong>
-            <small>Bring your vision to life with curated finishes, fixtures and details selected around your style.</small>
-          </span>
-          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7" /></svg>
-        </a>
-      </div>
-
-      <div class="home-intro-image" role="img" aria-label="Warm, thoughtfully designed open-plan kitchen and living room"></div>
-    </section>
-
-    <section class="featured-communities" aria-label="Featured communities">
-      <div class="featured-community-slides" aria-live="polite">
-        <article class="featured-community-slide is-active">
-          <img src="/media/communities/jerome-village-aster.jpg" alt="Homes at Jerome Village Aster in Plain City, Ohio" />
-          <div class="featured-community-copy">
-            <p>Featured community</p>
-            <h2>Jerome Village Aster</h2>
-            <div class="featured-community-description">Discover spacious new homes in a thoughtfully planned Plain City neighborhood surrounded by parks, trails and community amenities.</div>
-            <a class="featured-community-link" href="/communities.html">View Jerome Village Aster</a>
-            <a class="featured-community-all" href="/communities.html">View All Communities</a>
-          </div>
-        </article>
-
-        <article class="featured-community-slide" aria-hidden="true">
-          <img src="/media/communities/cottages-at-verbena.jpg" alt="Homes at The Cottages at Verbena in Plain City, Ohio" />
-          <div class="featured-community-copy">
-            <p>Featured community</p>
-            <h2>The Cottages at Verbena</h2>
-            <div class="featured-community-description">Enjoy low-maintenance ranch living with inviting streetscapes and modern comforts in a convenient Plain City setting.</div>
-            <a class="featured-community-link" href="/communities.html">View The Cottages at Verbena</a>
-            <a class="featured-community-all" href="/communities.html">View All Communities</a>
-          </div>
-        </article>
-
-        <article class="featured-community-slide" aria-hidden="true">
-          <img src="/media/communities/reserve-at-new-california.jpg" alt="Homes at The Reserve at New California in Plain City, Ohio" />
-          <div class="featured-community-copy">
-            <p>Featured community</p>
-            <h2>The Reserve at New California</h2>
-            <div class="featured-community-description">Find beautifully designed homes, generous homesites and an easy connection to everything Central Ohio has to offer.</div>
-            <a class="featured-community-link" href="/communities.html">View The Reserve at New California</a>
-            <a class="featured-community-all" href="/communities.html">View All Communities</a>
-          </div>
-        </article>
-
-        <article class="featured-community-slide" aria-hidden="true">
-          <img src="/media/communities/retreat-at-hickory-lakes.jpg" alt="Homes at The Retreat at Hickory Lakes in Pickerington, Ohio" />
-          <div class="featured-community-copy">
-            <p>Featured community</p>
-            <h2>The Retreat at Hickory Lakes</h2>
-            <div class="featured-community-description">Explore a welcoming Pickerington community pairing distinctive homes with peaceful surroundings and everyday convenience.</div>
-            <a class="featured-community-link" href="/communities.html">View The Retreat at Hickory Lakes</a>
-            <a class="featured-community-all" href="/communities.html">View All Communities</a>
-          </div>
-        </article>
-      </div>
-
-      <div class="featured-community-controls" aria-label="Featured community controls">
-        <button class="featured-community-previous" type="button" aria-label="Show previous featured community">
-          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M15 5 8 12l7 7" /></svg>
-        </button>
-        <button class="featured-community-next" type="button" aria-label="Show next featured community">
-          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7" /></svg>
-        </button>
+    <section class="masthead" data-reveal>
+      <p class="masthead-issue">No. 07 — Central Ohio Edition</p>
+      <div class="masthead-block">
+        <p class="masthead-eyebrow">A Story of Home</p>
+        <p class="masthead-quote">
+          &ldquo;At the heart of everything is a commitment to customer satisfaction&mdash;from
+          selecting the finest land for development to carefully crafting homes that reflect
+          each buyer&rsquo;s needs.&rdquo;
+        </p>
+        <p class="masthead-attribution">Est. 2007 &middot; Paul Coppel &amp; Steve Schottenstein</p>
       </div>
     </section>
 
-    <section class="communities-map-section" aria-labelledby="communities-map-heading">
-      <div class="communities-map-copy">
-        <p class="eyebrow">Our Communities</p>
-        <h2 id="communities-map-heading">See where<br />Schottenstein builds</h2>
-        <p class="communities-map-description">We build thoughtfully planned communities across Central Ohio—each with its own character, conveniences and collection of homes. Explore the map to see where you can find your future home.</p>
-        <a class="map-communities-button" href="/communities.html">Our Communities</a>
-
-      </div>
-
-      <div id="communities-map" class="communities-map" aria-label="Interactive map of Schottenstein Homes communities in Central Ohio"></div>
-    </section>
-
-    <section class="final-cta">
-      <div class="final-cta-card">
-        <div class="final-cta-content">
-          <h2>Your New Home<br />is Waiting</h2>
-          <p>Take the first step today—schedule a tour, explore our communities, or connect with our sales team.</p>
-          <span class="final-cta-button">Let's Get Started <span aria-hidden="true">→</span></span>
+    <section class="intro-spread">
+      <div class="intro-spread-inner">
+        <figure class="intro-spread-image" data-reveal>
+          <img src="/media/kitchen_homepage.png" alt="Warm open-plan kitchen and living room in a Schottenstein Home" loading="lazy" />
+        </figure>
+        <div class="intro-spread-card" data-reveal>
+          <p class="intro-eyebrow">Designed Around Real Life</p>
+          <h2>Step inside a home that feels considered from every angle.</h2>
+          <p class="intro-drop-cap">
+            Explore thoughtful floor plans, elevated interiors and opportunities to make the
+            home distinctly yours.
+          </p>
+          <p class="intro-stats">50+ Years Combined Experience &middot; 70,000+ Homes Sold &middot; Established 2007</p>
         </div>
-        <div class="final-cta-image" role="img" aria-label="Bright open-plan living room in a Schottenstein home"></div>
+      </div>
+    </section>
+
+    <section class="feature-spread">
+      <div class="feature-spread-top">
+        <figure class="feature-photo" data-reveal>
+          <img src="/media/communities/jerome-village-aster.jpg" alt="Jerome Village Aster community in Plain City, Ohio" loading="lazy" />
+        </figure>
+        <div class="feature-copy" data-reveal>
+          <p class="feature-kicker">The Featured Community</p>
+          <h2 class="feature-headline">Jerome Village<br />Aster</h2>
+          <p class="feature-tagline">New Release Homes</p>
+          <p class="feature-body">
+            Single family homes in Plain City, Ohio, set within the established Jerome Village
+            master plan &mdash; twelve home designs and six quick move-ins, zoned to Dublin City
+            Schools.
+          </p>
+          <a class="feature-link" href="/jerome-village-aster.html">Discover the Community</a>
+          <div class="feature-margin-note">
+            <span>Plain City, OH</span>
+            <span>Dublin City Schools</span>
+            <span>$540k&ndash;$780k+</span>
+            <span>12 Designs &middot; 6 Quick Move-ins</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="filmstrip" data-reveal aria-label="More communities">
+        <p class="filmstrip-heading">Seven More Places to Call Home</p>
+        <div class="filmstrip-track">
+          <a class="film-item film-tall" href="/glacier-pointe.html">
+            <img src="/media/communities/glacier-pointe.jpg" alt="Glacier Pointe" loading="lazy" />
+            <span>Glacier Pointe</span>
+          </a>
+          <a class="film-item film-wide" href="/cottages-at-verbena.html">
+            <img src="/media/communities/cottages-at-verbena.jpg" alt="The Cottages at Verbena" loading="lazy" />
+            <span>The Cottages at Verbena</span>
+          </a>
+          <a class="film-item film-square" href="/retreat-at-hickory-lakes.html">
+            <img src="/media/communities/retreat-at-hickory-lakes.jpg" alt="The Retreat at Hickory Lakes" loading="lazy" />
+            <span>The Retreat at Hickory Lakes</span>
+          </a>
+          <a class="film-item film-tall" href="/renner-park.html">
+            <img src="/media/communities/renner-park.jpg" alt="Renner Park" loading="lazy" />
+            <span>Renner Park</span>
+          </a>
+          <a class="film-item film-wide" href="/reserve-at-new-california.html">
+            <img src="/media/communities/reserve-at-new-california.jpg" alt="The Reserve at New California" loading="lazy" />
+            <span>The Reserve at New California</span>
+          </a>
+          <a class="film-item film-square" href="/holton-run.html">
+            <img src="/media/communities/holton-run.jpg" alt="Holton Run" loading="lazy" />
+            <span>Holton Run</span>
+          </a>
+          <a class="film-item film-tall" href="/hickory-creek.html">
+            <img src="/media/communities/hickory-creek.jpg" alt="Hickory Creek" loading="lazy" />
+            <span>Hickory Creek</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="makers">
+      <p class="makers-heading" data-reveal>Meet the Makers</p>
+
+      <div class="maker-row maker-row-a" data-reveal>
+        <figure class="maker-photo">
+          <img src="/media/about/steve.png" alt="Steve Schottenstein" loading="lazy" />
+        </figure>
+        <div class="maker-copy">
+          <p class="maker-quote">&ldquo;He believes homeowner satisfaction must always come
+          first, beginning with a strong commitment from ownership.&rdquo;</p>
+          <h3>Steve Schottenstein</h3>
+          <p class="maker-title">Principal, Chief Executive Officer</p>
+          <p class="maker-bio">Steve has over 40 years of experience in all areas of
+          homebuilding. Across three major regions, he has studied what buyers value most and
+          used that knowledge to design today&rsquo;s home selections.</p>
+        </div>
+      </div>
+
+      <div class="maker-row maker-row-b" data-reveal>
+        <figure class="maker-photo">
+          <img src="/media/about/paul.png" alt="Paul Coppel" loading="lazy" />
+        </figure>
+        <div class="maker-copy">
+          <p class="maker-quote">&ldquo;He knows that homeowner satisfaction begins with the
+          right location at the right price.&rdquo;</p>
+          <h3>Paul Coppel</h3>
+          <p class="maker-title">Principal, Chief Operating Officer</p>
+          <p class="maker-bio">Paul brings over 30 years of legal expertise, specializing in
+          land acquisition and development, and carefully evaluates every factor that can
+          influence a buyer&rsquo;s decision.</p>
+        </div>
+      </div>
+
+      <div class="maker-row maker-row-a" data-reveal>
+        <figure class="maker-photo">
+          <img src="/media/about/david.png" alt="David Parsley" loading="lazy" />
+        </figure>
+        <div class="maker-copy">
+          <p class="maker-quote">&ldquo;He brings strong ethics and professionalism to the
+          Schottenstein Homes marketing team.&rdquo;</p>
+          <h3>David Parsley</h3>
+          <p class="maker-title">Vice President</p>
+          <p class="maker-bio">David has over 30 years of experience helping homeowners, with
+          more than $350 million in sales built on understanding their needs and concerns as a
+          licensed real estate agent for over three decades.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="collage-section">
+      <div class="collage-heading" data-reveal>
+        <p class="collage-eyebrow">Make It Yours</p>
+        <h2>An expansive Design Center under one roof.</h2>
+        <p class="collage-body">
+          You&rsquo;ll have your very own Personal Design Consultant, who is available to
+          provide guidance and advice to help you achieve the desired design style of your new
+          home. Our design options are so expansive that no two homes in any of our communities
+          end up looking the same.
+        </p>
+        <a class="feature-link" href="/design-center.html">Visit the Design Center</a>
+      </div>
+
+      <div class="collage-grid" data-reveal>
+        <figure class="collage-tile tile-exteriors">
+          <img src="/media/design-center/exteriors.png" alt="Exteriors" loading="lazy" />
+          <figcaption><span>Exteriors</span>Quality vinyl siding in rich wood-grain colors, custom front doors, stone or brick accents</figcaption>
+        </figure>
+        <figure class="collage-tile tile-cabinets">
+          <img src="/media/design-center/cabinets.png" alt="Cabinets" loading="lazy" />
+          <figcaption><span>Cabinets</span>Quality Aristokraft cabinets paired with laminate, granite, or quartz countertops</figcaption>
+        </figure>
+        <figure class="collage-tile tile-flooring">
+          <img src="/media/design-center/flooring.png" alt="Flooring" loading="lazy" />
+          <figcaption><span>Flooring</span>Wood, carpet, vinyl, tile, and more</figcaption>
+        </figure>
+        <figure class="collage-tile tile-sinks">
+          <img src="/media/design-center/sinks.png" alt="Sinks &amp; Fixtures" loading="lazy" />
+          <figcaption><span>Sinks &amp; Fixtures</span>Stainless or farmhouse sinks, faucets in a range of finishes</figcaption>
+        </figure>
+        <figure class="collage-tile tile-lighting">
+          <img src="/media/design-center/lighting.png" alt="Lighting" loading="lazy" />
+          <figcaption><span>Lighting</span>Energy-efficient lighting options &mdash; curated or fully custom</figcaption>
+        </figure>
+        <figure class="collage-tile tile-fireplaces">
+          <img src="/media/design-center/fireplaces.png" alt="Fireplaces" loading="lazy" />
+          <figcaption><span>Fireplaces</span>Customized by mantles and surround tiles</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="closing-spread" data-reveal>
+      <div class="closing-inner">
+        <p class="closing-eyebrow">The Next Chapter</p>
+        <h2>Your New Home is Waiting.</h2>
+        <p class="closing-body">
+          Take the first step today&mdash;schedule a tour, explore our communities, or connect
+          with our sales team.
+        </p>
+        <a class="closing-link" href="/communities.html">Let&rsquo;s Get Started <span aria-hidden="true">&rarr;</span></a>
       </div>
     </section>
 

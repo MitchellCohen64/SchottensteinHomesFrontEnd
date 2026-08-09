@@ -8,6 +8,54 @@ const header = document.querySelector('.site-header')
 const headerLogo = header?.querySelector('.brand img')
 const isHomePage = document.body.classList.contains('home-page')
 
+if (isHomePage) {
+  const revealSections = document.querySelectorAll('body.home-page > section')
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+  revealSections.forEach((section) => {
+    const items = section.querySelectorAll([
+      'h2',
+      'h3',
+      'p',
+      '.home-intro-card',
+      '.home-intro-image',
+      '.featured-community-slide.is-active > img',
+      '.featured-community-controls',
+      '.communities-map',
+      '.offer-card',
+      '.final-cta-image',
+      '.final-cta-button',
+    ].join(', '))
+
+    ;[...items]
+      .filter((item) => !item.matches('.home-intro-title'))
+      .forEach((item, index) => {
+      item.classList.add('home-reveal-item')
+      item.style.setProperty('--reveal-delay', `${Math.min(index, 6) * 85}ms`)
+    })
+
+    section.querySelectorAll('.home-intro-title-line > span').forEach((line, index) => {
+      line.classList.add('home-reveal-title-line')
+      line.style.setProperty('--reveal-delay', `${85 + (index * 110)}ms`)
+    })
+  })
+
+  if (reduceMotion) {
+    revealSections.forEach((section) => section.classList.add('is-revealed'))
+  } else {
+    document.body.classList.add('home-reveal-enabled')
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return
+        entry.target.classList.add('is-revealed')
+        revealObserver.unobserve(entry.target)
+      })
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 })
+
+    revealSections.forEach((section) => revealObserver.observe(section))
+  }
+}
+
 document.querySelectorAll('.nav-group > .nav-label, .dropdown button, .hero-drawer-nav button').forEach((control) => {
   const label = control.textContent.trim().replace(/\s+/g, ' ')
   if (label === 'HOMES' || label === 'Inventory Homes') {
@@ -685,9 +733,19 @@ if (homeDetails) {
   const tourSection = homeDetails.querySelector('[data-detail-tour]')
   const tourFrame = homeDetails.querySelector('[data-detail-tour-frame]')
   if (tourVideo && tourSection && tourFrame) {
-    tourFrame.src = `https://www.youtube-nocookie.com/embed/${tourVideo}`
+    const tourVideoUrl = `https://www.youtube-nocookie.com/embed/${tourVideo}?playsinline=1&rel=0`
+    tourFrame.src = tourVideoUrl
     tourFrame.title = `${details.name} virtual tour`
     tourSection.hidden = false
+
+    const tourObserver = new IntersectionObserver((entries) => {
+      if (!entries.some((entry) => entry.isIntersecting)) return
+      tourFrame.src = `${tourVideoUrl}&autoplay=1&mute=1`
+      tourObserver.disconnect()
+    }, { threshold: 0.4 })
+
+    tourObserver.observe(tourSection)
+
     if (sessionStorage.getItem('openHomeVirtualTour') === 'true') {
       sessionStorage.removeItem('openHomeVirtualTour')
       requestAnimationFrame(() => tourSection.scrollIntoView({ behavior: 'smooth', block: 'start' }))
@@ -718,7 +776,10 @@ document.querySelectorAll('.plan-grid').forEach((grid) => {
   const controls = document.createElement('div')
   controls.className = 'plan-browser-controls'
   controls.innerHTML = `
-    <p class="plan-result-count" aria-live="polite">Showing ${cards.length} floor plans</p>
+    <div class="plan-result-summary">
+      <p class="plan-result-count" aria-live="polite">Showing ${cards.length} floor plans</p>
+      <button class="plan-result-clear" type="button" aria-label="Clear all filters" title="Clear all filters" hidden>&times;</button>
+    </div>
     <div class="plan-control-buttons">
       <div class="plan-control-menu">
         <button class="plan-control-button plan-filter-trigger" type="button" aria-expanded="false">
@@ -762,12 +823,21 @@ document.querySelectorAll('.plan-grid').forEach((grid) => {
   else grid.before(controls)
 
   const resultCount = controls.querySelector('.plan-result-count')
+  const resultClearButton = controls.querySelector('.plan-result-clear')
   const filterTrigger = controls.querySelector('.plan-filter-trigger')
   const sortTrigger = controls.querySelector('.plan-sort-trigger')
   const filterPanel = controls.querySelector('.plan-filter-panel')
   const sortPanel = controls.querySelector('.plan-sort-panel')
   const minRange = controls.querySelector('.plan-price-min')
   const maxRange = controls.querySelector('.plan-price-max')
+
+  const updateResultCount = (text) => {
+    if (resultCount.textContent === text) return
+    resultCount.textContent = text
+    resultCount.classList.remove('is-updating')
+    void resultCount.offsetWidth
+    resultCount.classList.add('is-updating')
+  }
   const priceOutput = controls.querySelector('.plan-price-filter output')
   const rangeTrack = controls.querySelector('.plan-range-track')
   const bedsFilter = controls.querySelector('.plan-beds-filter')
@@ -807,7 +877,24 @@ document.querySelectorAll('.plan-grid').forEach((grid) => {
       card.classList.toggle('is-hidden', !matches)
       if (matches) visible += 1
     })
-    resultCount.textContent = `Showing ${visible} ${visible === 1 ? 'floor plan' : 'floor plans'}`
+
+    const activeFilters = []
+    if (bedsFilter.value) activeFilters.push(`${bedsFilter.value} ${Number(bedsFilter.value) === 1 ? 'bed' : 'beds'}`)
+    if (bathsFilter.value) activeFilters.push(`${bathsFilter.value} ${Number(bathsFilter.value) === 1 ? 'bath' : 'baths'}`)
+    if (storiesFilter.value) activeFilters.push(`${storiesFilter.value} ${Number(storiesFilter.value) === 1 ? 'story' : 'stories'}`)
+    if (Number(minRange.value) !== priceFloor || Number(maxRange.value) !== priceCeiling) {
+      activeFilters.push(`priced $${Number(minRange.value).toLocaleString()}–$${Number(maxRange.value).toLocaleString()}`)
+    }
+    if (readyOnlyFilter.checked) activeFilters.push('Move-In Ready')
+
+    const formattedFilters = activeFilters.length < 2
+      ? activeFilters[0] || ''
+      : activeFilters.length === 2
+        ? `${activeFilters[0]} and ${activeFilters[1]}`
+        : `${activeFilters.slice(0, -1).join(', ')}, and ${activeFilters.at(-1)}`
+    const filterSummary = formattedFilters ? ` with ${formattedFilters}` : ''
+    updateResultCount(`Showing ${visible} ${visible === 1 ? 'floor plan' : 'floor plans'}${filterSummary}`)
+    resultClearButton.hidden = activeFilters.length === 0
   }
 
   filterTrigger.addEventListener('click', () => {
@@ -835,7 +922,7 @@ document.querySelectorAll('.plan-grid').forEach((grid) => {
   ;[bedsFilter, bathsFilter, storiesFilter].forEach((select) => select.addEventListener('change', applyPlanFilters))
   readyOnlyFilter.addEventListener('change', applyPlanFilters)
 
-  controls.querySelector('.plan-clear-filters').addEventListener('click', () => {
+  const clearPlanFilters = () => {
     minRange.value = priceFloor
     maxRange.value = priceCeiling
     bedsFilter.value = ''
@@ -844,7 +931,10 @@ document.querySelectorAll('.plan-grid').forEach((grid) => {
     readyOnlyFilter.checked = false
     updateRange()
     applyPlanFilters()
-  })
+  }
+
+  controls.querySelector('.plan-clear-filters').addEventListener('click', clearPlanFilters)
+  resultClearButton.addEventListener('click', clearPlanFilters)
 
   sortPanel.querySelectorAll('[data-plan-sort]').forEach((option) => option.addEventListener('click', () => {
     const direction = option.dataset.planSort
@@ -861,3 +951,21 @@ document.querySelectorAll('.plan-grid').forEach((grid) => {
   window.addEventListener('scroll', closePlanMenus, true)
   updateRange()
 })
+
+const revealElements = document.querySelectorAll('[data-reveal]')
+if (revealElements.length) {
+  if ('IntersectionObserver' in window) {
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible')
+          revealObserver.unobserve(entry.target)
+        }
+      })
+    }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' })
+
+    revealElements.forEach((element) => revealObserver.observe(element))
+  } else {
+    revealElements.forEach((element) => element.classList.add('is-visible'))
+  }
+}
