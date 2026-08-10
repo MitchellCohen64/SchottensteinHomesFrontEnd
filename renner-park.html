@@ -71,19 +71,6 @@
           </div>
         </div>
 
-        <div class="nav-group">
-          <button type="button" class="nav-label" aria-haspopup="true">
-            TEST <span class="chevron" aria-hidden="true"></span>
-          </button>
-          <div class="dropdown" role="menu">
-            <a href="/test1.html" role="menuitem"><span>Test 1</span></a>
-            <a href="/test2.html" role="menuitem"><span>Test 2</span></a>
-            <a href="/test3.html" role="menuitem"><span>Test 3</span></a>
-            <a href="/test4.html" role="menuitem"><span>Test 4</span></a>
-            <a href="/test5.html" role="menuitem"><span>Test 5</span></a>
-            <a href="/test6.html" role="menuitem"><span>Test 6</span></a>
-          </div>
-        </div>
       </nav>
 
       <a class="login" href="https://www.homeinformationpackages.com/" target="_blank" rel="noopener noreferrer" aria-label="Homeowner Login">
@@ -92,24 +79,31 @@
     </header>
 
     <main>
-      <section class="page-title">
-        <div class="page-title-inner">
-          <a class="community-back-link" href="/communities.html">&larr; All Communities</a>
-          <h1>Renner Park</h1>
-          <p class="community-location-line">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12Z"></path><circle cx="12" cy="9" r="2.5"></circle></svg>
-            Columbus, OH &middot; Hilliard Schools
-          </p>
-        </div>
+      <section class="renner-intro" aria-labelledby="renner-intro-heading">
+        <p class="eyebrow">13 Floor Plans Available</p>
+        <h2 id="renner-intro-heading">Renner Park</h2>
+        <p>Renner Park is a Schottenstein Homes community in Columbus, OH, zoned for Hilliard Schools. Floor plans here start from $400,000s – $540,000s, with 3–4-bedroom layouts to fit a range of households.</p>
+        <p class="renner-intro-location">Columbus, OH &middot; Hilliard Schools</p>
       </section>
 
-      <section class="about-intro" aria-label="Renner Park overview">
-        <div class="about-intro-content">
-          <p class="eyebrow">13 Floor Plans Available</p>
-          <p>Renner Park is a Schottenstein Homes community in Columbus, OH, zoned for Hilliard Schools. Floor plans here start from $400,000s – $540,000s, with 3–4-bedroom layouts to fit a range of households.</p>
+      <section class="renner-site-plan-section" aria-labelledby="renner-site-plan-heading">
+        <div class="renner-site-plan-heading">
+          <p class="eyebrow">Renner Park</p>
+          <h2 id="renner-site-plan-heading">Explore the Community</h2>
+          <p>View homesites, streets, and availability throughout Renner Park.</p>
         </div>
-        <div class="about-intro-image">
-          <img src="/media/community-maps/renner-park.jpg" alt="Map of the Renner Park community" />
+        <div class="renner-site-plan-image">
+          <div class="site-plan-wrapper" data-renner-lot-tracer>
+            <img class="site-plan-image" src="/media/community-maps/renner-park.jpg" alt="Renner Park site plan" />
+            <svg class="site-plan-overlay" viewBox="0 0 3058 4205" preserveAspectRatio="xMidYMid meet" aria-hidden="true"></svg>
+          </div>
+        </div>
+        <div class="site-plan-legend" aria-label="Homesite status legend">
+          <span><i data-status="available"></i>Available</span>
+          <span><i data-status="unavailable"></i>Unavailable</span>
+          <span><i data-status="model"></i>Model Home</span>
+          <span><i data-status="sold"></i>Sold</span>
+          <span><i data-status="comingSoon"></i>Coming Soon</span>
         </div>
       </section>
 

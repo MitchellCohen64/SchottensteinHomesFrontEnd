@@ -3,14 +3,28 @@ import 'leaflet/dist/leaflet.css'
 import standardLogoUrl from '../media/SH_logo.png'
 import whiteLogoUrl from '../media/SH_logo_white.png'
 import homePlaceholderUrl from '../media/home-hero/heroHomeImg2.png'
+import { renderRennerTracedLots } from './components/RennerTracedLots.js'
 
 const header = document.querySelector('.site-header')
 const headerLogo = header?.querySelector('.brand img')
 const isHomePage = document.body.classList.contains('home-page')
 
+const rennerLotTracer = document.querySelector('[data-renner-lot-tracer]')
+if (rennerLotTracer) renderRennerTracedLots(rennerLotTracer.querySelector('.site-plan-overlay'))
+
+if (import.meta.env.DEV && rennerLotTracer && new URLSearchParams(window.location.search).get('traceLots') === '1') {
+  import('./components/RennerLotTracer.js').then(({ mountRennerLotTracer }) => mountRennerLotTracer(rennerLotTracer))
+}
+
 if (isHomePage) {
   const revealSections = document.querySelectorAll('body.home-page > section')
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  // Tall stacked sections (esp. .home-intro) need less of themselves on screen
+  // before revealing on narrow viewports, or content reads as blank while scrolling.
+  const isNarrowViewport = window.matchMedia('(max-width: 700px)').matches
+  const revealDelayStep = isNarrowViewport ? 50 : 85
+  const revealDelayCap = isNarrowViewport ? 4 : 6
+  const introRevealThreshold = isNarrowViewport ? 0.15 : 0.4
 
   revealSections.forEach((section) => {
     const items = section.querySelectorAll([
@@ -31,12 +45,13 @@ if (isHomePage) {
       .filter((item) => !item.matches('.home-intro-title'))
       .forEach((item, index) => {
       item.classList.add('home-reveal-item')
-      item.style.setProperty('--reveal-delay', `${Math.min(index, 6) * 85}ms`)
+      item.style.setProperty('--reveal-delay', `${Math.min(index, revealDelayCap) * revealDelayStep}ms`)
     })
 
-    section.querySelectorAll('.home-intro-title-line > span').forEach((line, index) => {
+    const titleLines = [...section.querySelectorAll('.home-intro-title-line > span')]
+    titleLines.forEach((line, index) => {
       line.classList.add('home-reveal-title-line')
-      line.style.setProperty('--reveal-delay', `${85 + (index * 110)}ms`)
+      line.style.setProperty('--reveal-delay', `${index * 500}ms`)
     })
   })
 
@@ -47,10 +62,12 @@ if (isHomePage) {
     const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return
+        const revealThreshold = entry.target.classList.contains('home-intro') ? introRevealThreshold : 0.08
+        if (entry.intersectionRatio < revealThreshold) return
         entry.target.classList.add('is-revealed')
         revealObserver.unobserve(entry.target)
       })
-    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 })
+    }, { rootMargin: '0px 0px -8% 0px', threshold: [0.08, introRevealThreshold] })
 
     revealSections.forEach((section) => revealObserver.observe(section))
   }
@@ -119,12 +136,16 @@ if (heroSlides.length > 1) {
 const featuredCommunitySlides = [...document.querySelectorAll('.featured-community-slide')]
 const featuredCommunityPrevious = document.querySelector('.featured-community-previous')
 const featuredCommunityNext = document.querySelector('.featured-community-next')
+const featuredCommunitySection = document.querySelector('.featured-communities')
 
 if (featuredCommunitySlides.length > 1 && featuredCommunityPrevious && featuredCommunityNext) {
   let activeFeaturedCommunity = 0
+  let featuredCommunityTimer
+  let featuredCommunityRotationStarted = false
+  const featuredCommunityInterval = 6000
 
   const showFeaturedCommunity = (index) => {
-    activeFeaturedCommunity = Math.max(0, Math.min(index, featuredCommunitySlides.length - 1))
+    activeFeaturedCommunity = (index + featuredCommunitySlides.length) % featuredCommunitySlides.length
 
     featuredCommunitySlides.forEach((slide, slideIndex) => {
       const isActive = slideIndex === activeFeaturedCommunity
@@ -140,15 +161,62 @@ if (featuredCommunitySlides.length > 1 && featuredCommunityPrevious && featuredC
     featuredCommunityNext.disabled = activeFeaturedCommunity === featuredCommunitySlides.length - 1
   }
 
+  const startFeaturedCommunityTimer = () => {
+    window.clearTimeout(featuredCommunityTimer)
+    featuredCommunityTimer = window.setTimeout(() => {
+      showFeaturedCommunity(activeFeaturedCommunity + 1)
+      startFeaturedCommunityTimer()
+    }, featuredCommunityInterval)
+  }
+
   featuredCommunityPrevious.addEventListener('click', () => {
     showFeaturedCommunity(activeFeaturedCommunity - 1)
+    if (featuredCommunityRotationStarted) startFeaturedCommunityTimer()
   })
 
   featuredCommunityNext.addEventListener('click', () => {
     showFeaturedCommunity(activeFeaturedCommunity + 1)
+    if (featuredCommunityRotationStarted) startFeaturedCommunityTimer()
   })
 
+  let featuredCommunityTouchStartX = 0
+  let featuredCommunityTouchStartY = 0
+
+  featuredCommunitySection?.addEventListener('touchstart', (event) => {
+    featuredCommunityTouchStartX = event.touches[0].clientX
+    featuredCommunityTouchStartY = event.touches[0].clientY
+  }, { passive: true })
+
+  featuredCommunitySection?.addEventListener('touchend', (event) => {
+    const touch = event.changedTouches[0]
+    const deltaX = touch.clientX - featuredCommunityTouchStartX
+    const deltaY = touch.clientY - featuredCommunityTouchStartY
+
+    if (Math.abs(deltaX) < 50 || Math.abs(deltaX) < Math.abs(deltaY)) return
+
+    showFeaturedCommunity(activeFeaturedCommunity + (deltaX < 0 ? 1 : -1))
+    if (featuredCommunityRotationStarted) startFeaturedCommunityTimer()
+  }, { passive: true })
+
   showFeaturedCommunity(0)
+
+  const beginFeaturedCommunityRotation = () => {
+    if (featuredCommunityRotationStarted) return
+    featuredCommunityRotationStarted = true
+    startFeaturedCommunityTimer()
+  }
+
+  if ('IntersectionObserver' in window && featuredCommunitySection) {
+    const featuredCommunityObserver = new IntersectionObserver((entries) => {
+      if (!entries.some((entry) => entry.isIntersecting)) return
+      beginFeaturedCommunityRotation()
+      featuredCommunityObserver.disconnect()
+    }, { threshold: 0.2 })
+
+    featuredCommunityObserver.observe(featuredCommunitySection)
+  } else {
+    beginFeaturedCommunityRotation()
+  }
 }
 
 const mapElement = document.querySelector('#communities-map')
@@ -228,6 +296,26 @@ if (mapElement) {
       className: 'community-tooltip',
       opacity: 1,
       offset: [0, isHomeMap ? -5 : -13]
+    })
+    marker.on('tooltipopen', (event) => {
+      const tooltip = event.tooltip.getElement()
+      if (!tooltip) return
+
+      tooltip.style.marginLeft = '0px'
+      window.requestAnimationFrame(() => {
+        const mapBounds = map.getContainer().getBoundingClientRect()
+        const tooltipBounds = tooltip.getBoundingClientRect()
+        const edgePadding = 12
+        let horizontalShift = 0
+
+        if (tooltipBounds.left < mapBounds.left + edgePadding) {
+          horizontalShift = mapBounds.left + edgePadding - tooltipBounds.left
+        } else if (tooltipBounds.right > mapBounds.right - edgePadding) {
+          horizontalShift = mapBounds.right - edgePadding - tooltipBounds.right
+        }
+
+        tooltip.style.marginLeft = `${horizontalShift}px`
+      })
     })
     marker.on('mouseover', () => marker.openTooltip())
     marker.on('click', () => {
@@ -394,6 +482,7 @@ communityCards.forEach((card) => {
 
   const showSlide = (index) => {
     activeSlide = (index + slides.length) % slides.length
+    dots.style.setProperty('--dot-offset', `${(activeSlide - 1) * 17}px`)
     slides.forEach((item, slideIndex) => item.classList.toggle('is-active', slideIndex === activeSlide))
     dots.querySelectorAll('.community-card-dot').forEach((item, dotIndex) => {
       item.classList.toggle('is-active', dotIndex === activeSlide)
@@ -430,6 +519,75 @@ communityCards.forEach((card) => {
   next.addEventListener('click', () => showSlide(activeSlide + 1))
 
   media.append(dots, previous, next)
+})
+
+document.querySelectorAll('.virtual-tours-page .video-card-gallery').forEach((card) => {
+  const image = card.querySelector('img')
+  const homeName = card.querySelector('strong')?.textContent.trim() ?? 'home'
+
+  if (!image) return
+
+  image.classList.add('community-card-slide', 'is-active')
+
+  const placeholders = ['is-red', 'is-blue'].map((colorClass, index) => {
+    const placeholder = document.createElement('div')
+    placeholder.className = `community-card-slide community-card-placeholder ${colorClass}`
+    placeholder.setAttribute('role', 'img')
+    placeholder.setAttribute('aria-label', `Placeholder for ${homeName} image ${index + 2}`)
+    placeholder.innerHTML = placeholderHouseIcon
+    return placeholder
+  })
+
+  const slides = [image, ...placeholders]
+  const dots = document.createElement('div')
+  dots.className = 'community-card-dots'
+  dots.setAttribute('role', 'group')
+  dots.setAttribute('aria-label', `${homeName} photos`)
+  let activeSlide = 0
+
+  const showSlide = (index) => {
+    activeSlide = (index + slides.length) % slides.length
+    dots.style.setProperty('--dot-offset', `${(activeSlide - 1) * 17}px`)
+    slides.forEach((slide, slideIndex) => slide.classList.toggle('is-active', slideIndex === activeSlide))
+    dots.querySelectorAll('.community-card-dot').forEach((dot, dotIndex) => {
+      dot.classList.toggle('is-active', dotIndex === activeSlide)
+      dot.setAttribute('aria-pressed', dotIndex === activeSlide ? 'true' : 'false')
+    })
+  }
+
+  slides.forEach((slide, index) => {
+    if (index > 0) card.append(slide)
+
+    const dot = document.createElement('button')
+    dot.type = 'button'
+    dot.className = `community-card-dot${index === 0 ? ' is-active' : ''}`
+    dot.setAttribute('aria-label', `Show ${homeName} image ${index + 1}`)
+    dot.setAttribute('aria-pressed', index === 0 ? 'true' : 'false')
+    dot.addEventListener('click', (event) => {
+      event.preventDefault()
+      event.stopPropagation()
+      showSlide(index)
+    })
+    dots.append(dot)
+  })
+
+  const createArrow = (direction, step) => {
+    const arrow = document.createElement('button')
+    arrow.type = 'button'
+    arrow.className = `community-card-arrow is-${direction}`
+    arrow.setAttribute('aria-label', `Show ${direction === 'previous' ? 'previous' : 'next'} ${homeName} photo`)
+    arrow.innerHTML = direction === 'previous'
+      ? '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6-6 6 6 6"></path></svg>'
+      : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9.5 6 6 6-6 6"></path></svg>'
+    arrow.addEventListener('click', (event) => {
+      event.preventDefault()
+      event.stopPropagation()
+      showSlide(activeSlide + step)
+    })
+    return arrow
+  }
+
+  card.append(dots, createArrow('previous', -1), createArrow('next', 1))
 })
 
 if (filterPills.length && communityCards.length) {
@@ -639,6 +797,65 @@ document.querySelectorAll('.plan-card').forEach((card) => {
     card.classList.add('is-move-in-ready')
     media.insertAdjacentHTML('beforeend', '<span class="plan-card-ready-banner">Move-In Ready</span>')
   }
+
+  const galleryImage = media.querySelector('img')
+  galleryImage.classList.add('community-card-slide', 'is-active')
+
+  const gallerySlides = [galleryImage, ...['is-red', 'is-blue'].map((colorClass, index) => {
+    const placeholder = document.createElement('div')
+    placeholder.className = `community-card-slide community-card-placeholder ${colorClass}`
+    placeholder.setAttribute('role', 'img')
+    placeholder.setAttribute('aria-label', `Placeholder for ${title.textContent.trim()} image ${index + 2}`)
+    placeholder.innerHTML = placeholderHouseIcon
+    media.append(placeholder)
+    return placeholder
+  })]
+
+  const galleryDots = document.createElement('div')
+  galleryDots.className = 'community-card-dots'
+  galleryDots.setAttribute('role', 'group')
+  galleryDots.setAttribute('aria-label', `${title.textContent.trim()} photos`)
+  let activeGallerySlide = 0
+
+  const showGallerySlide = (index) => {
+    activeGallerySlide = (index + gallerySlides.length) % gallerySlides.length
+    galleryDots.style.setProperty('--dot-offset', `${(activeGallerySlide - 1) * 17}px`)
+    gallerySlides.forEach((slide, slideIndex) => slide.classList.toggle('is-active', slideIndex === activeGallerySlide))
+    galleryDots.querySelectorAll('.community-card-dot').forEach((dot, dotIndex) => {
+      dot.classList.toggle('is-active', dotIndex === activeGallerySlide)
+      dot.setAttribute('aria-pressed', dotIndex === activeGallerySlide ? 'true' : 'false')
+    })
+  }
+
+  gallerySlides.forEach((slide, index) => {
+    const dot = document.createElement('button')
+    dot.type = 'button'
+    dot.className = `community-card-dot${index === 0 ? ' is-active' : ''}`
+    dot.setAttribute('aria-label', `Show ${title.textContent.trim()} image ${index + 1}`)
+    dot.setAttribute('aria-pressed', index === 0 ? 'true' : 'false')
+    dot.addEventListener('click', (event) => {
+      event.stopPropagation()
+      showGallerySlide(index)
+    })
+    galleryDots.append(dot)
+  })
+
+  const makeGalleryArrow = (direction, step) => {
+    const arrow = document.createElement('button')
+    arrow.type = 'button'
+    arrow.className = `community-card-arrow is-${direction}`
+    arrow.setAttribute('aria-label', `Show ${direction === 'previous' ? 'previous' : 'next'} ${title.textContent.trim()} photo`)
+    arrow.innerHTML = direction === 'previous'
+      ? '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6-6 6 6 6"></path></svg>'
+      : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9.5 6 6 6-6 6"></path></svg>'
+    arrow.addEventListener('click', (event) => {
+      event.stopPropagation()
+      showGallerySlide(activeGallerySlide + step)
+    })
+    return arrow
+  }
+
+  media.append(galleryDots, makeGalleryArrow('previous', -1), makeGalleryArrow('next', 1))
 
   const body = document.createElement('div')
   body.className = 'plan-card-body'
