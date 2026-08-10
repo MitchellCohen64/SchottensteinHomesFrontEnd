@@ -345,6 +345,14 @@ button {
   transform: scale(1.45);
 }
 
+@media (min-width: 961px) {
+  .home-page .site-header:not(.is-scrolled) .brand img {
+    width: 260px;
+    height: 96px;
+    transform: scale(1.1);
+  }
+}
+
 .home-page .site-header:not(.is-scrolled) .main-nav,
 .home-page .site-header:not(.is-scrolled) .login {
   position: absolute;
@@ -1952,6 +1960,130 @@ h1 {
 }
 
 @media (max-width: 620px) {
+  .home-page .site-header,
+  .home-page .site-header:not(.is-scrolled) {
+    grid-template-columns: 44px minmax(0, 1fr) 44px;
+    gap: 0;
+    padding-inline: 18px;
+  }
+
+  .home-page .site-header .brand,
+  .home-page .site-header:not(.is-scrolled) .brand {
+    grid-column: 2;
+    justify-self: center;
+  }
+
+  .home-page .site-header .brand img,
+  .home-page .site-header:not(.is-scrolled) .brand img {
+    width: 172px;
+    height: 76px;
+    transform: none;
+  }
+
+  .home-page .site-header.is-scrolled .brand img {
+    width: 150px;
+    height: 64px;
+  }
+
+  .home-page .site-header .hero-menu-trigger,
+  .home-page .site-header:not(.is-scrolled) .hero-menu-trigger,
+  .home-page .site-header.is-scrolled .hero-menu-trigger {
+    grid-column: 1;
+    width: 44px;
+    height: 44px;
+    justify-content: flex-start;
+    gap: 0;
+    padding: 0;
+  }
+
+  .home-page .site-header .hero-menu-trigger span {
+    display: none;
+  }
+
+  .home-page .site-header .hero-menu-trigger svg,
+  .home-page .site-header:not(.is-scrolled) .hero-menu-trigger svg,
+  .home-page .site-header.is-scrolled .hero-menu-trigger svg {
+    width: 25px;
+    height: 25px;
+  }
+
+  .home-page .site-header .hero-account,
+  .home-page .site-header:not(.is-scrolled) .hero-account,
+  .home-page .site-header.is-scrolled .hero-account,
+  .home-page .site-header:not(.is-scrolled) .hero-account:hover,
+  .home-page .site-header:not(.is-scrolled) .hero-account:focus-visible {
+    display: inline-flex;
+    grid-column: 3;
+    width: 44px;
+    height: 44px;
+    align-items: center;
+    justify-content: flex-end;
+    justify-self: end;
+    gap: 0;
+    padding: 0;
+  }
+
+  .home-page .site-header .hero-account span {
+    display: none;
+  }
+
+  .home-page .site-header .hero-account svg,
+  .home-page .site-header:not(.is-scrolled) .hero-account svg,
+  .home-page .site-header.is-scrolled .hero-account svg {
+    flex-basis: 25px;
+    width: 25px;
+    height: 25px;
+  }
+
+  .home-page .hero {
+    min-height: 50vh;
+    min-height: 50svh;
+    align-items: flex-end;
+  }
+
+  .home-page .hero-slide {
+    background-position: 58% center;
+  }
+
+  .home-page .hero-shade {
+    background:
+      linear-gradient(180deg, rgba(12, 10, 8, 0.34) 0%, transparent 31%),
+      linear-gradient(0deg, rgba(12, 10, 8, 0.92) 0%, rgba(12, 10, 8, 0.58) 38%, rgba(12, 10, 8, 0.08) 68%);
+  }
+
+  .home-page .hero-content {
+    width: 100%;
+    margin: 0;
+    padding: 0 22px max(34px, env(safe-area-inset-bottom));
+  }
+
+  .home-page .hero-content h1 {
+    max-width: 540px;
+    margin-bottom: 24px;
+    font-size: clamp(45px, 13.5vw, 58px);
+    line-height: 0.96;
+    letter-spacing: -0.8px;
+    text-shadow: 0 3px 22px rgba(0, 0, 0, 0.26);
+  }
+
+  .home-page .hero-actions {
+    width: 100%;
+  }
+
+  .home-page .hero-communities-button {
+    width: 100%;
+    min-height: 52px;
+    height: 52px;
+    padding: 0 22px;
+    border-radius: 4px;
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+
+  .home-page .hero-community-label {
+    display: none;
+  }
+
   .hero-actions { flex-direction: column; gap: 13px; }
   .button, .button-light, .button-outline { width: 100%; height: 62px; padding: 0 27px; }
   .accent-line { margin: 19px 0 25px; }
