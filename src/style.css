@@ -3936,6 +3936,21 @@ h1 {
   padding: 0 24px 24px;
 }
 
+.community-city-link {
+  display: block;
+  width: fit-content;
+  margin-top: 14px;
+  color: #8d2637;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.community-city-link:hover,
+.community-city-link:focus-visible {
+  color: #17202b;
+}
+
 .renner-site-plan-column {
   display: flex;
   min-width: 0;

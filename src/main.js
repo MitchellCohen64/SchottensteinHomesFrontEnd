@@ -2,7 +2,6 @@ import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import standardLogoUrl from '../media/SH_logo.png'
 import whiteLogoUrl from '../media/SH_logo_white.png'
-import homePlaceholderUrl from '../media/home-hero/heroHomeImg2.png'
 import { renderRennerTracedLots } from './components/RennerTracedLots.js'
 import { communityPlanData, inventoryPlans } from './data/basePricing.js'
 
@@ -500,6 +499,13 @@ const placeholderHouseIcon = `
     <path d="M7 30 32 9l25 21-4 5-5-4v24H16V31l-5 4-4-5Zm17 19h16V34H24v15Z"></path>
   </svg>
 `
+
+const homePlaceholderUrl = `data:image/svg+xml,${encodeURIComponent(`
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+    <rect width="800" height="600" fill="#eee9e2"/>
+    <path fill="#8d2637" d="M244 292 400 161l156 131-25 31-31-25v148H300V298l-31 25-25-31Zm106 116h100v-94H350v94Z"/>
+  </svg>
+`)}`
 
 communityCards.forEach((card) => {
   const media = card.querySelector('.community-card-media')
@@ -1044,7 +1050,7 @@ document.querySelectorAll('.plan-card').forEach((card) => {
   const planImage = planImageFor(planName, planCommunity)
   const media = document.createElement('div')
   media.className = 'plan-card-media'
-  media.innerHTML = `<img src="${planImage || homePlaceholderUrl}" alt="${planImage ? `${planName} exterior rendering` : 'Home exterior'}" />`
+  media.innerHTML = `<img src="${planImage || homePlaceholderUrl}" alt="${planImage ? `${planName} exterior rendering` : `No exterior rendering available for ${planName}`}" />`
 
   if (['The Chester', 'The Franklin'].includes(title.textContent.trim())) {
     card.classList.add('is-move-in-ready')
@@ -1201,9 +1207,11 @@ if (homeDetails) {
 
   const detailImage = planImageFor(details.name, details.community)
   const detailHeroImage = homeDetails.querySelector('.home-detail-hero img')
-  if (detailImage && detailHeroImage) {
-    detailHeroImage.src = detailImage
-    detailHeroImage.alt = `${details.name} exterior rendering`
+  if (detailHeroImage) {
+    detailHeroImage.src = detailImage || homePlaceholderUrl
+    detailHeroImage.alt = detailImage
+      ? `${details.name} exterior rendering`
+      : `No exterior rendering available for ${details.name}`
   }
 
   const tourVideo = tourVideoFor(details.name)
