@@ -29,13 +29,13 @@ export function renderRennerTracedLots(svg) {
     <p class="renner-lot-details-kicker">Renner Park &middot; <span></span></p>
     <h3 id="renner-lot-home-name">The Benton</h3>
     <p class="renner-lot-details-status"></p>
-    <p class="renner-lot-details-price">From $420,000s</p>
+    <p class="renner-lot-details-price">Starting at $422,900</p>
     <div class="renner-lot-details-specs">
       <span><strong>4</strong>Beds</span>
       <span><strong>2.5</strong>Baths</span>
       <span><strong>2</strong>Stories</span>
     </div>
-    <a class="renner-lot-details-link" href="/home-details.html?name=The+Benton&price=%24420%2C000&beds=4&baths=2.5&stories=2&sqft=%3F%3F%3F&community=Renner+Park">View More Info</a>
+    <a class="renner-lot-details-link" href="/home-details.html?name=The+Benton&price=%24422%2C900&beds=4&baths=2.5&stories=2&sqft=1%2C847&community=Renner+Park">View More Info</a>
   `
   const backdrop = document.createElement('div')
   backdrop.className = 'renner-lot-details-backdrop'

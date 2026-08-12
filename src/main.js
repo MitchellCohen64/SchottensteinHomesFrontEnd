@@ -4,6 +4,7 @@ import standardLogoUrl from '../media/SH_logo.png'
 import whiteLogoUrl from '../media/SH_logo_white.png'
 import homePlaceholderUrl from '../media/home-hero/heroHomeImg2.png'
 import { renderRennerTracedLots } from './components/RennerTracedLots.js'
+import { communityPlanData, inventoryPlans } from './data/basePricing.js'
 
 const header = document.querySelector('.site-header')
 const headerLogo = header?.querySelector('.brand img')
@@ -91,6 +92,55 @@ const updateHeader = () => {
 
 updateHeader()
 window.addEventListener('scroll', updateHeader, { passive: true })
+
+if (header && !isHomePage) {
+  const compactMenuTrigger = document.createElement('button')
+  compactMenuTrigger.className = 'hero-menu-trigger site-menu-trigger'
+  compactMenuTrigger.type = 'button'
+  compactMenuTrigger.setAttribute('aria-label', 'Open menu')
+  compactMenuTrigger.setAttribute('aria-controls', 'site-menu-drawer')
+  compactMenuTrigger.setAttribute('aria-expanded', 'false')
+  compactMenuTrigger.innerHTML = '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" /></svg>'
+  header.append(compactMenuTrigger)
+
+  document.body.insertAdjacentHTML('beforeend', `
+    <div class="hero-menu-backdrop" aria-hidden="true"></div>
+    <aside id="site-menu-drawer" class="hero-menu-drawer is-right" aria-label="Main menu" aria-hidden="true">
+      <div class="hero-menu-drawer-header">
+        <img src="/media/SH_logo.png" alt="Schottenstein Homes" />
+        <button class="hero-menu-close" type="button" aria-label="Close menu">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" /></svg>
+        </button>
+      </div>
+      <nav class="hero-drawer-nav" aria-label="Compact navigation">
+        <section>
+          <a class="hero-drawer-heading" href="/communities.html">Communities</a>
+          <a href="/communities.html">View All Communities</a>
+          <a href="/jerome-village-aster.html">Jerome Village Aster</a>
+          <a href="/cottages-at-verbena.html">The Cottages at Verbena</a>
+          <a href="/reserve-at-new-california.html">The Reserve at New California</a>
+          <a href="/glacier-pointe.html">Glacier Pointe</a>
+          <a href="/holton-run.html">Holton Run</a>
+          <a href="/hickory-creek.html">Hickory Creek</a>
+          <a href="/renner-park.html">Renner Park</a>
+          <a href="/retreat-at-hickory-lakes.html">The Retreat at Hickory Lakes</a>
+        </section>
+        <section>
+          <a class="hero-drawer-heading" href="/inventory-homes.html">Homes</a>
+          <a href="/inventory-homes.html">Explore All Homes</a>
+          <a href="/design-center.html">Design Center</a>
+          <a href="/virtual-tours.html">Virtual Tours</a>
+        </section>
+        <section>
+          <a class="hero-drawer-heading" href="/about.html">About</a>
+          <a href="/about.html">About Us</a>
+          <a href="/energy-efficiency.html">Energy Efficiency</a>
+          <a href="/contact.html">Contact Us</a>
+        </section>
+        <a class="hero-drawer-login" href="https://www.homeinformationpackages.com/" target="_blank" rel="noopener noreferrer">Homeowner Login</a>
+      </nav>
+    </aside>`)
+}
 
 const heroMenuTrigger = document.querySelector('.hero-menu-trigger')
 const heroMenuDrawer = document.querySelector('.hero-menu-drawer')
@@ -717,30 +767,73 @@ const planSpecIcons = {
   stories: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V7h16v13H4Zm4-9h8M8 15h8M8 19h8"></path></svg>',
 }
 
-const inventoryCatalog = [
-  ['The Chester', 500000, 2, 2, 1], ['The Hanover', 380000, 2, 3, 2],
-  ['The Harmony', 460000, 2, 2, 1], ['The Reed', 510000, 3, 3, 2],
-  ['The Springfield', 480000, 3, 3, 2], ['The York', 490000, 2, 2, 1],
-  ['The Addison', 550000, 4, 3.5, 2], ['The Columbia', 440000, 3, 2, 1],
-  ['The Knox', 490000, 3, 2, 1], ['The Athens', 390000, 3, 2.5, 2],
-  ['The Benton', 430000, 4, 2.5, 2], ['The Franklin', 490000, 3, 2.5, 2],
-  ['The Harrison', 430000, 4, 2.5, 2], ['The Hayes', 460000, 3, 2.5, 2],
-  ['The Hudson', 430000, 4, 2.5, 2], ['The Jefferson', 490000, 4, 2.5, 2],
-  ['The Madison', 490000, 4, 2.5, 2], ['The Richland', 470000, 4, 2.5, 2],
-  ['The Stillwater', 450000, 3, 2.5, 2], ['The Stillwater Plus', 470000, 3, 2.5, 2],
-  ['The Vinton', 490000, 4, 2.5, 2], ['The Fayette', 490000, 3, 2, 1],
-  ['The Seneca', 540000, 4, 2.5, 2], ['The Carroll II', 540000, 3, 2.5, 2],
-  ['The Erie II', 580000, 4, 2.5, 2], ['The Franklin II', 550000, 3, 2.5, 2],
-  ['The Knox II', 540000, 3, 2, 1], ['The Madison II', 550000, 4, 2.5, 2],
-  ['The Seneca II', 590000, 4, 2.5, 2], ['The Summit II', 580000, 4, 2.5, 2],
-  ['The Trumbull II', 580000, 4, 2.5, 2], ['The Vinton II', 570000, 4, 2.5, 2],
-  ['The Erie', 610000, 4, 2.5, 2],
-]
+const planSpecs = {
+  Addison: [4, 3.5, 2], Athens: [3, 2.5, 2], Benton: [4, 2.5, 2],
+  'Carroll II': [3, 2.5, 2], Chester: [2, 2, 1], Columbia: [3, 2, 1],
+  Erie: [4, 2.5, 2], 'Erie II': [4, 2.5, 2], Fayette: [3, 2, 1],
+  Franklin: [3, 2.5, 2], 'Franklin II': [3, 2.5, 2], Hanover: [2, 3, 2],
+  Harrison: [4, 2.5, 2], Hayes: [3, 2.5, 2], Hudson: [4, 2.5, 2],
+  Jefferson: [4, 2.5, 2], 'Jefferson II': [4, 2.5, 2], Knox: [3, 2, 1],
+  'Knox II': [3, 2, 1], Madison: [4, 2.5, 2], 'Madison II': [4, 2.5, 2],
+  Reed: [3, 3, 2], Richland: [4, 2.5, 2], Seneca: [4, 2.5, 2],
+  'Seneca II': [4, 2.5, 2], Stillwater: [3, 2.5, 2], 'Stillwater Plus': [3, 2.5, 2],
+  'Summit II': [4, 2.5, 2], 'Trumbull II': [4, 2.5, 2], Vinton: [4, 2.5, 2],
+  'Vinton II': [4, 2.5, 2], York: [2, 2, 1],
+}
+
+const communityNames = {
+  'jerome-village-aster': 'Jerome Village Aster',
+  'cottages-at-verbena': 'The Cottages at Verbena',
+  'glacier-pointe': 'Glacier Pointe',
+  'hickory-creek': 'Hickory Creek',
+  'holton-run': 'Holton Run',
+  'renner-park': 'Renner Park',
+  'retreat-at-hickory-lakes': 'The Retreat at Hickory Lakes',
+  'reserve-at-new-california': 'The Reserve at New California',
+}
+
+const pageSlug = window.location.pathname.split('/').pop()?.replace(/\.html$/, '')
+const pagePlans = communityPlanData[pageSlug]
+const pagePlanGrid = document.querySelector('.offer-section .plan-grid:not([data-inventory-catalog])')
+
+if (pagePlans && pagePlanGrid) {
+  const existingCards = [...pagePlanGrid.querySelectorAll('.plan-card')]
+  const existingByName = new Map(existingCards.map((card) => [card.querySelector('h3')?.textContent.trim(), card]))
+
+  const cards = pagePlans.map((plan) => {
+    const displayName = `The ${plan.name}`
+    const fallbackName = displayName.replace(/ II$/, '')
+    const existingCard = existingByName.get(displayName)
+      || (plan.name === 'Jefferson II' ? existingByName.get(fallbackName) : null)
+    const card = existingCard || document.createElement('article')
+    card.classList.add('plan-card')
+
+    if (!card.querySelector('h3')) card.insertAdjacentHTML('beforeend', '<h3></h3>')
+    if (!card.querySelector('.plan-card-price')) card.insertAdjacentHTML('beforeend', '<p class="plan-card-price"></p>')
+    if (!card.querySelector('.plan-card-specs')) card.insertAdjacentHTML('beforeend', '<div class="plan-card-specs"></div>')
+
+    card.querySelector('h3').textContent = displayName
+    card.querySelector('.plan-card-price').textContent = `From $${plan.price.toLocaleString('en-US')}`
+    const specs = card.querySelector('.plan-card-specs')
+    if (!existingCard && planSpecs[plan.name]) {
+      const [beds, baths, stories] = planSpecs[plan.name]
+      specs.innerHTML = `<span>${beds} Beds</span><span>${baths} Baths</span><span>${stories} ${stories === 1 ? 'Story' : 'Stories'}</span>`
+    }
+    let area = [...specs.children].find((spec) => /Sq Ft/i.test(spec.textContent))
+    if (!area) {
+      area = document.createElement('span')
+      specs.append(area)
+    }
+    area.textContent = `${plan.sqft} Sq Ft`
+    return card
+  })
+
+  pagePlanGrid.replaceChildren(...cards)
+}
 
 const homeTourVideos = {
   'The Hayes': 'dlAZMudQ_Cs',
   'The Chester': 'VDvCNmqHTb4',
-  'The Concord': 'r49qznPEVGM',
   'The Erie': 'wex4pZnttPw',
   'The Franklin': 'aTDvFAywufw',
   'The Hanover': 'exIKm2N1H_c',
@@ -756,26 +849,183 @@ const homeTourVideos = {
 
 const tourVideoFor = (name) => homeTourVideos[name] || homeTourVideos[name.replace(/\s+II$/i, '')]
 
+const floorPlansByCommunity = {
+  'Jerome Village Aster': {
+    'The Carroll II': new URL('../media/Floor_Plans/Aster_in_Jerome_Village/AST CARROLL II Floor Plan Brochure 12.10.2024.pdf', import.meta.url).href,
+    'The Erie II': new URL('../media/Floor_Plans/Aster_in_Jerome_Village/AST ERIE II Floor Plan Brochure 12.10.2024.pdf', import.meta.url).href,
+    'The Franklin II': new URL('../media/Floor_Plans/Aster_in_Jerome_Village/AST FRANKLIN II Floor Plan Brochure 12.10.2024.pdf', import.meta.url).href,
+    'The Knox II': new URL('../media/Floor_Plans/Aster_in_Jerome_Village/AST KNOX II Floor Plan Brochure 12.10.2024.pdf', import.meta.url).href,
+    'The Madison II': new URL('../media/Floor_Plans/Aster_in_Jerome_Village/AST MADISON II Floor Plan Brochure 12.23.24.pdf', import.meta.url).href,
+    'The Seneca II': new URL('../media/Floor_Plans/Aster_in_Jerome_Village/AST SENECA II Floor Plan Brochure 12.10.2024.pdf', import.meta.url).href,
+    'The Trumbull II': new URL('../media/Floor_Plans/Aster_in_Jerome_Village/AST TRUMBULL II Floor Plan Brochure 12.10.2024.pdf', import.meta.url).href,
+    'The Vinton II': new URL('../media/Floor_Plans/Aster_in_Jerome_Village/AST VINTON II Floor Plan Brochure 12.10.2024.pdf', import.meta.url).href,
+  },
+  'Glacier Pointe': {
+    'The Addison': new URL('../media/Floor_Plans/Glacier_Pointe/GPT 4 Addison Floor Plan Brochure 11.2025.pdf', import.meta.url).href,
+    'The Chester': new URL('../media/Floor_Plans/Glacier_Pointe/GPT 4 Chester  Floor Plan Brochure 1.22.2026.pdf', import.meta.url).href,
+    'The Columbia': new URL('../media/Floor_Plans/Glacier_Pointe/GPT 4 Columbia  Floor Plan Brochure 1.15.2026.pdf', import.meta.url).href,
+    'The Hanover': new URL('../media/Floor_Plans/Glacier_Pointe/GPT 4 Hanover Floor Plan Brochure 1.22.26.pdf', import.meta.url).href,
+    'The Knox': new URL('../media/Floor_Plans/Glacier_Pointe/GPT 4 Knox Floor Plan Brochure 3.10.26.pdf', import.meta.url).href,
+    'The Reed': new URL('../media/Floor_Plans/Glacier_Pointe/GPT 4 Reed Floor Plan Brochure 2.2.26.pdf', import.meta.url).href,
+    'The York': new URL('../media/Floor_Plans/Glacier_Pointe/GPT 4 York Floor Plan Brochure 1.22.26.pdf', import.meta.url).href,
+  },
+  'Hickory Creek': {
+    'The Athens': new URL('../media/Floor_Plans/Hickory_Creek/HCK Athens Floor Plan Brochure 9.4.25.pdf', import.meta.url).href,
+    'The Benton': new URL('../media/Floor_Plans/Hickory_Creek/HCK Benton Floor Plan Brochure 8.2025.pdf', import.meta.url).href,
+    'The Columbia': new URL('../media/Floor_Plans/Hickory_Creek/HCK Columbia Floor Plan Brochure 8.28.2025.pdf', import.meta.url).href,
+    'The Fayette': new URL('../media/Floor_Plans/Hickory_Creek/HCK Fayette Floor Plan Brochure 9.25.pdf', import.meta.url).href,
+    'The Franklin': new URL('../media/Floor_Plans/Hickory_Creek/HCK Franklin Floor Plan Brochure 9.25.pdf', import.meta.url).href,
+    'The Harrison': new URL('../media/Floor_Plans/Hickory_Creek/HCK Harrison Floor Plan Brochure 9.25.pdf', import.meta.url).href,
+    'The Hayes': new URL('../media/Floor_Plans/Hickory_Creek/HCK Hayes Floor Plan Brochure 9.25.pdf', import.meta.url).href,
+    'The Hudson': new URL('../media/Floor_Plans/Hickory_Creek/HCK Hudson Floor Plan Brochure 9.25.pdf', import.meta.url).href,
+    'The Jefferson': new URL('../media/Floor_Plans/Hickory_Creek/HCK Jefferson Floor Plan Brochure 9.25.pdf', import.meta.url).href,
+    'The Madison': new URL('../media/Floor_Plans/Hickory_Creek/HCK Madison Floor Plan Brochure 9.25.pdf', import.meta.url).href,
+    'The Richland': new URL('../media/Floor_Plans/Hickory_Creek/HCK Richland Floor Plan Brochure 9.25.pdf', import.meta.url).href,
+    'The Stillwater': new URL('../media/Floor_Plans/Hickory_Creek/HCK Stillwater Floor Plan Brochure 9.25.pdf', import.meta.url).href,
+    'The Stillwater Plus': new URL('../media/Floor_Plans/Hickory_Creek/HCK Stillwater Plus Floor Plan Brochure 9.25.pdf', import.meta.url).href,
+    'The Vinton': new URL('../media/Floor_Plans/Hickory_Creek/HCK Vinton Floor Plan Brochure 9.25.pdf', import.meta.url).href,
+  },
+  'Holton Run': {
+    'The Hayes': new URL('../media/Floor_Plans/Holton_Run/HLT Hayes Floor Plan Brochure 2.6.25.pdf', import.meta.url).href,
+    'The Richland': new URL('../media/Floor_Plans/Holton_Run/HLT Richland Floor Plan Brochure 2.4.25.pdf', import.meta.url).href,
+  },
+  'Renner Park': {
+    'The Athens': new URL('../media/Floor_Plans/Renner_Park/RPK Athens Floor Plan Brochure 5.19.25.pdf', import.meta.url).href,
+    'The Benton': new URL('../media/Floor_Plans/Renner_Park/RPK Benton Floor Plan Brochure 8.11.2025.pdf', import.meta.url).href,
+    'The Columbia': new URL('../media/Floor_Plans/Renner_Park/RPK Columbia Floor Plan Brochure 10.7.2024.pdf', import.meta.url).href,
+    'The Fayette': new URL('../media/Floor_Plans/Renner_Park/RPK Fayette Floor Plan Brochure 10.10.24.pdf', import.meta.url).href,
+    'The Franklin': new URL('../media/Floor_Plans/Renner_Park/RPK Franklin Floor Plan Brochure 10.14.24.pdf', import.meta.url).href,
+    'The Hayes': new URL('../media/Floor_Plans/Renner_Park/RPK Hayes Floor Plan Brochure 10.11.24.pdf', import.meta.url).href,
+    'The Hudson': new URL('../media/Floor_Plans/Renner_Park/RPK Hudson Floor Plan Brochure 10.15.24.pdf', import.meta.url).href,
+    'The Madison': new URL('../media/Floor_Plans/Renner_Park/RPK Madison Floor Plan Brochure 10.15.24.pdf', import.meta.url).href,
+    'The Richland': new URL('../media/Floor_Plans/Renner_Park/RPK Richland Floor Plan Brochure 10.15.2024.pdf', import.meta.url).href,
+    'The Seneca': new URL('../media/Floor_Plans/Renner_Park/RPK Seneca Floor Plan Brochure 10.15.2024.pdf', import.meta.url).href,
+    'The Stillwater': new URL('../media/Floor_Plans/Renner_Park/RPK Stillwater Floor Plan Brochure 10.15.24.pdf', import.meta.url).href,
+    'The Stillwater Plus': new URL('../media/Floor_Plans/Renner_Park/Still_Water_plus_renner.pdf', import.meta.url).href,
+    'The Vinton': new URL('../media/Floor_Plans/Renner_Park/RPK Vinton Floor Plan Brochure 11.25.24.pdf', import.meta.url).href,
+  },
+  'The Cottages at Verbena': {
+    'The Reed': new URL('../media/Floor_Plans/The_Cottages_at_Verbena/CAV Reed Floor Plan Brochure 12.17.24.pdf', import.meta.url).href,
+    'The York': new URL('../media/Floor_Plans/The_Cottages_at_Verbena/CAV York Floor Plan Brochure 1.27.25.pdf', import.meta.url).href,
+  },
+  'The Retreat at Hickory Lakes': {
+    'The Fayette': new URL('../media/Floor_Plans/The_Retreat_At_Hickory_Lakes/6a4bc8329ef3f0614bf8f50a_RHL-Fayette-Floor-Plan-Brochure-PRINT-READY-6.5.2026-compressed.pdf', import.meta.url).href,
+    'The Franklin': new URL('../media/Floor_Plans/The_Retreat_At_Hickory_Lakes/6a4bc841f5d8d339523880a8_RHL-Franklin-Floor-Plan-Brochure-PRINT-READY-6.5.2026-compressed.pdf', import.meta.url).href,
+    'The Hayes': new URL('../media/Floor_Plans/The_Retreat_At_Hickory_Lakes/6a4bc818494b8d65067c1cfe_RHL-Hayes-Floor-Plan-Brochure-PRINT-READY-6.5.2026-compressed.pdf', import.meta.url).href,
+    'The Hudson': new URL('../media/Floor_Plans/The_Retreat_At_Hickory_Lakes/6a4bc643b4336b9356eba41c_RHL-Hudson-Floor-Plan-Brochure-PRINT-READY-6.5.2026-compressed.pdf', import.meta.url).href,
+    'The Jefferson': new URL('../media/Floor_Plans/The_Retreat_At_Hickory_Lakes/6a4bc59a58506f56c48d86df_RHL-Jefferson-Floor-Plan-Brochure-PRINT-READY-6.5.2026-compressed.pdf', import.meta.url).href,
+    'The Madison': new URL('../media/Floor_Plans/The_Retreat_At_Hickory_Lakes/6a4bc59db46bda8ae74564e8_RHL-Madison-Floor-Plan-Brochure-PRINT-READY-6.5.2026-compressed.pdf', import.meta.url).href,
+    'The Richland': new URL('../media/Floor_Plans/The_Retreat_At_Hickory_Lakes/6a4bc59db46bda8ae74564fb_RHL-Richland-Floor-Plan-Brochure-PRINT-READY-6.5.2026-compressed.pdf', import.meta.url).href,
+    'The Stillwater': new URL('../media/Floor_Plans/The_Retreat_At_Hickory_Lakes/6a4bc5501d383992212af24f_RHL-Stillwater-Floor-Plan-Brochure-PRINT-ORDER-6.5.2026-compressed.pdf', import.meta.url).href,
+    'The Stillwater Plus': new URL('../media/Floor_Plans/The_Retreat_At_Hickory_Lakes/6a4bc5219ef3f0614bf6db5a_RHL-Stillwater-Plus-Floor-Plan-Brochure-PRINT-READY-6.5.2026-compressed.pdf', import.meta.url).href,
+    'The Vinton': new URL('../media/Floor_Plans/The_Retreat_At_Hickory_Lakes/6a4bc8c2f5d8d3395238df26_RHL-VINTON-Floor-Plan-Brochure-PRINT-READY-6.5.2026-compressed.pdf', import.meta.url).href,
+  },
+  'The Reserve at New California': {
+    'The Erie': new URL('../media/Floor_Plans/The_Reserve_at_New_California/RNC Erie Floor Plan Brochure 10.10.24.pdf', import.meta.url).href,
+    'The Franklin': new URL('../media/Floor_Plans/The_Reserve_at_New_California/RNC Franklin Floor Plan Brochure 4.17.25.pdf', import.meta.url).href,
+    'The Jefferson II': new URL('../media/Floor_Plans/The_Reserve_at_New_California/RNC Jefferson Floor Plan Brochure 9.22.25.pdf', import.meta.url).href,
+    'The Knox': new URL('../media/Floor_Plans/The_Reserve_at_New_California/RNC Knox Floor Plan Brochure 10.10.24.pdf', import.meta.url).href,
+    'The Seneca': new URL('../media/Floor_Plans/The_Reserve_at_New_California/RNC Seneca Floor Plan Brochure 10.10.24.pdf', import.meta.url).href,
+    'The Vinton': new URL('../media/Floor_Plans/The_Reserve_at_New_California/RNC Vinton Floor Plan Brochure 10.10.24.pdf', import.meta.url).href,
+  },
+}
+
+// This derives the live missing list from the authoritative community catalog,
+// so it stays accurate whenever another brochure is added above.
+const missingFloorPlansByCommunity = Object.fromEntries(
+  Object.entries(communityPlanData).map(([communitySlug, plans]) => [
+    communityNames[communitySlug],
+    plans
+      .filter(({ name }) => !floorPlansByCommunity[communityNames[communitySlug]]?.[`The ${name}`])
+      .map(({ name }) => `The ${name}`),
+  ]),
+)
+
+const floorPlanFor = (name, community) => floorPlansByCommunity[community]?.[name] || null
+
+const planImagesByCommunity = {
+  'Jerome Village Aster': {
+    'The Carroll II': new URL('../media/Renders/Aster_in_Jerome_Village/Carroll_II.jpg', import.meta.url).href,
+    'The Erie II': new URL('../media/Renders/Aster_in_Jerome_Village/Erie_II.jpg', import.meta.url).href,
+    'The Franklin II': new URL('../media/Renders/Aster_in_Jerome_Village/Franklin_II.jpg', import.meta.url).href,
+    'The Knox II': new URL('../media/Renders/Aster_in_Jerome_Village/Knox_II.jpg', import.meta.url).href,
+    'The Madison II': new URL('../media/Renders/Aster_in_Jerome_Village/Madison_II.jpg', import.meta.url).href,
+    'The Seneca II': new URL('../media/Renders/Aster_in_Jerome_Village/Seneca_II.jpg', import.meta.url).href,
+    'The Trumbull II': new URL('../media/Renders/Aster_in_Jerome_Village/Trumbull_II.jpg', import.meta.url).href,
+    'The Vinton II': new URL('../media/Renders/Aster_in_Jerome_Village/Vinton_II.jpg', import.meta.url).href,
+  },
+  'The Cottages at Verbena': {
+    'The Reed': new URL('../media/Renders/The_Cottages_at_Verbena/Reed.jpg', import.meta.url).href,
+    'The York': new URL('../media/Renders/The_Cottages_at_Verbena/York.jpg', import.meta.url).href,
+  },
+  'Glacier Pointe': {
+    'The Addison': new URL('../media/Renders/Glacier_Pointe/Addison.jpg', import.meta.url).href,
+    'The Chester': new URL('../media/Renders/Glacier_Pointe/Chester.jpg', import.meta.url).href,
+    'The Columbia': new URL('../media/Renders/Glacier_Pointe/Columbia.jpg', import.meta.url).href,
+    'The Hanover': new URL('../media/Renders/Glacier_Pointe/Hanover.jpg', import.meta.url).href,
+    'The Knox': new URL('../media/Renders/Glacier_Pointe/Knox.jpg', import.meta.url).href,
+    'The Reed': new URL('../media/Renders/Glacier_Pointe/Reed.jpg', import.meta.url).href,
+    'The York': new URL('../media/Renders/Glacier_Pointe/York.jpg', import.meta.url).href,
+  },
+  'Hickory Creek': {
+    'The Athens': new URL('../media/Renders/Hickory_Creek/Athens.jpg', import.meta.url).href,
+    'The Benton': new URL('../media/Renders/Hickory_Creek/Benton.jpg', import.meta.url).href,
+    'The Columbia': new URL('../media/Renders/Hickory_Creek/Columbia.jpg', import.meta.url).href,
+    'The Fayette': new URL('../media/Renders/Hickory_Creek/Fayette.jpg', import.meta.url).href,
+    'The Franklin': new URL('../media/Renders/Hickory_Creek/Franklin.jpg', import.meta.url).href,
+    'The Harrison': new URL('../media/Renders/Hickory_Creek/Harrison.png', import.meta.url).href,
+    'The Jefferson': new URL('../media/Renders/Hickory_Creek/Jefferson.jpg', import.meta.url).href,
+  },
+  'Renner Park': {
+    'The Benton': new URL('../media/Renders/Renner_Park/Benton.jpg', import.meta.url).href,
+    'The Columbia': new URL('../media/Renders/Renner_Park/Columbia.jpg', import.meta.url).href,
+    'The Fayette': new URL('../media/Renders/Renner_Park/Fayette.jpg', import.meta.url).href,
+    'The Franklin': new URL('../media/Renders/Renner_Park/Franklin.jpg', import.meta.url).href,
+    'The Madison': new URL('../media/Renders/Renner_Park/Madison.jpg', import.meta.url).href,
+    'The Stillwater': new URL('../media/Renders/Renner_Park/Stillwater.png', import.meta.url).href,
+  },
+  'The Retreat at Hickory Lakes': {
+    'The Fayette': new URL('../media/Renders/The_Retreat_at_Hickory_Lakes/Fayette.jpg', import.meta.url).href,
+    'The Franklin': new URL('../media/Renders/The_Retreat_at_Hickory_Lakes/Franklin.jpg', import.meta.url).href,
+    'The Hayes': new URL('../media/Renders/The_Retreat_at_Hickory_Lakes/Hayes.jpg', import.meta.url).href,
+    'The Hudson': new URL('../media/Renders/The_Retreat_at_Hickory_Lakes/Hudson.jpg', import.meta.url).href,
+    'The Jefferson': new URL('../media/Renders/The_Retreat_at_Hickory_Lakes/Jefferson.jpg', import.meta.url).href,
+    'The Madison': new URL('../media/Renders/The_Retreat_at_Hickory_Lakes/Madison.jpg', import.meta.url).href,
+    'The Richland': new URL('../media/Renders/The_Retreat_at_Hickory_Lakes/Richland.jpg', import.meta.url).href,
+    'The Seneca': new URL('../media/Renders/The_Retreat_at_Hickory_Lakes/Seneca.jpg', import.meta.url).href,
+    'The Stillwater': new URL('../media/Renders/The_Retreat_at_Hickory_Lakes/Stillwater.jpg', import.meta.url).href,
+    'The Stillwater Plus': new URL('../media/Renders/The_Retreat_at_Hickory_Lakes/Stillwater_Plus.jpg', import.meta.url).href,
+    'The Vinton': new URL('../media/Renders/The_Retreat_at_Hickory_Lakes/Vinton.jpg', import.meta.url).href,
+  },
+  'The Reserve at New California': {
+    'The Erie': new URL('../media/Renders/The_Reserve_at_New_California/Erie.jpg', import.meta.url).href,
+    'The Franklin': new URL('../media/Renders/The_Reserve_at_New_California/Franklin.jpg', import.meta.url).href,
+    'The Jefferson II': new URL('../media/Renders/The_Reserve_at_New_California/Jefferson_II.jpg', import.meta.url).href,
+    'The Knox': new URL('../media/Renders/The_Reserve_at_New_California/Knox.jpg', import.meta.url).href,
+    'The Seneca': new URL('../media/Renders/The_Reserve_at_New_California/Seneca.jpg', import.meta.url).href,
+    'The Vinton': new URL('../media/Renders/The_Reserve_at_New_California/Vinton.jpg', import.meta.url).href,
+  },
+}
+
+const planImageFor = (name, community) => {
+  const communityImages = planImagesByCommunity[community]
+  if (communityImages) return communityImages[name] || null
+  return Object.values(planImagesByCommunity).find((images) => images[name])?.[name] || null
+}
+
 const inventoryGrid = document.querySelector('[data-inventory-catalog]')
 if (inventoryGrid) {
-  const inventoryCommunity = (name) => {
-    if (['The Chester', 'The Hanover', 'The Harmony', 'The Reed', 'The Springfield', 'The York'].includes(name)) return 'The Cottages at Verbena'
-    if (['The Addison', 'The Columbia', 'The Knox'].includes(name)) return 'Glacier Pointe'
-    if (['The Seneca'].includes(name)) return 'Holton Run'
-    if (name.endsWith(' II')) return 'Jerome Village Aster'
-    if (name === 'The Erie') return 'The Reserve at New California'
-    return 'Hickory Creek'
-  }
-
-  inventoryCatalog.forEach(([name, price, beds, baths, stories]) => {
+  inventoryPlans.forEach(({ name, price, sqft, communities }) => {
+    const [beds, baths, stories] = planSpecs[name] || []
     const card = document.createElement('article')
     card.className = 'plan-card'
-    card.dataset.community = inventoryCommunity(name)
+    card.dataset.community = communities.length === 1 ? communityNames[communities[0]] : 'Multiple Communities'
     card.innerHTML = `
-      <h3>${name}</h3>
+      <h3>The ${name}</h3>
       <p class="plan-card-price">From $${price.toLocaleString()}</p>
       <div class="plan-card-specs">
-        <span>${beds} Beds</span><span>${baths} Baths</span><span>${stories} ${stories === 1 ? 'Story' : 'Stories'}</span>
+        ${beds ? `<span>${beds} Beds</span><span>${baths} Baths</span><span>${stories} ${stories === 1 ? 'Story' : 'Stories'}</span>` : ''}
+        <span>${sqft} Sq Ft</span>
       </div>`
     inventoryGrid.append(card)
   })
@@ -789,9 +1039,12 @@ document.querySelectorAll('.plan-card').forEach((card) => {
 
   card.querySelector('.plan-card-icon')?.remove()
 
+  const planName = title.textContent.trim()
+  const planCommunity = card.dataset.community || document.querySelector('.page-title h1')?.textContent.trim()
+  const planImage = planImageFor(planName, planCommunity)
   const media = document.createElement('div')
   media.className = 'plan-card-media'
-  media.innerHTML = `<img src="${homePlaceholderUrl}" alt="Home exterior" />`
+  media.innerHTML = `<img src="${planImage || homePlaceholderUrl}" alt="${planImage ? `${planName} exterior rendering` : 'Home exterior'}" />`
 
   if (['The Chester', 'The Franklin'].includes(title.textContent.trim())) {
     card.classList.add('is-move-in-ready')
@@ -914,8 +1167,7 @@ document.querySelectorAll('.plan-card').forEach((card) => {
   const tourVideo = tourVideoFor(title.textContent.trim())
   if (tourVideo) {
     actions.lastElementChild.addEventListener('click', () => {
-      sessionStorage.setItem('openHomeVirtualTour', 'true')
-      actions.firstElementChild.click()
+      window.open(`https://www.youtube.com/watch?v=${tourVideo}`, '_blank', 'noopener,noreferrer')
     })
   } else {
     actions.lastElementChild.hidden = true
@@ -946,27 +1198,30 @@ if (homeDetails) {
   homeDetails.querySelector('[data-detail-sqft]').textContent = `${details.sqft} Square Feet`
   homeDetails.querySelector('[data-detail-stories]').textContent = `${details.stories} ${details.stories === '1' ? 'Story' : 'Stories'}`
   homeDetails.querySelector('[data-tour-home]').value = details.name
+
+  const detailImage = planImageFor(details.name, details.community)
+  const detailHeroImage = homeDetails.querySelector('.home-detail-hero img')
+  if (detailImage && detailHeroImage) {
+    detailHeroImage.src = detailImage
+    detailHeroImage.alt = `${details.name} exterior rendering`
+  }
+
   const tourVideo = tourVideoFor(details.name)
-  const tourSection = homeDetails.querySelector('[data-detail-tour]')
-  const tourFrame = homeDetails.querySelector('[data-detail-tour-frame]')
-  if (tourVideo && tourSection && tourFrame) {
-    const tourVideoUrl = `https://www.youtube-nocookie.com/embed/${tourVideo}?playsinline=1&rel=0`
-    tourFrame.src = tourVideoUrl
-    tourFrame.title = `${details.name} virtual tour`
-    tourSection.hidden = false
+  const tourResource = homeDetails.querySelector('[data-detail-tour-resource]')
+  const tourLink = homeDetails.querySelector('[data-detail-tour-link]')
+  if (tourVideo && tourResource && tourLink) {
+    tourLink.href = `https://www.youtube.com/watch?v=${tourVideo}`
+    tourLink.hidden = false
+    tourResource.hidden = false
+  }
 
-    const tourObserver = new IntersectionObserver((entries) => {
-      if (!entries.some((entry) => entry.isIntersecting)) return
-      tourFrame.src = `${tourVideoUrl}&autoplay=1&mute=1`
-      tourObserver.disconnect()
-    }, { threshold: 0.4 })
-
-    tourObserver.observe(tourSection)
-
-    if (sessionStorage.getItem('openHomeVirtualTour') === 'true') {
-      sessionStorage.removeItem('openHomeVirtualTour')
-      requestAnimationFrame(() => tourSection.scrollIntoView({ behavior: 'smooth', block: 'start' }))
-    }
+  const floorPlan = floorPlanFor(details.name, details.community)
+  const floorPlanLink = homeDetails.querySelector('[data-detail-floor-plan-link]')
+  const floorPlanUnavailable = homeDetails.querySelector('[data-detail-floor-plan-unavailable]')
+  if (floorPlan && floorPlanLink && floorPlanUnavailable) {
+    floorPlanLink.href = floorPlan
+    floorPlanLink.hidden = false
+    floorPlanUnavailable.hidden = true
   }
 }
 
