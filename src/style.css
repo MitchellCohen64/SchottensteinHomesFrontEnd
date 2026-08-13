@@ -757,23 +757,23 @@ button {
 }
 
 .hero-slide:nth-child(1) {
-  background-image: url("/media/home-hero/testHero1.jpeg");
+  background-image: url("/media/Renders/Aster_in_Jerome_Village/Carroll_II.jpg");
 }
 
 .hero-slide:nth-child(2) {
-  background-image: url("/media/home-hero/testHero2.jpeg");
+  background-image: url("/media/Renders/Holton_Run/Madison.jpg");
 }
 
 .hero-slide:nth-child(3) {
-  background-image: url("/media/home-hero/heroHomeImg1.png");
+  background-image: url("/media/Renders/Aster_in_Jerome_Village/Franklin_II.jpg");
 }
 
 .hero-slide:nth-child(4) {
-  background-image: url("/media/home-hero/heroHomeImg2.png");
+  background-image: url("/media/Renders/Holton_Run/Fayette.jpg");
 }
 
 .hero-slide:nth-child(5) {
-  background-image: url("/media/home-hero/heroHomeImg3.png");
+  background-image: url("/media/Renders/Aster_in_Jerome_Village/Erie_II.jpg");
 }
 
 .hero-slide.is-active {
@@ -2234,30 +2234,42 @@ h1 {
   }
 
   .footer-inner {
-    width: min(100% - 48px, 480px);
-    padding: 52px 0 38px;
+    width: min(100% - 36px, 480px);
+    padding: 32px 0 24px;
   }
 
   .footer-columns {
-    grid-template-columns: 1fr;
-    gap: 38px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 20px;
+    row-gap: 24px;
+  }
+
+  .footer-contact {
+    grid-column: 1 / -1;
   }
 
   .footer-column h3 {
-    margin-bottom: 18px;
+    margin-bottom: 11px;
   }
 
   .footer-list {
-    gap: 9px;
+    gap: 4px;
   }
 
+  .footer-list span,
   .footer-list a {
-    padding: 5px 0;
-    margin: -5px 0;
+    font-size: 12px;
+    line-height: 1.25;
+  }
+
+  .footer-contact .footer-list {
+    gap: 5px;
   }
 
   .footer-legal {
-    margin-top: 42px;
+    margin-top: 24px;
+    font-size: 9px;
+    line-height: 1.35;
   }
 }
 
@@ -3048,9 +3060,26 @@ h1 {
     font-size: clamp(22px, 7.1vw, 36px);
   }
 
-  .communities-grid {
+  .communities-browser .communities-grid {
     grid-template-columns: 1fr;
+    gap: 24px;
     max-width: 480px;
+  }
+
+  .communities-browser .community-card,
+  .communities-browser .community-card:nth-child(odd),
+  .communities-browser .community-card:nth-child(even) {
+    width: 100%;
+    justify-self: stretch;
+  }
+
+  .communities-browser .community-card-body,
+  .communities-browser .community-card.is-featured .community-card-body {
+    min-height: 0;
+  }
+
+  .communities-browser .community-card-details {
+    flex: 0 0 auto;
   }
 
   .community-card.is-featured {

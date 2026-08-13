@@ -510,140 +510,14 @@ const homePlaceholderUrl = `data:image/svg+xml,${encodeURIComponent(`
 communityCards.forEach((card) => {
   const media = card.querySelector('.community-card-media')
   const image = media?.querySelector('img')
-  const communityName = card.querySelector('h3')?.textContent.trim() ?? 'community'
-
   if (!media || !image) return
-
-  image.classList.add('community-card-slide', 'is-active')
-
-  const redPlaceholder = document.createElement('div')
-  redPlaceholder.className = 'community-card-slide community-card-placeholder is-red'
-  redPlaceholder.setAttribute('role', 'img')
-  redPlaceholder.setAttribute('aria-label', `Placeholder for ${communityName} image 2`)
-  redPlaceholder.innerHTML = placeholderHouseIcon
-
-  const bluePlaceholder = document.createElement('div')
-  bluePlaceholder.className = 'community-card-slide community-card-placeholder is-blue'
-  bluePlaceholder.setAttribute('role', 'img')
-  bluePlaceholder.setAttribute('aria-label', `Placeholder for ${communityName} image 3`)
-  bluePlaceholder.innerHTML = placeholderHouseIcon
-
-  const dots = document.createElement('div')
-  dots.className = 'community-card-dots'
-  dots.setAttribute('role', 'group')
-  dots.setAttribute('aria-label', `${communityName} photos`)
-
-  const slides = [image, redPlaceholder, bluePlaceholder]
-  let activeSlide = 0
-
-  const showSlide = (index) => {
-    activeSlide = (index + slides.length) % slides.length
-    dots.style.setProperty('--dot-offset', `${(activeSlide - 1) * 17}px`)
-    slides.forEach((item, slideIndex) => item.classList.toggle('is-active', slideIndex === activeSlide))
-    dots.querySelectorAll('.community-card-dot').forEach((item, dotIndex) => {
-      item.classList.toggle('is-active', dotIndex === activeSlide)
-      item.setAttribute('aria-pressed', dotIndex === activeSlide ? 'true' : 'false')
-    })
-  }
-
-  slides.forEach((slide, index) => {
-    if (index > 0) media.append(slide)
-
-    const dot = document.createElement('button')
-    dot.type = 'button'
-    dot.className = `community-card-dot${index === 0 ? ' is-active' : ''}`
-    dot.setAttribute('aria-label', `Show ${communityName} image ${index + 1}`)
-    dot.setAttribute('aria-pressed', index === 0 ? 'true' : 'false')
-
-    dot.addEventListener('click', () => showSlide(index))
-
-    dots.append(dot)
-  })
-
-  const previous = document.createElement('button')
-  previous.type = 'button'
-  previous.className = 'community-card-arrow is-previous'
-  previous.setAttribute('aria-label', `Show previous ${communityName} photo`)
-  previous.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6-6 6 6 6"></path></svg>'
-  previous.addEventListener('click', () => showSlide(activeSlide - 1))
-
-  const next = document.createElement('button')
-  next.type = 'button'
-  next.className = 'community-card-arrow is-next'
-  next.setAttribute('aria-label', `Show next ${communityName} photo`)
-  next.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9.5 6 6 6-6 6"></path></svg>'
-  next.addEventListener('click', () => showSlide(activeSlide + 1))
-
-  media.append(dots, previous, next)
+  image.classList.remove('community-card-slide', 'is-active')
 })
 
 document.querySelectorAll('.virtual-tours-page .video-card-gallery').forEach((card) => {
   const image = card.querySelector('img')
-  const homeName = card.querySelector('strong')?.textContent.trim() ?? 'home'
-
   if (!image) return
-
-  image.classList.add('community-card-slide', 'is-active')
-
-  const placeholders = ['is-red', 'is-blue'].map((colorClass, index) => {
-    const placeholder = document.createElement('div')
-    placeholder.className = `community-card-slide community-card-placeholder ${colorClass}`
-    placeholder.setAttribute('role', 'img')
-    placeholder.setAttribute('aria-label', `Placeholder for ${homeName} image ${index + 2}`)
-    placeholder.innerHTML = placeholderHouseIcon
-    return placeholder
-  })
-
-  const slides = [image, ...placeholders]
-  const dots = document.createElement('div')
-  dots.className = 'community-card-dots'
-  dots.setAttribute('role', 'group')
-  dots.setAttribute('aria-label', `${homeName} photos`)
-  let activeSlide = 0
-
-  const showSlide = (index) => {
-    activeSlide = (index + slides.length) % slides.length
-    dots.style.setProperty('--dot-offset', `${(activeSlide - 1) * 17}px`)
-    slides.forEach((slide, slideIndex) => slide.classList.toggle('is-active', slideIndex === activeSlide))
-    dots.querySelectorAll('.community-card-dot').forEach((dot, dotIndex) => {
-      dot.classList.toggle('is-active', dotIndex === activeSlide)
-      dot.setAttribute('aria-pressed', dotIndex === activeSlide ? 'true' : 'false')
-    })
-  }
-
-  slides.forEach((slide, index) => {
-    if (index > 0) card.append(slide)
-
-    const dot = document.createElement('button')
-    dot.type = 'button'
-    dot.className = `community-card-dot${index === 0 ? ' is-active' : ''}`
-    dot.setAttribute('aria-label', `Show ${homeName} image ${index + 1}`)
-    dot.setAttribute('aria-pressed', index === 0 ? 'true' : 'false')
-    dot.addEventListener('click', (event) => {
-      event.preventDefault()
-      event.stopPropagation()
-      showSlide(index)
-    })
-    dots.append(dot)
-  })
-
-  const createArrow = (direction, step) => {
-    const arrow = document.createElement('button')
-    arrow.type = 'button'
-    arrow.className = `community-card-arrow is-${direction}`
-    arrow.setAttribute('aria-label', `Show ${direction === 'previous' ? 'previous' : 'next'} ${homeName} photo`)
-    arrow.innerHTML = direction === 'previous'
-      ? '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6-6 6 6 6"></path></svg>'
-      : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9.5 6 6 6-6 6"></path></svg>'
-    arrow.addEventListener('click', (event) => {
-      event.preventDefault()
-      event.stopPropagation()
-      showSlide(activeSlide + step)
-    })
-    return arrow
-  }
-
-  card.append(dots, createArrow('previous', -1), createArrow('next', 1))
+  image.classList.remove('community-card-slide', 'is-active')
 })
 
 if (filterPills.length && communityCards.length) {
@@ -980,15 +854,38 @@ const planImagesByCommunity = {
     'The Fayette': new URL('../media/Renders/Hickory_Creek/Fayette.jpg', import.meta.url).href,
     'The Franklin': new URL('../media/Renders/Hickory_Creek/Franklin.jpg', import.meta.url).href,
     'The Harrison': new URL('../media/Renders/Hickory_Creek/Harrison.png', import.meta.url).href,
+    'The Hayes': new URL('../media/Renders/Hickory_Creek/Hayes.jpg', import.meta.url).href,
+    'The Hudson': new URL('../media/Renders/Hickory_Creek/Hudson.jpg', import.meta.url).href,
     'The Jefferson': new URL('../media/Renders/Hickory_Creek/Jefferson.jpg', import.meta.url).href,
+    'The Madison': new URL('../media/Renders/Hickory_Creek/Madison.jpg', import.meta.url).href,
+    'The Richland': new URL('../media/Renders/Hickory_Creek/Richland.jpg', import.meta.url).href,
+    'The Stillwater': new URL('../media/Renders/Hickory_Creek/Stillwater.png', import.meta.url).href,
+    'The Stillwater Plus': new URL('../media/Renders/Hickory_Creek/Stillwater_Plus.png', import.meta.url).href,
+    'The Vinton': new URL('../media/Renders/Hickory_Creek/Vinton.jpg', import.meta.url).href,
+  },
+  'Holton Run': {
+    'The Fayette': new URL('../media/Renders/Holton_Run/Fayette.jpg', import.meta.url).href,
+    'The Franklin': new URL('../media/Renders/Holton_Run/Franklin.jpg', import.meta.url).href,
+    'The Hayes': new URL('../media/Renders/Holton_Run/Hayes.jpg', import.meta.url).href,
+    'The Madison': new URL('../media/Renders/Holton_Run/Madison.jpg', import.meta.url).href,
+    'The Richland': new URL('../media/Renders/Holton_Run/Richland.jpg', import.meta.url).href,
+    'The Seneca': new URL('../media/Renders/Holton_Run/Seneca.jpg', import.meta.url).href,
+    'The Vinton': new URL('../media/Renders/Holton_Run/Vinton.jpg', import.meta.url).href,
   },
   'Renner Park': {
+    'The Athens': new URL('../media/Renders/Renner_Park/Athens.jpg', import.meta.url).href,
     'The Benton': new URL('../media/Renders/Renner_Park/Benton.jpg', import.meta.url).href,
     'The Columbia': new URL('../media/Renders/Renner_Park/Columbia.jpg', import.meta.url).href,
     'The Fayette': new URL('../media/Renders/Renner_Park/Fayette.jpg', import.meta.url).href,
     'The Franklin': new URL('../media/Renders/Renner_Park/Franklin.jpg', import.meta.url).href,
+    'The Hayes': new URL('../media/Renders/Renner_Park/Hayes.jpg', import.meta.url).href,
+    'The Hudson': new URL('../media/Renders/Renner_Park/Hudson.jpg', import.meta.url).href,
     'The Madison': new URL('../media/Renders/Renner_Park/Madison.jpg', import.meta.url).href,
+    'The Richland': new URL('../media/Renders/Renner_Park/Richland.jpg', import.meta.url).href,
+    'The Seneca': new URL('../media/Renders/Renner_Park/Seneca_II.jpg', import.meta.url).href,
     'The Stillwater': new URL('../media/Renders/Renner_Park/Stillwater.png', import.meta.url).href,
+    'The Stillwater Plus': new URL('../media/Renders/Renner_Park/Stillwater_Plus.jpg', import.meta.url).href,
+    'The Vinton': new URL('../media/Renders/Renner_Park/Vinton.jpg', import.meta.url).href,
   },
   'The Retreat at Hickory Lakes': {
     'The Fayette': new URL('../media/Renders/The_Retreat_at_Hickory_Lakes/Fayette.jpg', import.meta.url).href,
@@ -1016,7 +913,10 @@ const planImagesByCommunity = {
 const planImageFor = (name, community) => {
   const communityImages = planImagesByCommunity[community]
   if (communityImages) return communityImages[name] || null
-  return Object.values(planImagesByCommunity).find((images) => images[name])?.[name] || null
+  if (community === 'Multiple Communities' || community === 'Schottenstein Homes') {
+    return Object.values(planImagesByCommunity).find((images) => images[name])?.[name] || null
+  }
+  return null
 }
 
 const inventoryGrid = document.querySelector('[data-inventory-catalog]')
@@ -1056,65 +956,6 @@ document.querySelectorAll('.plan-card').forEach((card) => {
     card.classList.add('is-move-in-ready')
     media.insertAdjacentHTML('beforeend', '<span class="plan-card-ready-banner">Move-In Ready</span>')
   }
-
-  const galleryImage = media.querySelector('img')
-  galleryImage.classList.add('community-card-slide', 'is-active')
-
-  const gallerySlides = [galleryImage, ...['is-red', 'is-blue'].map((colorClass, index) => {
-    const placeholder = document.createElement('div')
-    placeholder.className = `community-card-slide community-card-placeholder ${colorClass}`
-    placeholder.setAttribute('role', 'img')
-    placeholder.setAttribute('aria-label', `Placeholder for ${title.textContent.trim()} image ${index + 2}`)
-    placeholder.innerHTML = placeholderHouseIcon
-    media.append(placeholder)
-    return placeholder
-  })]
-
-  const galleryDots = document.createElement('div')
-  galleryDots.className = 'community-card-dots'
-  galleryDots.setAttribute('role', 'group')
-  galleryDots.setAttribute('aria-label', `${title.textContent.trim()} photos`)
-  let activeGallerySlide = 0
-
-  const showGallerySlide = (index) => {
-    activeGallerySlide = (index + gallerySlides.length) % gallerySlides.length
-    galleryDots.style.setProperty('--dot-offset', `${(activeGallerySlide - 1) * 17}px`)
-    gallerySlides.forEach((slide, slideIndex) => slide.classList.toggle('is-active', slideIndex === activeGallerySlide))
-    galleryDots.querySelectorAll('.community-card-dot').forEach((dot, dotIndex) => {
-      dot.classList.toggle('is-active', dotIndex === activeGallerySlide)
-      dot.setAttribute('aria-pressed', dotIndex === activeGallerySlide ? 'true' : 'false')
-    })
-  }
-
-  gallerySlides.forEach((slide, index) => {
-    const dot = document.createElement('button')
-    dot.type = 'button'
-    dot.className = `community-card-dot${index === 0 ? ' is-active' : ''}`
-    dot.setAttribute('aria-label', `Show ${title.textContent.trim()} image ${index + 1}`)
-    dot.setAttribute('aria-pressed', index === 0 ? 'true' : 'false')
-    dot.addEventListener('click', (event) => {
-      event.stopPropagation()
-      showGallerySlide(index)
-    })
-    galleryDots.append(dot)
-  })
-
-  const makeGalleryArrow = (direction, step) => {
-    const arrow = document.createElement('button')
-    arrow.type = 'button'
-    arrow.className = `community-card-arrow is-${direction}`
-    arrow.setAttribute('aria-label', `Show ${direction === 'previous' ? 'previous' : 'next'} ${title.textContent.trim()} photo`)
-    arrow.innerHTML = direction === 'previous'
-      ? '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6-6 6 6 6"></path></svg>'
-      : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9.5 6 6 6-6 6"></path></svg>'
-    arrow.addEventListener('click', (event) => {
-      event.stopPropagation()
-      showGallerySlide(activeGallerySlide + step)
-    })
-    return arrow
-  }
-
-  media.append(galleryDots, makeGalleryArrow('previous', -1), makeGalleryArrow('next', 1))
 
   const body = document.createElement('div')
   body.className = 'plan-card-body'
