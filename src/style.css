@@ -342,6 +342,7 @@ button {
 .home-page .site-header:not(.is-scrolled) .brand img {
   width: 380px;
   height: 110px;
+  filter: brightness(0) invert(1);
   transform: scale(1.45);
 }
 
@@ -1392,7 +1393,7 @@ h1 {
 .featured-community-copy .featured-community-all {
   margin-top: 18px;
   color: #252321;
-  font-size: 15px;
+  font-size: 17px;
 }
 
 .featured-community-copy a:hover,
@@ -1601,6 +1602,8 @@ h1 {
 }
 
 .community-pin svg {
+  display: block;
+  margin: 0 auto;
   width: 32px;
   height: 40px;
   overflow: visible;
@@ -1616,6 +1619,22 @@ h1 {
 
 .community-pin circle {
   fill: #fff9f0;
+}
+
+.community-pin-price {
+  position: absolute;
+  top: 39px;
+  left: 50%;
+  min-width: 47px;
+  padding: 3px 6px;
+  border-radius: 999px;
+  background: #b51f35;
+  box-shadow: 0 2px 6px rgba(72, 10, 20, .28);
+  color: #fff;
+  font: 600 11px/1.2 "Jost", "Montserrat", sans-serif;
+  text-align: center;
+  transform: translateX(-50%);
+  white-space: nowrap;
 }
 
 .community-pin:hover svg {
@@ -2839,10 +2858,11 @@ h1 {
 .communities-browser {
   display: grid;
   height: calc(100vh - 78px);
-  grid-template-columns: minmax(0, 60%) minmax(400px, 40%);
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
   align-items: stretch;
   overflow: hidden;
   background: #f8f5ef;
+  transition: grid-template-columns 360ms cubic-bezier(.22, 1, .36, 1);
 }
 
 .communities-browser .offer-section {
@@ -2855,12 +2875,13 @@ h1 {
 }
 
 .communities-browser .offer-heading {
+  margin-bottom: 24px;
   text-align: left;
 }
 
 .communities-browser .offer-heading h2 {
   font-family: "Times New Roman", Times, serif;
-  font-size: clamp(40px, 3.8vw, 58px);
+  font-size: clamp(38px, 3.1vw, 54px);
   white-space: nowrap;
 }
 
@@ -2871,13 +2892,27 @@ h1 {
 .communities-browser .communities-filter {
   justify-content: flex-start;
   gap: 10px;
-  margin-bottom: 36px;
+  margin: 0 0 0 auto;
 }
 
 .communities-browser .communities-result-count {
-  margin: 0 0 12px;
+  margin: 0;
   text-align: left;
 }
+
+.communities-results-bar { display: flex; align-items: center; gap: 14px; margin: 0 0 28px; }
+.communities-results-bar .communities-result-count { flex: 0 0 auto; }
+.communities-results-bar .communities-map-toggle { margin-left: 8px; }
+.communities-map-toggle { display: inline-flex; align-items: center; gap: 9px; padding: 0; border: 0; background: transparent; color: #252321; font: 500 13px "Jost", sans-serif; cursor: pointer; }
+.communities-map-toggle i { position: relative; width: 40px; height: 22px; border-radius: 999px; background: #252321; transition: background 180ms ease; }
+.communities-map-toggle i::after { position: absolute; top: 3px; right: 3px; width: 16px; height: 16px; border-radius: 50%; background: #fff; content: ""; transition: transform 180ms ease; }
+.communities-map-toggle[aria-pressed="false"] i { background: #b9b4ad; }
+.communities-map-toggle[aria-pressed="false"] i::after { transform: translateX(-18px); }
+.communities-browser.is-map-hidden { grid-template-columns: minmax(0, 1fr) minmax(0, 0fr); }
+.communities-browser.is-map-hidden .communities-map-page { overflow: hidden; border-left: 0; opacity: 0; pointer-events: none; transform: translateX(100%); }
+.communities-browser.is-map-hidden .offer-section { grid-column: 1; }
+.communities-browser.is-map-hidden .communities-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.communities-browser.is-map-hidden .community-card { width: 100%; justify-self: stretch; }
 
 .communities-browser .filter-pill {
   height: 44px;
@@ -2896,24 +2931,24 @@ h1 {
 }
 
 .communities-browser .community-card {
-  width: 88.8889%;
+  width: 100%;
 }
 
 .communities-browser .community-card:nth-child(odd) {
-  justify-self: end;
+  justify-self: stretch;
 }
 
 .communities-browser .community-card:nth-child(even) {
-  justify-self: start;
+  justify-self: stretch;
 }
 
 .communities-browser .community-card-media {
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 16 / 8.5;
 }
 
 .communities-browser .community-card-body {
-  min-height: 300px;
-  padding: 18px 20px 20px;
+  min-height: 252px;
+  padding: 16px 20px 18px;
 }
 
 .communities-browser .community-card-body h3 {
@@ -2921,7 +2956,7 @@ h1 {
 }
 
 .communities-browser .community-card-details {
-  margin: 12px 0 14px;
+  margin: 9px 0 11px;
   font-size: 13px;
 }
 
@@ -2936,14 +2971,14 @@ h1 {
 }
 
 .communities-browser .community-card.is-featured .community-card-media {
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 16 / 8.5;
   height: auto;
 }
 
 .communities-browser .community-card.is-featured .community-card-body {
   justify-content: flex-start;
-  min-height: 300px;
-  padding: 18px 20px 20px;
+  min-height: 252px;
+  padding: 16px 20px 18px;
 }
 
 .communities-browser .community-card.is-featured .community-card-body h3 {
@@ -2983,6 +3018,9 @@ h1 {
   padding: 0;
   border-left: 1px solid #ddd7ce;
   background: #ece9e2;
+  opacity: 1;
+  transform: translateX(0);
+  transition: transform 360ms cubic-bezier(.22, 1, .36, 1), opacity 220ms ease;
 }
 
 .communities-browser .communities-map-page .offer-heading {
@@ -3007,6 +3045,18 @@ h1 {
     height: auto;
     grid-template-columns: 1fr;
     overflow: visible;
+  }
+
+  .communities-browser .offer-heading h2 {
+    white-space: normal;
+  }
+
+  .communities-browser.is-map-hidden {
+    grid-template-columns: 1fr;
+  }
+
+  .communities-browser.is-map-hidden .communities-map-page {
+    display: none;
   }
 
   .communities-browser .communities-map-page,
@@ -3056,6 +3106,15 @@ h1 {
 }
 
 @media (max-width: 620px) {
+  .communities-browser .communities-map-page,
+  .communities-browser .communities-map-toggle {
+    display: none;
+  }
+
+  .communities-browser .offer-section {
+    grid-row: 1;
+  }
+
   .communities-browser .offer-heading h2 {
     font-size: clamp(22px, 7.1vw, 36px);
   }
@@ -3097,9 +3156,6 @@ h1 {
     font-size: 13px;
   }
 
-  .communities-map-page .communities-map {
-    min-height: 380px;
-  }
 }
 
 .home-page h1 {
@@ -3125,6 +3181,60 @@ h1 {
   margin: 0;
   color: #17202b;
   font-family: "Times New Roman", Times, serif;
+}
+
+.interior-hero {
+  position: relative;
+  display: flex;
+  min-height: clamp(360px, 50svh, 560px);
+  align-items: flex-end;
+  overflow: hidden;
+  isolation: isolate;
+  background: #17202b;
+}
+
+.interior-hero > img {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.design-center-page .interior-hero > img {
+  object-position: center;
+}
+
+.about-page .interior-hero > img {
+  object-position: center 58%;
+}
+
+.energy-efficiency-page .interior-hero > img {
+  object-position: center 46%;
+}
+
+.interior-hero-shade {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(12, 18, 24, .76) 0%, rgba(12, 18, 24, .34) 48%, rgba(12, 18, 24, .08) 78%), linear-gradient(0deg, rgba(12, 18, 24, .54), transparent 60%);
+}
+
+.interior-hero-content {
+  width: min(760px, 100%);
+  padding: clamp(58px, 7vw, 100px) clamp(28px, 7vw, 120px);
+  color: #fff;
+}
+
+.interior-hero-content h1 {
+  margin: 0;
+  color: #fff;
+  font-family: "Times New Roman", Times, serif;
+  font-size: clamp(48px, 6.1vw, 84px);
+  font-weight: 400;
+  line-height: .98;
+  text-wrap: balance;
 }
 
 .team-section .offer-heading h2 {
@@ -3237,15 +3347,28 @@ h1 {
   background: #f7f3ed;
 }
 
-.awards-placeholder {
-  min-height: clamp(420px, 48vw, 680px);
+.awards-section {
   padding: clamp(64px, 7vw, 110px) clamp(28px, 6vw, 108px);
   border-top: 1px solid #e2ddd2;
   border-bottom: 1px solid #e2ddd2;
   background: #fff;
 }
 
-.awards-placeholder h2 {
+.awards-heading {
+  display: flex;
+  max-width: 1200px;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 48px;
+  margin: 0 auto clamp(44px, 5vw, 72px);
+}
+
+.awards-heading .eyebrow {
+  margin: 0 0 12px;
+  color: #8d2637;
+}
+
+.awards-heading h2 {
   margin: 0;
   color: #17202b;
   font-family: "Times New Roman", Times, serif;
@@ -3253,8 +3376,111 @@ h1 {
   font-weight: 400;
 }
 
-.awards-placeholder-space {
-  min-height: clamp(250px, 30vw, 430px);
+.awards-heading > div > p:last-child {
+  max-width: 650px;
+  margin: 18px 0 0;
+  color: #55524c;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.awards-organization {
+  display: flex;
+  flex: 0 0 230px;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  color: #17202b;
+  text-decoration: none;
+}
+
+.awards-organization img {
+  display: block;
+  width: 190px;
+  height: auto;
+}
+
+.awards-organization span {
+  font: 500 12px/1.2 "Jost", "Montserrat", sans-serif;
+  letter-spacing: 2.1px;
+  text-transform: uppercase;
+}
+
+.awards-grid {
+  display: grid;
+  max-width: 1200px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(18px, 2.4vw, 32px);
+  margin: 0 auto;
+}
+
+.award-card {
+  position: relative;
+  min-height: 330px;
+  padding: 38px 30px 34px;
+  overflow: hidden;
+  border: 1px solid #ddd7ce;
+  background: #faf8f3;
+  text-align: center;
+}
+
+.award-card::after {
+  position: absolute;
+  right: -45px;
+  bottom: -65px;
+  width: 170px;
+  height: 170px;
+  border: 1px solid rgba(141, 38, 55, .12);
+  border-radius: 50%;
+  content: "";
+}
+
+.award-medallion {
+  display: grid;
+  width: 76px;
+  height: 76px;
+  margin: 0 auto 24px;
+  border: 1px solid rgba(141, 38, 55, .3);
+  border-radius: 50%;
+  place-items: center;
+  background: #fff;
+  color: #8d2637;
+}
+
+.award-medallion svg {
+  width: 47px;
+  height: 47px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.6;
+}
+
+.award-card > p {
+  margin: 0 0 12px;
+  color: #8d2637;
+  font: 500 11px/1.2 "Jost", "Montserrat", sans-serif;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+}
+
+.award-card h3 {
+  margin: 0;
+  color: #17202b;
+  font-family: "Times New Roman", Times, serif;
+  font-size: clamp(27px, 2.2vw, 34px);
+  font-weight: 400;
+  line-height: 1.12;
+}
+
+.award-card > span {
+  display: block;
+  max-width: 260px;
+  margin: 13px auto 0;
+  color: #66625b;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
 .team-grid {
@@ -3415,9 +3641,61 @@ h1 {
     grid-template-columns: 1fr;
     max-width: 480px;
   }
+
+  .awards-heading {
+    align-items: flex-start;
+  }
+
+  .awards-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .award-card:last-child {
+    grid-column: 1 / -1;
+  }
 }
 
 @media (max-width: 560px) {
+  .interior-hero {
+    min-height: clamp(340px, 50svh, 430px);
+  }
+
+  .interior-hero-shade {
+    background: linear-gradient(0deg, rgba(12, 18, 24, .82) 0%, rgba(12, 18, 24, .25) 72%, rgba(12, 18, 24, .12) 100%);
+  }
+
+  .interior-hero-content {
+    padding: 52px 24px;
+  }
+
+  .interior-hero-content h1 {
+    font-size: clamp(43px, 13vw, 58px);
+  }
+
+  .awards-heading {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .awards-organization {
+    flex-basis: auto;
+    align-items: flex-start;
+  }
+
+  .awards-organization img {
+    width: 170px;
+  }
+
+  .awards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .award-card,
+  .award-card:last-child {
+    min-height: 0;
+    grid-column: auto;
+  }
+
   .stats {
     grid-template-columns: 1fr;
     padding-block: 26px;
@@ -3709,6 +3987,7 @@ h1 {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  filter: brightness(0.62);
   transition: filter 350ms ease, transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -3722,8 +4001,8 @@ h1 {
   justify-content: center;
   gap: 10px;
   padding: 24px;
-  background: rgba(15, 18, 22, 0);
-  opacity: 0;
+  background: rgba(15, 18, 22, 0.2);
+  opacity: 1;
   pointer-events: none;
   text-align: center;
   transition: background-color 350ms ease, opacity 350ms ease;
@@ -3745,15 +4024,25 @@ h1 {
   text-transform: uppercase;
 }
 
+.video-card-price {
+  margin: -2px 0 4px;
+  color: rgba(255, 255, 255, .9);
+  font-family: "Jost", "Montserrat", sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: .3px;
+}
+
 .video-card:hover img,
 .video-card:focus-visible img {
-  filter: brightness(0.48);
-  transform: scale(1.025);
+  filter: brightness(0.36);
+  transform: scale(1.04);
 }
 
 .video-card:hover > span,
 .video-card:focus-visible > span {
-  background: rgba(15, 18, 22, 0.22);
+  background: rgba(15, 18, 22, 0.38);
   opacity: 1;
 }
 

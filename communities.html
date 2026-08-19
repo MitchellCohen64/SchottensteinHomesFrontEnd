@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/media/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Explore Schottenstein Homes communities across Central Ohio — cottage and single-family neighborhoods in Plain City, Grove City, Pickerington and Columbus." />
     <title>Our Communities | Schottenstein Homes</title>
@@ -85,11 +86,12 @@
 
     <section class="offer-section" aria-labelledby="communities-grid-heading">
       <div class="offer-heading">
-        <h2 id="communities-grid-heading">Communities in Columbus, OH</h2>
+          <h2 id="communities-grid-heading">New Home Communities in Columbus, OH</h2>
       </div>
 
-      <p class="communities-result-count" aria-live="polite">Showing results for 8 communities</p>
-      <div class="communities-filter" aria-label="Community display controls">
+      <div class="communities-results-bar">
+        <p class="communities-result-count" aria-live="polite">Showing results for 8 communities</p>
+        <div class="communities-filter" aria-label="Community display controls">
         <div class="community-filter-menu">
           <button class="community-control" type="button" aria-expanded="false" aria-controls="community-filter-options">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"></path></svg>
@@ -123,6 +125,8 @@
             <button type="button" data-sort="move-ins-desc">Most Quick Move-ins</button>
           </div>
         </div>
+        </div>
+        <button class="communities-map-toggle" type="button" aria-pressed="true" aria-controls="communities-map"><span>Map View</span><i aria-hidden="true"></i></button>
       </div>
 
       <div class="communities-grid">

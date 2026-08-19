@@ -1,7 +1,6 @@
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import standardLogoUrl from '../media/SH_logo.png'
-import whiteLogoUrl from '../media/SH_logo_white.png'
 import { renderRennerTracedLots } from './components/RennerTracedLots.js'
 import { communityPlanData, inventoryPlans } from './data/basePricing.js'
 
@@ -85,7 +84,7 @@ const updateHeader = () => {
   header?.classList.toggle('is-scrolled', isScrolled)
 
   if (isHomePage && headerLogo) {
-    headerLogo.src = isScrolled ? standardLogoUrl : whiteLogoUrl
+    headerLogo.src = standardLogoUrl
   }
 }
 
@@ -274,14 +273,14 @@ if (mapElement) {
   const isHomeMap = mapElement.dataset.mapStyle === 'illustrated'
 
   const communities = [
-    { name: 'Jerome Village Aster', address: '6971 Aster Way, Plain City', coords: [40.1930731, -83.1743563], href: '/jerome-village-aster.html' },
-    { name: 'The Cottages at Verbena', address: '11738 Verbena Place, Plain City', coords: [40.18376, -83.19973], href: '/cottages-at-verbena.html' },
-    { name: 'The Reserve at New California', address: '10171 Jeffrey Pine Drive, Plain City', coords: [40.15765, -83.24662], href: '/reserve-at-new-california.html' },
-    { name: 'Glacier Pointe', address: '8798 Eliot Drive, Plain City', coords: [40.1449718, -83.2051174], href: '/glacier-pointe.html' },
-    { name: 'Renner Park', address: '6186 Renner Park Drive, Columbus', coords: [39.9832, -83.172859], href: '/renner-park.html' },
-    { name: 'Holton Run', address: '4840 Citation Court, Grove City', coords: [39.865303, -83.097641], markerCoords: [39.872, -83.108], href: '/holton-run.html' },
-    { name: 'Hickory Creek', address: '3899 Orders Road, Grove City', coords: [39.8603495, -83.0980086], markerCoords: [39.854, -83.088], href: '/hickory-creek.html' },
-    { name: 'The Retreat at Hickory Lakes', address: '12445 Ault Road, Pickerington', coords: [39.9154859, -82.7277241], href: '/retreat-at-hickory-lakes.html' }
+    { name: 'Jerome Village Aster', address: '6971 Aster Way, Plain City', price: 550, coords: [40.1930731, -83.1743563], href: '/jerome-village-aster.html' },
+    { name: 'The Cottages at Verbena', address: '11738 Verbena Place, Plain City', price: 490, coords: [40.18376, -83.19973], href: '/cottages-at-verbena.html' },
+    { name: 'The Reserve at New California', address: '10171 Jeffrey Pine Drive, Plain City', price: 620, coords: [40.15765, -83.24662], href: '/reserve-at-new-california.html' },
+    { name: 'Glacier Pointe', address: '8798 Eliot Drive, Plain City', price: 450, coords: [40.1449718, -83.2051174], href: '/glacier-pointe.html' },
+    { name: 'Renner Park', address: '6186 Renner Park Drive, Columbus', price: 410, coords: [39.9832, -83.172859], href: '/renner-park.html' },
+    { name: 'Holton Run', address: '4840 Citation Court, Grove City', price: 480, coords: [39.865303, -83.097641], markerCoords: [39.872, -83.108], href: '/holton-run.html' },
+    { name: 'Hickory Creek', address: '3899 Orders Road, Grove City', price: 410, coords: [39.8603495, -83.0980086], markerCoords: [39.854, -83.088], href: '/hickory-creek.html' },
+    { name: 'The Retreat at Hickory Lakes', address: '12445 Ault Road, Pickerington', price: 470, coords: [39.9154859, -82.7277241], href: '/retreat-at-hickory-lakes.html' }
   ]
 
   const map = L.map(mapElement, {
@@ -313,13 +312,13 @@ if (mapElement) {
     L.control.zoom({ position: 'bottomright' }).addTo(map)
   }
 
-  const pinIcon = L.divIcon({
+  const pinIcon = (community) => L.divIcon({
     className: `community-pin${isHomeMap ? ' is-pushpin' : ''}`,
     html: isHomeMap
       ? '<svg viewBox="0 0 36 48" aria-hidden="true"><ellipse cx="18" cy="45" rx="11" ry="2"></ellipse><path d="M11 4h14v4l-3 3v9l6 5v4H8v-4l6-5v-9l-3-3V4Zm6 25h2v14l-1 3-1-3V29Z"></path></svg>'
-      : '<svg viewBox="0 0 32 40" aria-hidden="true"><path d="M16 39S30 24.4 30 14A14 14 0 1 0 2 14c0 10.4 14 25 14 25Z"></path><circle cx="16" cy="14" r="5"></circle></svg>',
-    iconSize: isHomeMap ? [36, 48] : [32, 40],
-    iconAnchor: isHomeMap ? [18, 46] : [16, 40],
+      : `<svg viewBox="0 0 32 40" aria-hidden="true"><path d="M16 39S30 24.4 30 14A14 14 0 1 0 2 14c0 10.4 14 25 14 25Z"></path><circle cx="16" cy="14" r="5"></circle></svg><span class="community-pin-price">$${community.price}s</span>`,
+    iconSize: isHomeMap ? [36, 48] : [56, 62],
+    iconAnchor: isHomeMap ? [18, 46] : [28, 52],
     tooltipAnchor: [0, -34]
   })
 
@@ -339,7 +338,7 @@ if (mapElement) {
     const markerPosition = isHomeMap
       ? toHomeMapCoords(community.coords)
       : community.markerCoords ?? community.coords
-    const marker = L.marker(markerPosition, { icon: pinIcon }).addTo(map)
+    const marker = L.marker(markerPosition, { icon: pinIcon(community) }).addTo(map)
     marker.bindTooltip(`<strong>${community.name}</strong><span>${community.address}</span>`, {
       direction: 'top',
       className: 'community-tooltip',
@@ -402,6 +401,14 @@ if (mapElement) {
   } else {
     map.fitBounds(L.featureGroup(markers).getBounds(), { padding: [65, 65] })
   }
+
+  const mapToggle = document.querySelector('.communities-map-toggle')
+  mapToggle?.addEventListener('click', () => {
+    const isVisible = mapToggle.getAttribute('aria-pressed') === 'true'
+    mapToggle.setAttribute('aria-pressed', String(!isVisible))
+    document.querySelector('.communities-browser')?.classList.toggle('is-map-hidden', isVisible)
+    if (!isVisible) window.setTimeout(() => map.invalidateSize(), 220)
+  })
 }
 
 const communityMapImage = document.querySelector('.community-page .about-intro-image img[src*="/community-maps/"]')
@@ -919,6 +926,28 @@ const planImageFor = (name, community) => {
   return null
 }
 
+document.querySelectorAll('.virtual-tours-page .video-card').forEach((card) => {
+  const name = card.querySelector('strong')?.textContent.trim()
+  const image = card.querySelector('img')
+  if (!name || !image) return
+
+  const render = planImageFor(name, 'Multiple Communities')
+  if (render) {
+    image.src = render
+    image.alt = `${name} exterior rendering`
+  }
+
+  const baseName = name.replace(/^The\s+/i, '')
+  const plan = inventoryPlans.find(({ name: planName }) => planName === baseName)
+    || inventoryPlans.find(({ name: planName }) => planName.replace(/\s+II$/i, '') === baseName)
+  if (plan) {
+    const price = document.createElement('em')
+    price.className = 'video-card-price'
+    price.textContent = `Starting at $${plan.price.toLocaleString('en-US')}`
+    card.querySelector('small')?.before(price)
+  }
+})
+
 const inventoryGrid = document.querySelector('[data-inventory-catalog]')
 if (inventoryGrid) {
   inventoryPlans.forEach(({ name, price, sqft, communities }) => {
@@ -978,16 +1007,22 @@ document.querySelectorAll('.plan-card').forEach((card) => {
 
   heading.append(titleGroup)
 
+  const areaSpec = [...specs.children].find((spec) => /Sq Ft/i.test(spec.textContent))
+  const storySpec = [...specs.children].find((spec) => /Stor(?:y|ies)/i.test(spec.textContent))
+  if (areaSpec) card.dataset.sqft = areaSpec.textContent.replace(/\s*Sq Ft\s*/i, '').trim()
+  if (storySpec) card.dataset.stories = storySpec.textContent.match(/[\d.]+/)?.[0] || ''
+  if (areaSpec && storySpec) storySpec.textContent = areaSpec.textContent
+
   ;[...specs.children].forEach((spec) => {
     const text = spec.textContent
-    if (/Sq Ft/i.test(text)) {
-      card.dataset.sqft = text.replace(/\s*Sq Ft\s*/i, '').trim()
+    if (spec === areaSpec) {
       spec.remove()
       return
     }
     const icon = /Beds/i.test(text) ? planSpecIcons.beds
       : /Baths/i.test(text) ? planSpecIcons.baths
-        : planSpecIcons.stories
+        : /Sq Ft/i.test(text) ? planSpecIcons.area
+          : planSpecIcons.stories
     spec.insertAdjacentHTML('afterbegin', icon)
     spec.childNodes[spec.childNodes.length - 1].textContent = text.replace(/\s*(Beds?|Baths?|Stories?|Sq Ft)\s*/i, ' $1').trim()
   })
@@ -1005,7 +1040,7 @@ document.querySelectorAll('.plan-card').forEach((card) => {
       price: price.textContent.replace(/^Starting at\s*/i, ''),
       beds: specValue('Beds'),
       baths: specValue('Baths'),
-      stories: specValue('Stor'),
+      stories: card.dataset.stories || specValue('Stor'),
       sqft: card.dataset.sqft || '???',
       community,
     })

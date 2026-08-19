@@ -1,4 +1,5 @@
 node_modules/
 dist/
 *.log
-
+media/Floor_Plans/
+tmp/
