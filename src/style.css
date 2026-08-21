@@ -5748,24 +5748,6 @@ body.map-lightbox-open {
   background: #eee;
 }
 
-.plan-card-ready-banner {
-  position: absolute;
-  z-index: 2;
-  top: 25px;
-  right: -48px;
-  width: 190px;
-  padding: 9px 0;
-  background: #c71f35;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.22);
-  color: white;
-  font: 500 12px "Jost", "Montserrat", sans-serif;
-  letter-spacing: 0.8px;
-  text-align: center;
-  text-transform: uppercase;
-  transform: rotate(45deg);
-  transform-origin: center;
-}
-
 .plan-card-media img {
   width: 100%;
   height: 100%;

@@ -998,13 +998,18 @@ document.querySelectorAll('.plan-card').forEach((card) => {
   const planName = title.textContent.trim()
   const planCommunity = card.dataset.community || document.querySelector('.page-title h1')?.textContent.trim()
   const planImage = planImageFor(planName, planCommunity)
+
+  if (!planImage) {
+    card.remove()
+    return
+  }
+
   const media = document.createElement('div')
   media.className = 'plan-card-media'
   media.innerHTML = `<img src="${planImage || homePlaceholderUrl}" alt="${planImage ? `${planName} exterior rendering` : `No exterior rendering available for ${planName}`}" />`
 
   if (['The Chester', 'The Franklin'].includes(title.textContent.trim())) {
     card.classList.add('is-move-in-ready')
-    media.insertAdjacentHTML('beforeend', '<span class="plan-card-ready-banner">Move-In Ready</span>')
   }
 
   const body = document.createElement('div')
