@@ -3111,6 +3111,17 @@ h1 {
     display: none;
   }
 
+  .communities-browser .communities-results-bar {
+    flex-wrap: wrap;
+    row-gap: 14px;
+  }
+
+  .communities-browser .communities-results-bar .communities-filter {
+    flex: 0 0 100%;
+    justify-content: flex-start;
+    margin: 0;
+  }
+
   .communities-browser .offer-section {
     grid-row: 1;
   }

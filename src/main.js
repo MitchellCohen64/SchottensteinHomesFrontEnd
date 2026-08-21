@@ -105,7 +105,7 @@ if (header && !isHomePage) {
     <div class="hero-menu-backdrop" aria-hidden="true"></div>
     <aside id="site-menu-drawer" class="hero-menu-drawer is-right" aria-label="Main menu" aria-hidden="true">
       <div class="hero-menu-drawer-header">
-        <img src="/media/SH_logo.png" alt="Schottenstein Homes" />
+        <img src="${standardLogoUrl}" alt="Schottenstein Homes" />
         <button class="hero-menu-close" type="button" aria-label="Close menu">
           <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" /></svg>
         </button>
@@ -271,6 +271,7 @@ const mapElement = document.querySelector('#communities-map')
 
 if (mapElement) {
   const isHomeMap = mapElement.dataset.mapStyle === 'illustrated'
+  const mobileMapViewport = window.matchMedia('(max-width: 620px)')
 
   const communities = [
     { name: 'Jerome Village Aster', address: '6971 Aster Way, Plain City', price: 550, coords: [40.1930731, -83.1743563], href: '/jerome-village-aster.html' },
@@ -287,8 +288,16 @@ if (mapElement) {
     crs: isHomeMap ? L.CRS.Simple : L.CRS.EPSG3857,
     zoomControl: false,
     scrollWheelZoom: false,
+    dragging: !mobileMapViewport.matches,
+    touchZoom: true,
     attributionControl: !isHomeMap
   })
+
+  const syncMapDraggingMode = () => {
+    if (mobileMapViewport.matches) map.dragging.disable()
+    else map.dragging.enable()
+  }
+  mobileMapViewport.addEventListener('change', syncMapDraggingMode)
 
   map.attributionControl?.setPrefix(false)
 
@@ -401,6 +410,18 @@ if (mapElement) {
   } else {
     map.fitBounds(L.featureGroup(markers).getBounds(), { padding: [65, 65] })
   }
+
+  const markerBounds = L.featureGroup(markers).getBounds()
+  const fitMobileMapToPins = () => {
+    if (!mobileMapViewport.matches || !mapElement.offsetParent) return
+    map.invalidateSize()
+    map.fitBounds(markerBounds, { padding: [38, 58] })
+  }
+
+  // Recalculate after the narrow layout has settled so every pin is visible
+  // in the initial mobile viewport, including after an orientation change.
+  window.requestAnimationFrame(() => window.requestAnimationFrame(fitMobileMapToPins))
+  window.addEventListener('resize', fitMobileMapToPins, { passive: true })
 
   const mapToggle = document.querySelector('.communities-map-toggle')
   mapToggle?.addEventListener('click', () => {
