@@ -1,19 +1,11 @@
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import standardLogoUrl from '../media/SH_logo.png'
-import { renderRennerTracedLots } from './components/RennerTracedLots.js'
 import { communityPlanData, inventoryPlans } from './data/basePricing.js'
 
 const header = document.querySelector('.site-header')
 const headerLogo = header?.querySelector('.brand img')
 const isHomePage = document.body.classList.contains('home-page')
-
-const rennerLotTracer = document.querySelector('[data-renner-lot-tracer]')
-if (rennerLotTracer) renderRennerTracedLots(rennerLotTracer.querySelector('.site-plan-overlay'))
-
-if (import.meta.env.DEV && rennerLotTracer && new URLSearchParams(window.location.search).get('traceLots') === '1') {
-  import('./components/RennerLotTracer.js').then(({ mountRennerLotTracer }) => mountRennerLotTracer(rennerLotTracer))
-}
 
 if (isHomePage) {
   const revealSections = document.querySelectorAll('body.home-page > section')
@@ -115,10 +107,8 @@ if (header && !isHomePage) {
           <a class="hero-drawer-heading" href="/communities.html">Communities</a>
           <a href="/communities.html">View All Communities</a>
           <a href="/jerome-village-aster.html">Jerome Village Aster</a>
-          <a href="/cottages-at-verbena.html">The Cottages at Verbena</a>
           <a href="/reserve-at-new-california.html">The Reserve at New California</a>
           <a href="/glacier-pointe.html">Glacier Pointe</a>
-          <a href="/holton-run.html">Holton Run</a>
           <a href="/hickory-creek.html">Hickory Creek</a>
           <a href="/renner-park.html">Renner Park</a>
           <a href="/retreat-at-hickory-lakes.html">The Retreat at Hickory Lakes</a>
@@ -139,6 +129,20 @@ if (header && !isHomePage) {
       </nav>
     </aside>`)
 }
+
+document.querySelectorAll([
+  '.site-header a[href="/cottages-at-verbena.html"]',
+  '.site-header a[href="/holton-run.html"]',
+  '.hero-menu-drawer a[href="/cottages-at-verbena.html"]',
+  '.hero-menu-drawer a[href="/holton-run.html"]',
+  '.site-footer a[href="/cottages-at-verbena.html"]',
+  '.site-footer a[href="/holton-run.html"]',
+].join(', ')).forEach((link) => link.remove())
+
+document.querySelectorAll('.footer-contact span, .footer-contact dd, .contact-details dd').forEach((element) => {
+  if (element.textContent.trim() !== 'dp@schottensteinhomes.com' || element.querySelector('a')) return
+  element.innerHTML = '<a href="mailto:dp@schottensteinhomes.com">dp@schottensteinhomes.com</a>'
+})
 
 const heroMenuTrigger = document.querySelector('.hero-menu-trigger')
 const heroMenuDrawer = document.querySelector('.hero-menu-drawer')
@@ -267,6 +271,70 @@ if (featuredCommunitySlides.length > 1 && featuredCommunityPrevious && featuredC
   }
 }
 
+document.querySelectorAll('[data-amenities-carousel]').forEach((carousel) => {
+  const slides = [...carousel.querySelectorAll('[data-amenities-slide]')]
+  const dots = [...carousel.querySelectorAll('[data-amenities-dot]')]
+  const previousButton = carousel.querySelector('[data-amenities-previous]')
+  const nextButton = carousel.querySelector('[data-amenities-next]')
+  const counter = carousel.querySelector('[data-amenities-counter]')
+
+  if (slides.length < 2 || !previousButton || !nextButton) return
+
+  let activeSlide = 0
+
+  const showSlide = (index) => {
+    activeSlide = (index + slides.length) % slides.length
+
+    slides.forEach((slide, slideIndex) => {
+      const isActive = slideIndex === activeSlide
+      slide.classList.toggle('is-active', isActive)
+      slide.setAttribute('aria-hidden', isActive ? 'false' : 'true')
+    })
+
+    dots.forEach((dot, dotIndex) => {
+      const isActive = dotIndex === activeSlide
+      dot.classList.toggle('is-active', isActive)
+      if (isActive) dot.setAttribute('aria-current', 'true')
+      else dot.removeAttribute('aria-current')
+    })
+
+    if (counter) counter.textContent = `${activeSlide + 1} / ${slides.length}`
+  }
+
+  previousButton.addEventListener('click', () => showSlide(activeSlide - 1))
+  nextButton.addEventListener('click', () => showSlide(activeSlide + 1))
+  dots.forEach((dot, dotIndex) => dot.addEventListener('click', () => showSlide(dotIndex)))
+
+  carousel.addEventListener('keydown', (event) => {
+    if (event.key === 'ArrowLeft') {
+      event.preventDefault()
+      showSlide(activeSlide - 1)
+    }
+
+    if (event.key === 'ArrowRight') {
+      event.preventDefault()
+      showSlide(activeSlide + 1)
+    }
+  })
+
+  let touchStartX = 0
+  let touchStartY = 0
+
+  carousel.addEventListener('touchstart', (event) => {
+    touchStartX = event.touches[0].clientX
+    touchStartY = event.touches[0].clientY
+  }, { passive: true })
+
+  carousel.addEventListener('touchend', (event) => {
+    const deltaX = event.changedTouches[0].clientX - touchStartX
+    const deltaY = event.changedTouches[0].clientY - touchStartY
+
+    if (Math.abs(deltaX) > 45 && Math.abs(deltaX) > Math.abs(deltaY)) {
+      showSlide(activeSlide + (deltaX < 0 ? 1 : -1))
+    }
+  }, { passive: true })
+})
+
 const mapElement = document.querySelector('#communities-map')
 
 if (mapElement) {
@@ -275,11 +343,9 @@ if (mapElement) {
 
   const communities = [
     { name: 'Jerome Village Aster', address: '6971 Aster Way, Plain City', price: 550, coords: [40.1930731, -83.1743563], href: '/jerome-village-aster.html' },
-    { name: 'The Cottages at Verbena', address: '11738 Verbena Place, Plain City', price: 490, coords: [40.18376, -83.19973], href: '/cottages-at-verbena.html' },
     { name: 'The Reserve at New California', address: '10171 Jeffrey Pine Drive, Plain City', price: 620, coords: [40.15765, -83.24662], href: '/reserve-at-new-california.html' },
     { name: 'Glacier Pointe', address: '8798 Eliot Drive, Plain City', price: 450, coords: [40.1449718, -83.2051174], href: '/glacier-pointe.html' },
     { name: 'Renner Park', address: '6186 Renner Park Drive, Columbus', price: 410, coords: [39.9832, -83.172859], href: '/renner-park.html' },
-    { name: 'Holton Run', address: '4840 Citation Court, Grove City', price: 480, coords: [39.865303, -83.097641], markerCoords: [39.872, -83.108], href: '/holton-run.html' },
     { name: 'Hickory Creek', address: '3899 Orders Road, Grove City', price: 410, coords: [39.8603495, -83.0980086], markerCoords: [39.854, -83.088], href: '/hickory-creek.html' },
     { name: 'The Retreat at Hickory Lakes', address: '12445 Ault Road, Pickerington', price: 470, coords: [39.9154859, -82.7277241], href: '/retreat-at-hickory-lakes.html' }
   ]
