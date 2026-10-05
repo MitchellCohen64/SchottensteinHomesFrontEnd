@@ -398,11 +398,19 @@ if (mapElement) {
       interactive: false
     }).addTo(map)
   } else {
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-      attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
-      subdomains: 'abcd',
-      maxZoom: 20
-    }).addTo(map)
+    const cartoBasemapKey = import.meta.env.VITE_CARTO_BASEMAP_KEY?.trim()
+
+    if (cartoBasemapKey) {
+      L.tileLayer(`https://basemaps.cartocdn.com/rastertiles/light_all/{z}/{x}/{y}{r}.png?key=${encodeURIComponent(cartoBasemapKey)}`, {
+        attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+        maxZoom: 20
+      }).addTo(map)
+    } else {
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors',
+        maxZoom: 19
+      }).addTo(map)
+    }
   }
 
   if (!isHomeMap) {
