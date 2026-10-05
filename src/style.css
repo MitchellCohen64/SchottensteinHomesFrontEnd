@@ -1,3 +1,51 @@
+@font-face {
+  font-family: "Montserrat Local";
+  src: url("../fonts/Montserrat/Montserrat-VariableFont_wght.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Montserrat Local";
+  src: url("../fonts/Montserrat/Montserrat-Italic-VariableFont_wght.ttf") format("truetype");
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist Fallback";
+  src: url("../fonts/Geist/Geist-VariableFont_wght.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist Fallback";
+  src: url("../fonts/Geist/Geist-Italic-VariableFont_wght.ttf") format("truetype");
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Roboto Condensed Fallback";
+  src: url("../fonts/Roboto_Condensed/RobotoCondensed-VariableFont_wght.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Roboto Condensed Fallback";
+  src: url("../fonts/Roboto_Condensed/RobotoCondensed-Italic-VariableFont_wght.ttf") format("truetype");
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
 :root {
   color: #252321;
   font-family: "Montserrat", sans-serif;
@@ -758,7 +806,7 @@ button {
 }
 
 .hero-slide:nth-child(1) {
-  background-image: url("/media/Renders/Aster_in_Jerome_Village/Carroll_II.jpg");
+  background-image: url("/media/home-hero/carroll-ii-hero.jpg");
 }
 
 .hero-slide:nth-child(2) {
@@ -2296,6 +2344,84 @@ h1 {
     margin-top: 24px;
     font-size: 9px;
     line-height: 1.35;
+  }
+}
+
+/* Navigation comparison controls used only on test.html. */
+.nav-test-page[data-nav-mode="current"] .nav-test-expanded,
+.nav-test-page[data-nav-mode="expanded"] .nav-test-current {
+  display: none !important;
+}
+
+.nav-test-page .nav-test-expanded {
+  gap: clamp(12px, 1.5vw, 28px);
+  font-size: clamp(10px, 0.78vw, 13px);
+  letter-spacing: 0.65px;
+}
+
+.nav-test-page .nav-test-expanded > .nav-label,
+.nav-test-page .nav-test-expanded > .nav-group > .nav-label {
+  white-space: nowrap;
+}
+
+.nav-test-switch {
+  position: fixed;
+  right: 50%;
+  bottom: 18px;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  background: rgba(25, 28, 33, 0.94);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.24);
+  color: #fff;
+  transform: translateX(50%);
+  backdrop-filter: blur(12px);
+}
+
+.nav-test-switch > span {
+  padding: 0 10px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.nav-test-switch button {
+  min-height: 38px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.nav-test-switch button[aria-pressed="true"] {
+  background: #fff;
+  color: #252321;
+}
+
+.nav-test-switch button:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+@media (max-width: 620px) {
+  .nav-test-switch {
+    bottom: 10px;
+    max-width: calc(100vw - 20px);
+  }
+
+  .nav-test-switch > span {
+    display: none;
   }
 }
 
@@ -6247,10 +6373,10 @@ main .plan-card h3 {
   }
 }
 
-/* Keep the selected brand family consistent over legacy page-specific type. */
+/* Keep the current Montserrat look, with the downloaded families as local fallbacks. */
 body,
 body * {
-  font-family: "Gotham", "Univers", "Montserrat", Arial, sans-serif !important;
+  font-family: "Montserrat", "Montserrat Local", "Geist Fallback", "Roboto Condensed Fallback", Arial, sans-serif !important;
 }
 
 .home-page :is(.home-intro-title, .featured-community-copy h2, .communities-map-copy h2),
@@ -6260,7 +6386,7 @@ body * {
 .final-cta h2,
 .announcements h2,
 .virtual-tour-heading h2 {
-  font-family: "Univers Condensed", "Gotham", "Univers", "Montserrat", Arial, sans-serif !important;
+  font-family: "Montserrat", "Montserrat Local", "Roboto Condensed Fallback", "Geist Fallback", Arial, sans-serif !important;
 }
 
 /* Text-fit safeguards shared by every page. */

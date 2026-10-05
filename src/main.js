@@ -144,6 +144,26 @@ document.querySelectorAll('.footer-contact span, .footer-contact dd, .contact-de
   element.innerHTML = '<a href="mailto:dp@schottensteinhomes.com">dp@schottensteinhomes.com</a>'
 })
 
+document.querySelectorAll('.site-footer .footer-column:first-child .footer-list').forEach((footerList) => {
+  if (footerList.querySelector('a[href="/test.html"]')) return
+  footerList.insertAdjacentHTML('beforeend', '<a href="/test.html">test</a>')
+})
+
+const navigationTestButtons = [...document.querySelectorAll('[data-nav-test-mode]')]
+
+if (document.body.classList.contains('nav-test-page') && navigationTestButtons.length) {
+  const setNavigationTestMode = (mode) => {
+    document.body.dataset.navMode = mode
+    navigationTestButtons.forEach((button) => {
+      button.setAttribute('aria-pressed', button.dataset.navTestMode === mode ? 'true' : 'false')
+    })
+  }
+
+  navigationTestButtons.forEach((button) => {
+    button.addEventListener('click', () => setNavigationTestMode(button.dataset.navTestMode))
+  })
+}
+
 const heroMenuTrigger = document.querySelector('.hero-menu-trigger')
 const heroMenuDrawer = document.querySelector('.hero-menu-drawer')
 const heroMenuBackdrop = document.querySelector('.hero-menu-backdrop')
@@ -170,10 +190,12 @@ if (heroMenuTrigger && heroMenuDrawer && heroMenuBackdrop && heroMenuClose) {
   })
 }
 
+const heroSlideshow = document.querySelector('.hero-slideshow')
 const heroSlides = document.querySelectorAll('.hero-slideshow .hero-slide')
 const heroCommunityLabels = document.querySelectorAll('.hero-community-label span')
 
-if (heroSlides.length > 1) {
+// Remove the `is-static` class from the slideshow to restore automatic rotation.
+if (heroSlides.length > 1 && !heroSlideshow?.classList.contains('is-static')) {
   let activeHeroSlide = 0
 
   window.setInterval(() => {

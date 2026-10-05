@@ -4,15 +4,15 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/media/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Schottenstein Homes — homes of distinction, built for life." />
-    <title>Schottenstein Homes</title>
+    <meta name="description" content="Schottenstein Homes â€” homes of distinction, built for life." />
+    <title>Navigation Test | Schottenstein Homes</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Jost:wght@400;500&family=Manrope:wght@500&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/src/style.css" />
     <script type="module" src="/src/main.js"></script>
   </head>
-  <body class="home-page">
+  <body class="home-page nav-test-page" data-nav-mode="current">
     <header class="site-header">
       <button class="hero-menu-trigger" type="button" aria-label="Open menu" aria-controls="hero-menu-drawer" aria-expanded="false">
         <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
@@ -23,7 +23,7 @@
         <a href="/index.html"><img src="/media/SH_logo.png" alt="Schottenstein Homes" /></a>
       </div>
 
-      <nav class="main-nav" aria-label="Main navigation">
+      <nav class="main-nav nav-test-current" aria-label="Current main navigation">
         <div class="nav-group">
           <a class="nav-label" href="/communities.html">
             COMMUNITIES <span class="chevron" aria-hidden="true"></span>
@@ -77,6 +77,51 @@
           </div>
         </div>
 
+      </nav>
+
+      <nav class="main-nav nav-test-expanded" aria-label="Expanded main navigation">
+        <div class="nav-group">
+          <a class="nav-label" href="/communities.html">
+            COMMUNITIES <span class="chevron" aria-hidden="true"></span>
+          </a>
+          <div class="dropdown communities-dropdown" role="menu">
+            <a class="community-menu-all" href="/communities.html" role="menuitem">View All Communities</a>
+            <div class="community-menu-grid">
+              <section>
+                <h3>Plain City</h3>
+                <a href="/jerome-village-aster.html" role="menuitem">Jerome Village Aster</a>
+                <a href="/reserve-at-new-california.html" role="menuitem">The Reserve at New California</a>
+                <a href="/glacier-pointe.html" role="menuitem">Glacier Pointe</a>
+              </section>
+              <section>
+                <h3>Grove City</h3>
+                <a href="/hickory-creek.html" role="menuitem">Hickory Creek</a>
+              </section>
+              <section>
+                <h3>Columbus</h3>
+                <a href="/renner-park.html" role="menuitem">Renner Park</a>
+              </section>
+              <section>
+                <h3>Pickerington</h3>
+                <a href="/retreat-at-hickory-lakes.html" role="menuitem">The Retreat at Hickory Lakes</a>
+              </section>
+            </div>
+          </div>
+        </div>
+
+        <a class="nav-label" href="/energy-efficiency.html">ENERGY EFFICIENCY</a>
+        <a class="nav-label" href="/design-center.html">DESIGN CENTER</a>
+        <a class="nav-label" href="/virtual-tours.html">VIRTUAL TOURS</a>
+
+        <div class="nav-group">
+          <a class="nav-label" href="/about.html">
+            ABOUT <span class="chevron" aria-hidden="true"></span>
+          </a>
+          <div class="dropdown" role="menu">
+            <a href="/about.html" role="menuitem"><span>About Us</span></a>
+            <a href="/contact.html" role="menuitem"><span>Contact Us</span></a>
+          </div>
+        </div>
       </nav>
 
       <a class="login" href="https://www.homeinformationpackages.com/" target="_blank" rel="noopener noreferrer" aria-label="Homeowner Login">
@@ -254,7 +299,7 @@
       <div class="communities-map-copy">
         <p class="eyebrow">Our Communities</p>
         <h2 id="communities-map-heading">See where<br />Schottenstein builds</h2>
-        <p class="communities-map-description">We build thoughtfully planned communities across Central Ohio—each with its own character, conveniences and collection of homes. Explore the map to see where you can find your future home.</p>
+        <p class="communities-map-description">We build thoughtfully planned communities across Central Ohioâ€”each with its own character, conveniences and collection of homes. Explore the map to see where you can find your future home.</p>
         <a class="map-communities-button" href="/communities.html">Our Communities</a>
 
       </div>
@@ -266,8 +311,8 @@
       <div class="final-cta-card">
         <div class="final-cta-content">
           <h2>Your New Home<br />is Waiting</h2>
-          <p>Take the first step today—schedule a tour, explore our communities, or connect with our sales team.</p>
-          <span class="final-cta-button">Let's Get Started <span aria-hidden="true">→</span></span>
+          <p>Take the first step todayâ€”schedule a tour, explore our communities, or connect with our sales team.</p>
+          <span class="final-cta-button">Let's Get Started <span aria-hidden="true">â†’</span></span>
         </div>
         <div class="final-cta-image" role="img" aria-label="Bright open-plan living room in a Schottenstein home"></div>
       </div>
@@ -314,10 +359,15 @@
         </div>
 
         <div class="footer-legal">
-          <p class="copyright">© Copyright 2025 Schottenstein Homes</p>
+          <p class="copyright">Â© Copyright 2025 Schottenstein Homes</p>
           <p>At Schottenstein Homes, we value your privacy. Our website uses cookies and tracking technologies strictly for analytics purposes, allowing us to better understand how visitors interact with our site and improve the overall user experience. We do not collect, store, or share any personal information through these tools. The data gathered is anonymous and is used only to measure performance, track usage patterns, and ensure our content is helpful and relevant. By continuing to use our website, you agree to the use of these basic analytics tools, knowing your personal information remains private and protected.</p>
         </div>
       </div>
     </footer>
+    <div class="nav-test-switch" role="group" aria-label="Choose navigation layout">
+      <span>Navigation test</span>
+      <button type="button" data-nav-test-mode="current" aria-pressed="true">3 Titles</button>
+      <button type="button" data-nav-test-mode="expanded" aria-pressed="false">5 Titles</button>
+    </div>
   </body>
 </html>
