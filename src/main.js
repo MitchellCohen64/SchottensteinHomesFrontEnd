@@ -149,6 +149,50 @@ document.querySelectorAll('.site-footer .footer-column:first-child .footer-list'
   footerList.insertAdjacentHTML('beforeend', '<a href="/test.html">test</a>')
 })
 
+const contactForm = document.querySelector('.contact-form')
+
+if (contactForm) {
+  const submitButton = contactForm.querySelector('button[type="submit"]')
+  const formStatus = contactForm.querySelector('.contact-form-status')
+  const defaultButtonText = submitButton?.textContent || 'Send Message'
+
+  contactForm.addEventListener('submit', async (event) => {
+    event.preventDefault()
+    if (!contactForm.reportValidity()) return
+
+    const formData = new FormData(contactForm)
+    const payload = Object.fromEntries(formData.entries())
+
+    submitButton.disabled = true
+    submitButton.textContent = 'Sending...'
+    formStatus.textContent = ''
+    formStatus.classList.remove('is-success', 'is-error')
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+      const result = await response.json().catch(() => ({}))
+
+      if (!response.ok) {
+        throw new Error(result.error || 'We could not send your message. Please try again.')
+      }
+
+      contactForm.reset()
+      formStatus.textContent = 'Thank you! Your message has been sent.'
+      formStatus.classList.add('is-success')
+    } catch (error) {
+      formStatus.textContent = error.message || 'We could not send your message. Please try again.'
+      formStatus.classList.add('is-error')
+    } finally {
+      submitButton.disabled = false
+      submitButton.textContent = defaultButtonText
+    }
+  })
+}
+
 const navigationTestButtons = [...document.querySelectorAll('[data-nav-test-mode]')]
 
 if (document.body.classList.contains('nav-test-page') && navigationTestButtons.length) {

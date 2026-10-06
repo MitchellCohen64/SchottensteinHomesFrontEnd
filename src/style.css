@@ -4450,6 +4450,39 @@ h1 {
   box-shadow: none;
 }
 
+.contact-form .button:disabled {
+  cursor: wait;
+  opacity: 0.68;
+  transform: none;
+}
+
+.form-honeypot {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.contact-form-status {
+  min-height: 24px;
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.contact-form-status:empty {
+  display: none;
+}
+
+.contact-form-status.is-success {
+  color: #2f6f45;
+}
+
+.contact-form-status.is-error {
+  color: #9e1f32;
+}
+
 @media (max-width: 960px) {
   .design-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
