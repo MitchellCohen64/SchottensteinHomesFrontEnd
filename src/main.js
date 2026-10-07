@@ -83,6 +83,72 @@ const updateHeader = () => {
 updateHeader()
 window.addEventListener('scroll', updateHeader, { passive: true })
 
+const footerContactItems = document.querySelectorAll('.footer-contact .footer-list span')
+
+if (footerContactItems.length) {
+  const copyStatus = document.createElement('div')
+  let copyStatusTimer
+
+  copyStatus.className = 'footer-copy-status'
+  copyStatus.setAttribute('role', 'status')
+  copyStatus.setAttribute('aria-live', 'polite')
+  copyStatus.setAttribute('aria-atomic', 'true')
+  document.body.append(copyStatus)
+
+  const fallbackCopy = (text) => {
+    const textarea = document.createElement('textarea')
+    textarea.value = text
+    textarea.setAttribute('readonly', '')
+    textarea.style.position = 'fixed'
+    textarea.style.opacity = '0'
+    document.body.append(textarea)
+    textarea.select()
+    const copied = document.execCommand('copy')
+    textarea.remove()
+
+    if (!copied) throw new Error('Copy command was unsuccessful')
+  }
+
+  const copyContactItem = async (item) => {
+    const text = item.textContent.trim()
+
+    try {
+      if (navigator.clipboard?.writeText && window.isSecureContext) {
+        await navigator.clipboard.writeText(text)
+      } else {
+        fallbackCopy(text)
+      }
+
+      window.clearTimeout(copyStatusTimer)
+      footerContactItems.forEach((contactItem) => contactItem.classList.remove('is-copied'))
+      item.classList.add('is-copied')
+      copyStatus.textContent = 'Copied to clipboard'
+      copyStatus.classList.add('is-visible')
+      copyStatusTimer = window.setTimeout(() => {
+        item.classList.remove('is-copied')
+        copyStatus.classList.remove('is-visible')
+      }, 2200)
+    } catch {
+      copyStatus.textContent = 'Unable to copy. Please select the text and try again.'
+      copyStatus.classList.add('is-visible')
+    }
+  }
+
+  footerContactItems.forEach((item) => {
+    const text = item.textContent.trim()
+    item.tabIndex = 0
+    item.setAttribute('role', 'button')
+    item.setAttribute('aria-label', `Copy ${text} to clipboard`)
+    item.setAttribute('title', 'Copy to clipboard')
+    item.addEventListener('click', () => copyContactItem(item))
+    item.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter' && event.key !== ' ') return
+      event.preventDefault()
+      copyContactItem(item)
+    })
+  })
+}
+
 if (header && !isHomePage) {
   const compactMenuTrigger = document.createElement('button')
   compactMenuTrigger.className = 'hero-menu-trigger site-menu-trigger'
@@ -139,22 +205,27 @@ document.querySelectorAll([
   '.site-footer a[href="/holton-run.html"]',
 ].join(', ')).forEach((link) => link.remove())
 
-document.querySelectorAll('.footer-contact span, .footer-contact dd, .contact-details dd').forEach((element) => {
-  if (element.textContent.trim() !== 'dp@schottensteinhomes.com' || element.querySelector('a')) return
-  element.innerHTML = '<a href="mailto:dp@schottensteinhomes.com">dp@schottensteinhomes.com</a>'
-})
-
-document.querySelectorAll('.site-footer .footer-column:first-child .footer-list').forEach((footerList) => {
-  if (footerList.querySelector('a[href="/test.html"]')) return
-  footerList.insertAdjacentHTML('beforeend', '<a href="/test.html">test</a>')
-})
-
 const contactForm = document.querySelector('.contact-form')
 
 if (contactForm) {
   const submitButton = contactForm.querySelector('button[type="submit"]')
   const formStatus = contactForm.querySelector('.contact-form-status')
   const defaultButtonText = submitButton?.textContent || 'Send Message'
+  const community = new URLSearchParams(window.location.search).get('community')?.trim()
+
+  if (community) {
+    const message = contactForm.querySelector('[name="message"]')
+    const requestType = document.createElement('input')
+    const communityInput = document.createElement('input')
+    requestType.type = 'hidden'
+    requestType.name = 'requestType'
+    requestType.value = 'community-tour'
+    communityInput.type = 'hidden'
+    communityInput.name = 'community'
+    communityInput.value = community
+    contactForm.append(requestType, communityInput)
+    message.value = `I'd like to schedule a tour of ${community}.`
+  }
 
   contactForm.addEventListener('submit', async (event) => {
     event.preventDefault()
@@ -1246,6 +1317,47 @@ if (homeDetails) {
   homeDetails.querySelector('[data-detail-sqft]').textContent = `${details.sqft} Square Feet`
   homeDetails.querySelector('[data-detail-stories]').textContent = `${details.stories} ${details.stories === '1' ? 'Story' : 'Stories'}`
   homeDetails.querySelector('[data-tour-home]').value = details.name
+  homeDetails.querySelector('[data-tour-community]').value = details.community
+
+  const tourForm = homeDetails.querySelector('.tour-request-form')
+  const tourSubmitButton = tourForm?.querySelector('button[type="submit"]')
+  const tourFormStatus = tourForm?.querySelector('.tour-form-status')
+
+  tourForm?.addEventListener('submit', async (event) => {
+    event.preventDefault()
+    if (!tourForm.reportValidity()) return
+
+    const payload = Object.fromEntries(new FormData(tourForm).entries())
+    tourSubmitButton.disabled = true
+    tourSubmitButton.textContent = 'Sending...'
+    tourFormStatus.textContent = ''
+    tourFormStatus.classList.remove('is-success', 'is-error')
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+      const result = await response.json().catch(() => ({}))
+
+      if (!response.ok) {
+        throw new Error(result.error || 'We could not send your tour request. Please try again.')
+      }
+
+      tourForm.reset()
+      homeDetails.querySelector('[data-tour-home]').value = details.name
+      homeDetails.querySelector('[data-tour-community]').value = details.community
+      tourFormStatus.textContent = 'Thank you! Your tour request has been sent.'
+      tourFormStatus.classList.add('is-success')
+    } catch (error) {
+      tourFormStatus.textContent = error.message || 'We could not send your tour request. Please try again.'
+      tourFormStatus.classList.add('is-error')
+    } finally {
+      tourSubmitButton.disabled = false
+      tourSubmitButton.textContent = 'Request a Tour'
+    }
+  })
 
   const detailImage = planImageFor(details.name, details.community)
   const detailHeroImage = homeDetails.querySelector('.home-detail-hero img')

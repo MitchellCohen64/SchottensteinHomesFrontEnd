@@ -36,12 +36,60 @@ export default {
       return json({ ok: true })
     }
 
-    const name = normalizeLine(payload.name, 100)
+    const requestType = normalizeLine(payload.requestType, 20)
     const email = normalizeLine(payload.email, 254).toLowerCase()
-    const message = String(payload.message ?? '').trim().slice(0, 5_000)
+    let subject
+    let emailText
 
-    if (!name || !isEmail(email) || !message) {
-      return json({ error: 'Please provide your name, a valid email, and a message.' }, 400)
+    if (requestType === 'tour') {
+      const firstName = normalizeLine(payload.firstName, 50)
+      const lastName = normalizeLine(payload.lastName, 50)
+      const phone = normalizeLine(payload.phone, 50)
+      const home = normalizeLine(payload.home, 150)
+      const community = normalizeLine(payload.community, 150)
+      const message = String(payload.message ?? '').trim().slice(0, 5_000)
+
+      if (!firstName || !lastName || !isEmail(email) || !phone || !home || !community) {
+        return json({ error: 'Please complete all required tour-request fields.' }, 400)
+      }
+
+      subject = `Tour Request: ${home} — ${community}`
+      emailText = [
+        'A new tour request was submitted through the Schottenstein Homes website.',
+        '',
+        `Home: ${home}`,
+        `Community: ${community}`,
+        `Name: ${firstName} ${lastName}`,
+        `Email: ${email}`,
+        `Phone: ${phone}`,
+        '',
+        'Message:',
+        message || 'No additional message provided.',
+      ].join('\n')
+    } else {
+      const name = normalizeLine(payload.name, 100)
+      const message = String(payload.message ?? '').trim().slice(0, 5_000)
+      const community = normalizeLine(payload.community, 150)
+
+      if (!name || !isEmail(email) || !message) {
+        return json({ error: 'Please provide your name, a valid email, and a message.' }, 400)
+      }
+
+      subject = requestType === 'community-tour' && community
+        ? `Tour Request: ${community}`
+        : `New website inquiry from ${name}`
+      emailText = [
+        requestType === 'community-tour'
+          ? 'A new community tour request was submitted through the Schottenstein Homes website.'
+          : 'A new message was submitted through the Schottenstein Homes website.',
+        '',
+        ...(community ? [`Community: ${community}`] : []),
+        `Name: ${name}`,
+        `Email: ${email}`,
+        '',
+        'Message:',
+        message,
+      ].join('\n')
     }
 
     const apiKey = process.env.RESEND_API_KEY
@@ -63,16 +111,8 @@ export default {
         from: fromEmail,
         to: [toEmail],
         reply_to: email,
-        subject: `New website inquiry from ${name}`,
-        text: [
-          'A new message was submitted through the Schottenstein Homes website.',
-          '',
-          `Name: ${name}`,
-          `Email: ${email}`,
-          '',
-          'Message:',
-          message,
-        ].join('\n'),
+        subject,
+        text: emailText,
       }),
     })
 
