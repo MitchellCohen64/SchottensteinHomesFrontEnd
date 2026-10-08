@@ -965,6 +965,13 @@ h1 {
   display: block;
 }
 
+.home-intro-title-line--inline {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.24em;
+  white-space: nowrap;
+}
+
 .home-page.home-reveal-enabled .home-reveal-title-line {
   opacity: 1;
   visibility: hidden;
@@ -974,6 +981,16 @@ h1 {
 
 .home-page.home-reveal-enabled > .home-intro .home-reveal-item {
   transition-duration: 1000ms;
+}
+
+.home-page.home-reveal-enabled > .home-intro .home-intro-copy.home-reveal-item {
+  transform: translate3d(48px, 0, 0);
+  transition-duration: 800ms;
+  will-change: transform, opacity;
+}
+
+.home-page.home-reveal-enabled > .home-intro.is-revealed .home-intro-copy.home-reveal-item {
+  transform: translate3d(0, 0, 0);
 }
 
 @media (max-width: 700px) {

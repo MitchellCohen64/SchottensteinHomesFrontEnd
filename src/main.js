@@ -16,8 +16,12 @@ if (isHomePage) {
   const revealDelayStep = isNarrowViewport ? 50 : 85
   const revealDelayCap = isNarrowViewport ? 4 : 6
   const introRevealThreshold = isNarrowViewport ? 0.15 : 0.4
+  const titleDelayStep = 500
+  const titleRevealDuration = 650
+  const introCopyPause = 100
 
   revealSections.forEach((section) => {
+    const titleLines = [...section.querySelectorAll('.home-intro-title-line > span')]
     const items = section.querySelectorAll([
       'h2',
       'h3',
@@ -36,13 +40,16 @@ if (isHomePage) {
       .filter((item) => !item.matches('.home-intro-title'))
       .forEach((item, index) => {
       item.classList.add('home-reveal-item')
-      item.style.setProperty('--reveal-delay', `${Math.min(index, revealDelayCap) * revealDelayStep}ms`)
+      const followsIntroTitle = section.classList.contains('home-intro') && item.matches('.home-intro-copy')
+      const delay = followsIntroTitle
+        ? Math.max(0, titleLines.length - 1) * titleDelayStep + titleRevealDuration + introCopyPause
+        : Math.min(index, revealDelayCap) * revealDelayStep
+      item.style.setProperty('--reveal-delay', `${delay}ms`)
     })
 
-    const titleLines = [...section.querySelectorAll('.home-intro-title-line > span')]
     titleLines.forEach((line, index) => {
       line.classList.add('home-reveal-title-line')
-      line.style.setProperty('--reveal-delay', `${index * 500}ms`)
+      line.style.setProperty('--reveal-delay', `${index * titleDelayStep}ms`)
     })
   })
 
