@@ -271,21 +271,6 @@ if (contactForm) {
   })
 }
 
-const navigationTestButtons = [...document.querySelectorAll('[data-nav-test-mode]')]
-
-if (document.body.classList.contains('nav-test-page') && navigationTestButtons.length) {
-  const setNavigationTestMode = (mode) => {
-    document.body.dataset.navMode = mode
-    navigationTestButtons.forEach((button) => {
-      button.setAttribute('aria-pressed', button.dataset.navTestMode === mode ? 'true' : 'false')
-    })
-  }
-
-  navigationTestButtons.forEach((button) => {
-    button.addEventListener('click', () => setNavigationTestMode(button.dataset.navTestMode))
-  })
-}
-
 const heroMenuTrigger = document.querySelector('.hero-menu-trigger')
 const heroMenuDrawer = document.querySelector('.hero-menu-drawer')
 const heroMenuBackdrop = document.querySelector('.hero-menu-backdrop')
