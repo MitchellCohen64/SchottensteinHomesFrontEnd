@@ -6459,6 +6459,12 @@ main .plan-card h3 {
   transform: translateY(-2px);
 }
 
+.plan-card-actions button:disabled {
+  opacity: .58;
+  cursor: not-allowed;
+  transform: none;
+}
+
 .community-disclaimer {
   max-width: 800px;
   margin: 36px auto 0;

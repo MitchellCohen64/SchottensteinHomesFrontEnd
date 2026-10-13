@@ -958,19 +958,28 @@ if (pagePlans && pagePlanGrid) {
 }
 
 const homeTourVideos = {
-  'The Hayes': 'dlAZMudQ_Cs',
+  // Keep these IDs synchronized with the cards on virtual-tours.html.
+  'The Addison': 'PtFxC8FBIl8',
+  'The Athens': 'Bjpd5gBddu8',
   'The Chester': 'VDvCNmqHTb4',
-  'The Erie': 'wex4pZnttPw',
-  'The Franklin': 'aTDvFAywufw',
+  'The Columbia': 't8jXcYttH_M',
+  'The Concord': 'r49qznPEVGM',
+  'The Erie': 'CuFZkFBd32I',
+  'The Erie A': 'Tkg7mlvgc_8',
+  'The Fayette': 'aTDvFAywufw',
+  'The Franklin': 'dhM4M2SJSXc',
   'The Hanover': 'exIKm2N1H_c',
-  'The Knox': 'ItrA4fKs6bI',
+  'The Hayes': 'dlAZMudQ_Cs',
+  'The Knox': 'mjifpLUcvGM',
   'The Madison': 'lotboNqTBlY',
   'The Reed': '6-IWOpLS_j4',
   'The Richland': 'wPhrKOhiJt0',
+  'The Richland with Den': 'seKGkCb4LoU',
   'The Seneca': 'Ev0Bgrbo6bA',
   'The Stillwater': 'kYaq_AY1mFw',
-  'The Vinton': 'rgI5Ry2e490',
-  'The York': '9gZypRrM-40',
+  'The Vinton': 'Bg5yf6DHgSc',
+  'The Vinton A': 'j6xp1xlVZ7A',
+  'The York': 'Ukgwtzl1bVM',
 }
 
 const tourVideoFor = (name) => homeTourVideos[name] || homeTourVideos[name.replace(/\s+II$/i, '')]
@@ -1067,7 +1076,16 @@ const missingFloorPlansByCommunity = Object.fromEntries(
   ]),
 )
 
-const floorPlanFor = (name, community) => floorPlansByCommunity[community]?.[name] || null
+const floorPlanFor = (name, community) => {
+  const communityFloorPlan = floorPlansByCommunity[community]?.[name]
+  if (communityFloorPlan) return communityFloorPlan
+
+  if (community !== 'Multiple Communities' && community !== 'Schottenstein Homes') return null
+
+  return Object.values(floorPlansByCommunity)
+    .map((floorPlans) => floorPlans[name])
+    .find(Boolean) || null
+}
 
 const planImagesByCommunity = {
   'Jerome Village Aster': {
@@ -1291,12 +1309,24 @@ document.querySelectorAll('.plan-card').forEach((card) => {
     window.location.href = `/home-details.html?${params}`
   })
   const tourVideo = tourVideoFor(title.textContent.trim())
+  const secondaryAction = actions.lastElementChild
   if (tourVideo) {
-    actions.lastElementChild.addEventListener('click', () => {
+    secondaryAction.addEventListener('click', () => {
       window.open(`https://www.youtube.com/watch?v=${tourVideo}`, '_blank', 'noopener,noreferrer')
     })
   } else {
-    actions.lastElementChild.hidden = true
+    const floorPlan = floorPlanFor(planName, planCommunity)
+    secondaryAction.textContent = 'Floor Plan'
+
+    if (floorPlan) {
+      secondaryAction.addEventListener('click', () => {
+        window.open(floorPlan, '_blank', 'noopener,noreferrer')
+      })
+    } else {
+      secondaryAction.disabled = true
+      secondaryAction.title = 'Floor plan coming soon'
+      secondaryAction.setAttribute('aria-label', `${planName} floor plan coming soon`)
+    }
   }
 
   body.append(heading, specs, price, actions)

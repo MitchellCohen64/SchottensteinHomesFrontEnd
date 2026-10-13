@@ -1,9 +1,121 @@
-const json = (body, status = 200) => Response.json(body, {
+const json = (body, status = 200, headers = {}) => Response.json(body, {
   status,
   headers: {
     'Cache-Control': 'no-store',
+    ...headers,
   },
 })
+
+const rateLimitPolicies = [
+  { scope: 'ip', windowSeconds: 10 * 60, maximum: 5 },
+  { scope: 'ip', windowSeconds: 24 * 60 * 60, maximum: 20 },
+  { scope: 'email', windowSeconds: 10 * 60, maximum: 3 },
+  { scope: 'email', windowSeconds: 24 * 60 * 60, maximum: 10 },
+]
+
+const hashIdentifier = async (value, secret) => {
+  const encoder = new TextEncoder()
+  const key = await crypto.subtle.importKey(
+    'raw',
+    encoder.encode(secret),
+    { name: 'HMAC', hash: 'SHA-256' },
+    false,
+    ['sign'],
+  )
+  const signature = await crypto.subtle.sign('HMAC', key, encoder.encode(value))
+  return [...new Uint8Array(signature)]
+    .map((byte) => byte.toString(16).padStart(2, '0'))
+    .join('')
+}
+
+const clientIpFor = (request) => {
+  const forwarded = request.headers.get('x-vercel-forwarded-for')
+    || request.headers.get('x-forwarded-for')
+    || request.headers.get('x-real-ip')
+    || 'unknown'
+
+  return forwarded.split(',')[0].trim() || 'unknown'
+}
+
+const checkRateLimit = async (request, email) => {
+  const redisUrl = process.env.UPSTASH_REDIS_REST_URL?.replace(/\/$/, '')
+  const redisToken = process.env.UPSTASH_REDIS_REST_TOKEN
+  const hashSecret = process.env.RATE_LIMIT_SECRET
+
+  if (!redisUrl || !redisToken || !hashSecret) {
+    throw new Error('Contact rate limiting is not configured.')
+  }
+  if (new TextEncoder().encode(hashSecret).byteLength < 32) {
+    throw new Error('RATE_LIMIT_SECRET must be at least 32 bytes.')
+  }
+
+  const identifiers = {
+    ip: await hashIdentifier(clientIpFor(request), hashSecret),
+    email: await hashIdentifier(email, hashSecret),
+  }
+  const nowSeconds = Math.floor(Date.now() / 1000)
+  const commands = []
+  const evaluatedPolicies = rateLimitPolicies.map((policy) => {
+    const bucket = Math.floor(nowSeconds / policy.windowSeconds)
+    const key = `contact:${policy.scope}:${identifiers[policy.scope]}:${policy.windowSeconds}:${bucket}`
+
+    commands.push(['INCR', key], ['EXPIRE', key, policy.windowSeconds + 60])
+    return {
+      ...policy,
+      retryAfter: policy.windowSeconds - (nowSeconds % policy.windowSeconds),
+    }
+  })
+
+  const controller = new AbortController()
+  const timeout = setTimeout(() => controller.abort(), 3_000)
+  let response
+
+  try {
+    response = await fetch(`${redisUrl}/pipeline`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${redisToken}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(commands),
+      signal: controller.signal,
+    })
+  } finally {
+    clearTimeout(timeout)
+  }
+
+  if (!response.ok) {
+    throw new Error(`Rate-limit store rejected the request with status ${response.status}.`)
+  }
+
+  const results = await response.json()
+  if (!Array.isArray(results) || results.length !== commands.length) {
+    throw new Error('Rate-limit store returned an invalid response.')
+  }
+
+  const violations = evaluatedPolicies.filter((policy, index) => {
+    const countResult = results[index * 2]
+    const expiryResult = results[index * 2 + 1]
+    const count = Number(countResult?.result)
+    if (
+      countResult?.error
+      || expiryResult?.error
+      || !Number.isInteger(count)
+      || count < 1
+      || Number(expiryResult?.result) !== 1
+    ) {
+      throw new Error('Rate-limit store could not update a counter.')
+    }
+    return count > policy.maximum
+  })
+
+  return {
+    allowed: violations.length === 0,
+    retryAfter: violations.length
+      ? Math.max(...violations.map(({ retryAfter }) => retryAfter))
+      : 0,
+  }
+}
 
 const normalizeLine = (value, maxLength) => String(value ?? '')
   .replace(/[\r\n]+/g, ' ')
@@ -40,6 +152,22 @@ export default {
     const email = normalizeLine(payload.email, 254).toLowerCase()
     let subject
     let emailText
+
+    let rateLimit
+    try {
+      rateLimit = await checkRateLimit(request, email)
+    } catch (error) {
+      console.error('Contact rate limiting is unavailable:', error.message)
+      return json({ error: 'Message delivery is temporarily unavailable. Please try again shortly.' }, 503)
+    }
+
+    if (!rateLimit.allowed) {
+      return json(
+        { error: 'Too many messages have been submitted. Please try again later.' },
+        429,
+        { 'Retry-After': String(rateLimit.retryAfter) },
+      )
+    }
 
     if (requestType === 'tour') {
       const firstName = normalizeLine(payload.firstName, 50)
