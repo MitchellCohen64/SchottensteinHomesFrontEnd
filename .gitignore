@@ -8,3 +8,5 @@ tmp/
 !.env.example
 docs/**
 !docs/README.md
+
+.vercel
