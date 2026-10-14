@@ -1,6 +1,7 @@
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import standardLogoUrl from '../media/SH_logo.png'
+import columbusMapUrl from '../media/columbus_map.png'
 import { communityPlanData, inventoryPlans } from './data/basePricing.js'
 
 const header = document.querySelector('.site-header')
@@ -501,7 +502,7 @@ if (mapElement) {
   const homeImageBounds = [[0, 0], [100, 100]]
 
   if (isHomeMap) {
-    L.imageOverlay('/media/columbus_map.png', homeImageBounds, {
+    L.imageOverlay(columbusMapUrl, homeImageBounds, {
       interactive: false
     }).addTo(map)
   } else {
