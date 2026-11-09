@@ -214,6 +214,7 @@ button {
   font-size: 15px;
   letter-spacing: 0.6px;
   text-transform: none;
+  white-space: normal;
 }
 
 .dropdown button,
@@ -315,6 +316,7 @@ button {
 }
 
 .community-menu-grid section {
+  min-width: 0;
   min-height: 190px;
   padding: 3px 32px;
   border-left: 1px solid #ddd8d0;
@@ -336,10 +338,16 @@ button {
 
 .community-menu-grid a {
   display: block;
+  width: 100%;
+  max-width: 100%;
   padding: 7px 0;
   color: #304a45;
   font-size: 14px;
   line-height: 1.35;
+  white-space: normal;
+  overflow-wrap: normal;
+  word-break: normal;
+  text-wrap: pretty;
   transition: color 160ms ease, transform 160ms ease;
 }
 
@@ -4345,20 +4353,33 @@ h1 {
 }
 
 .contact-detail dt {
-  min-width: 64px;
+  min-width: max-content;
+  flex: 0 0 auto;
   color: #8d2637;
   font-family: "Jost", "Montserrat", sans-serif;
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 1px;
   text-transform: uppercase;
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: keep-all;
 }
 
 .contact-detail dd {
   min-width: 0;
   margin: 0;
   color: #17202b;
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+@media (max-width: 420px) {
+  .contact-detail {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
 }
 
 .contact-form {
@@ -4553,7 +4574,7 @@ h1 {
   font-size: clamp(38px, 4.4vw, 66px);
   font-weight: 400;
   line-height: 0.98;
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
 }
 
 .amenities-carousel-heading p:last-child {
@@ -6594,15 +6615,23 @@ body * {
 }
 
 /* Text-fit safeguards shared by every page. */
-main :is(section, article, div, a),
+main *,
 .site-header > *,
 .site-footer :is(div, a, span) {
   min-width: 0;
 }
 
-main :is(h1, h2, h3, h4, h5, h6, p, small, strong, summary, dt, dd, label),
+main :is(h1, h2, h3, h4, h5, h6, p, small, strong, summary, dt, dd, label, a, button, span),
 .site-footer :is(h3, p, a, span) {
-  overflow-wrap: break-word;
+  max-width: 100%;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
+}
+
+.faq-item summary > span:first-child {
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 @media (max-width: 620px) {
@@ -6619,5 +6648,110 @@ main :is(h1, h2, h3, h4, h5, h6, p, small, strong, summary, dt, dd, label),
   .home-intro-title-line > span,
   .home-intro-card strong {
     white-space: normal;
+  }
+
+  main :is(h1, h2, h3, h4, h5, h6, p, summary, a, button, strong) {
+    white-space: normal;
+  }
+}
+
+/* Keep Homeowner Login fully visible in the header at every breakpoint. */
+.site-header .login {
+  flex: 0 0 auto;
+  max-width: none;
+  overflow: visible;
+}
+
+.home-page .site-header:not(.is-scrolled) .login {
+  position: static;
+  display: inline-flex;
+  grid-column: 3;
+  justify-self: end;
+  visibility: visible;
+  color: #fff;
+  opacity: 1;
+  pointer-events: auto;
+  transform: none;
+}
+
+.home-page .site-header .hero-account {
+  display: none !important;
+}
+
+@media (min-width: 961px) and (max-width: 1250px) {
+  .site-header {
+    grid-template-columns: 220px minmax(0, 1fr) minmax(140px, auto);
+  }
+}
+
+@media (max-width: 1180px) {
+  body:not(.home-page) .site-header {
+    grid-template-columns: minmax(0, 1fr) auto 48px;
+  }
+
+  body:not(.home-page) .site-header .login {
+    display: inline-flex;
+    grid-column: 2;
+    justify-self: end;
+  }
+
+  body:not(.home-page) .site-header .site-menu-trigger {
+    grid-column: 3;
+  }
+}
+
+@media (max-width: 960px) {
+  .home-page .site-header .login,
+  .home-page .site-header:not(.is-scrolled) .login,
+  .home-page .site-header.is-scrolled .login {
+    display: inline-flex;
+    grid-column: 3;
+    justify-self: end;
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+@media (max-width: 620px) {
+  .site-header .login {
+    min-height: 44px;
+    padding: 0 4px;
+    white-space: normal;
+    font-size: clamp(9px, 3vw, 11px);
+    line-height: 1.15;
+    text-align: center;
+  }
+
+  .site-header .login span {
+    max-width: 88px;
+  }
+
+  .home-page .site-header,
+  .home-page .site-header:not(.is-scrolled) {
+    grid-template-columns: 44px minmax(0, 1fr) minmax(92px, auto);
+    padding-inline: 12px;
+  }
+
+  .home-page .site-header .brand img,
+  .home-page .site-header:not(.is-scrolled) .brand img,
+  .home-page .site-header.is-scrolled .brand img {
+    width: min(132px, calc(100vw - 172px));
+  }
+
+  body:not(.home-page) .site-header {
+    grid-template-columns: minmax(0, 1fr) minmax(92px, auto) 44px;
+    gap: 8px;
+    padding-inline: 12px;
+  }
+
+  body:not(.home-page) .site-header .brand img {
+    width: min(132px, calc(100vw - 172px));
+    height: auto;
+  }
+
+  body:not(.home-page) .site-header .site-menu-trigger {
+    width: 44px;
+    height: 44px;
   }
 }

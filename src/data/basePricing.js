@@ -1,4 +1,5 @@
-// Source: media/Schottenstein_Base_Pricing_8.3.26.xlsx (revision 8.3.2026).
+// Square footage verified against the 11/4/2026 delivery (source PDF revision 10.9.2026).
+// Existing website pricing is intentionally unchanged.
 // Elevation and foundation variants are consolidated into one entry per base design.
 export const communityPlanData = {
   'jerome-village-aster': [
