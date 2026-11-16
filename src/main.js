@@ -91,9 +91,9 @@ const updateHeader = () => {
 updateHeader()
 window.addEventListener('scroll', updateHeader, { passive: true })
 
-const footerContactItems = document.querySelectorAll('.footer-contact .footer-list span')
+const copyTargets = document.querySelectorAll('.footer-contact .footer-list span, [data-copy-value]')
 
-if (footerContactItems.length) {
+if (copyTargets.length) {
   const copyStatus = document.createElement('div')
   let copyStatusTimer
 
@@ -118,7 +118,7 @@ if (footerContactItems.length) {
   }
 
   const copyContactItem = async (item) => {
-    const text = item.textContent.trim()
+    const text = item.dataset.copyValue?.trim() || item.textContent.trim()
 
     try {
       if (navigator.clipboard?.writeText && window.isSecureContext) {
@@ -128,9 +128,9 @@ if (footerContactItems.length) {
       }
 
       window.clearTimeout(copyStatusTimer)
-      footerContactItems.forEach((contactItem) => contactItem.classList.remove('is-copied'))
+      copyTargets.forEach((copyTarget) => copyTarget.classList.remove('is-copied'))
       item.classList.add('is-copied')
-      copyStatus.textContent = 'Copied to clipboard'
+      copyStatus.textContent = item.dataset.copyConfirmation || 'Copied to clipboard'
       copyStatus.classList.add('is-visible')
       copyStatusTimer = window.setTimeout(() => {
         item.classList.remove('is-copied')
@@ -142,13 +142,16 @@ if (footerContactItems.length) {
     }
   }
 
-  footerContactItems.forEach((item) => {
-    const text = item.textContent.trim()
-    item.tabIndex = 0
-    item.setAttribute('role', 'button')
+  copyTargets.forEach((item) => {
+    const text = item.dataset.copyValue?.trim() || item.textContent.trim()
     item.setAttribute('aria-label', `Copy ${text} to clipboard`)
     item.setAttribute('title', 'Copy to clipboard')
     item.addEventListener('click', () => copyContactItem(item))
+
+    if (item instanceof HTMLButtonElement) return
+
+    item.tabIndex = 0
+    item.setAttribute('role', 'button')
     item.addEventListener('keydown', (event) => {
       if (event.key !== 'Enter' && event.key !== ' ') return
       event.preventDefault()

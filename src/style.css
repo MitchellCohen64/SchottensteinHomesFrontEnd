@@ -6663,13 +6663,15 @@ main .plan-card h3 {
   margin-top: 36px;
 }
 
-.model-home-actions a {
+.model-home-actions a,
+.model-home-actions button {
   display: inline-flex;
   min-height: 48px;
   align-items: center;
   justify-content: center;
   padding: 12px 20px;
   border: 1px solid #8d2637;
+  font: inherit;
   text-decoration: none;
   transition: background 180ms ease, color 180ms ease;
 }
@@ -6688,10 +6690,12 @@ main .plan-card h3 {
 .model-home-secondary {
   background: transparent;
   color: #8d2637;
+  cursor: copy;
 }
 
 .model-home-secondary:hover,
-.model-home-secondary:focus-visible {
+.model-home-secondary:focus-visible,
+.model-home-secondary.is-copied {
   background: #8d2637;
   color: #fff;
 }
