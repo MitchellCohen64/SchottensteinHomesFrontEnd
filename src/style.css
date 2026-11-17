@@ -12,6 +12,7 @@
   min-height: 100dvh;
   display: grid;
   grid-template-rows: auto 1fr auto;
+  padding-top: 0;
   background: #f7f4ee;
   color: #17202b;
 }
