@@ -973,6 +973,27 @@ const homeTourVideos = {
 
 const tourVideoFor = (name) => homeTourVideos[name] || homeTourVideos[name.replace(/\s+II$/i, '')]
 
+const virtualToursByCommunity = {
+  'Glacier Pointe': {
+    'The Reed': 'https://unbranded.youriguide.com/031d6c89-9e74-45f9-9519-7aa819106094',
+    'The Chester': 'https://unbranded.youriguide.com/0def7604-e588-411e-8031-23163b7e2a4e',
+  },
+  'The Reserve at New California': {
+    'The Knox': 'https://unbranded.youriguide.com/871b3358-7708-4935-8a0c-ec568cd0e088',
+  },
+  'Renner Park': {
+    'The Franklin': 'https://unbranded.youriguide.com/471a1ac2-e605-4f53-ab05-b5478fbbb75e',
+  },
+}
+
+const virtualTourFor = (name, community) => {
+  const communityTour = virtualToursByCommunity[community]?.[name]
+  if (communityTour) return communityTour
+
+  const video = tourVideoFor(name)
+  return video ? `https://www.youtube.com/watch?v=${video}` : null
+}
+
 const floorPlanBlobBaseUrl = 'https://njwcqmczpfmbb0bm.public.blob.vercel-storage.com/'
 const floorPlanBlobUrl = (pathname) => new URL(pathname, floorPlanBlobBaseUrl).href
 
@@ -1300,11 +1321,11 @@ document.querySelectorAll('.plan-card').forEach((card) => {
     })
     window.location.href = `/home-details.html?${params}`
   })
-  const tourVideo = tourVideoFor(title.textContent.trim())
+  const virtualTour = virtualTourFor(title.textContent.trim(), planCommunity)
   const secondaryAction = actions.lastElementChild
-  if (tourVideo) {
+  if (virtualTour) {
     secondaryAction.addEventListener('click', () => {
-      window.open(`https://www.youtube.com/watch?v=${tourVideo}`, '_blank', 'noopener,noreferrer')
+      window.open(virtualTour, '_blank', 'noopener,noreferrer')
     })
   } else {
     const floorPlan = floorPlanFor(planName, planCommunity)
@@ -1397,11 +1418,11 @@ if (homeDetails) {
       : `No exterior rendering available for ${details.name}`
   }
 
-  const tourVideo = tourVideoFor(details.name)
+  const virtualTour = virtualTourFor(details.name, details.community)
   const tourResource = homeDetails.querySelector('[data-detail-tour-resource]')
   const tourLink = homeDetails.querySelector('[data-detail-tour-link]')
-  if (tourVideo && tourResource && tourLink) {
-    tourLink.href = `https://www.youtube.com/watch?v=${tourVideo}`
+  if (virtualTour && tourResource && tourLink) {
+    tourLink.href = virtualTour
     tourLink.hidden = false
     tourResource.hidden = false
   }
