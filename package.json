@@ -6,9 +6,13 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "optimize:images": "node scripts/optimize-images.mjs",
+    "report:images": "node scripts/image-weight-report.mjs",
+    "preview": "vite preview",
+    "test:contact": "node --test api/contact.test.js"
   },
   "devDependencies": {
+    "sharp": "^0.35.5",
     "vite": "^7.0.0"
   },
   "dependencies": {

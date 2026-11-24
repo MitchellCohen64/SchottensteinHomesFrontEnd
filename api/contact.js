@@ -46,9 +46,9 @@ const checkRateLimit = async (request, email) => {
     || process.env.KV_REST_API_TOKEN
   const hashSecret = process.env.RATE_LIMIT_SECRET
 
-  if (!redisUrl || !redisToken || !hashSecret) {
-    throw new Error('Contact rate limiting is not configured.')
-  }
+  if (!redisUrl) throw new Error('Missing environment variable: UPSTASH_REDIS_REST_URL (or KV_REST_API_URL).')
+  if (!redisToken) throw new Error('Missing environment variable: UPSTASH_REDIS_REST_TOKEN (or KV_REST_API_TOKEN).')
+  if (!hashSecret) throw new Error('Missing environment variable: RATE_LIMIT_SECRET.')
   if (new TextEncoder().encode(hashSecret).byteLength < 32) {
     throw new Error('RATE_LIMIT_SECRET must be at least 32 bytes.')
   }
@@ -121,10 +121,16 @@ const checkRateLimit = async (request, email) => {
   }
 }
 
-const normalizeLine = (value, maxLength) => String(value ?? '')
+const normalizeLine = (value) => String(value ?? '')
   .replace(/[\r\n]+/g, ' ')
   .trim()
-  .slice(0, maxLength)
+
+const validateLine = (value, label, maximum, { required = false } = {}) => {
+  const normalized = normalizeLine(value)
+  if (required && !normalized) return `${label} is required.`
+  if (normalized.length > maximum) return `${label} must be ${maximum} characters or fewer.`
+  return null
+}
 
 const isEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
 
@@ -146,43 +152,39 @@ export default {
       return json({ error: 'Invalid request.' }, 400)
     }
 
-    // Bots commonly fill this visually hidden field. Return success without
-    // sending so the field remains an effective, unobtrusive honeypot.
     if (String(payload.company ?? '').trim()) {
-      return json({ ok: true })
+      return json({ error: 'Spam protection check failed.' }, 400)
     }
 
-    const requestType = normalizeLine(payload.requestType, 20)
-    const email = normalizeLine(payload.email, 254).toLowerCase()
+    const requestType = normalizeLine(payload.requestType)
+    const email = normalizeLine(payload.email).toLowerCase()
+    const commonValidationError = validateLine(payload.requestType, 'Request type', 20)
+      || validateLine(payload.email, 'Email', 254, { required: true })
+      || (!isEmail(email) ? 'Please provide a valid email address.' : null)
+
+    if (commonValidationError) {
+      return json({ error: commonValidationError }, 400)
+    }
+
     let subject
     let emailText
 
-    let rateLimit
-    try {
-      rateLimit = await checkRateLimit(request, email)
-    } catch (error) {
-      console.error('Contact rate limiting is unavailable:', error.message)
-      return json({ error: 'Message delivery is temporarily unavailable. Please try again shortly.' }, 503)
-    }
-
-    if (!rateLimit.allowed) {
-      return json(
-        { error: 'Too many messages have been submitted. Please try again later.' },
-        429,
-        { 'Retry-After': String(rateLimit.retryAfter) },
-      )
-    }
-
     if (requestType === 'tour') {
-      const firstName = normalizeLine(payload.firstName, 50)
-      const lastName = normalizeLine(payload.lastName, 50)
-      const phone = normalizeLine(payload.phone, 50)
-      const home = normalizeLine(payload.home, 150)
-      const community = normalizeLine(payload.community, 150)
-      const message = String(payload.message ?? '').trim().slice(0, 5_000)
+      const firstName = normalizeLine(payload.firstName)
+      const lastName = normalizeLine(payload.lastName)
+      const phone = normalizeLine(payload.phone)
+      const home = normalizeLine(payload.home)
+      const community = normalizeLine(payload.community)
+      const message = String(payload.message ?? '').trim()
+      const validationError = validateLine(payload.firstName, 'First name', 50, { required: true })
+        || validateLine(payload.lastName, 'Last name', 50, { required: true })
+        || validateLine(payload.phone, 'Phone', 50, { required: true })
+        || validateLine(payload.home, 'Home', 150, { required: true })
+        || validateLine(payload.community, 'Community', 150, { required: true })
+        || (message.length > 5_000 ? 'Message must be 5000 characters or fewer.' : null)
 
-      if (!firstName || !lastName || !isEmail(email) || !phone || !home || !community) {
-        return json({ error: 'Please complete all required tour-request fields.' }, 400)
+      if (validationError) {
+        return json({ error: validationError }, 400)
       }
 
       subject = `Tour Request: ${home} — ${community}`
@@ -199,12 +201,16 @@ export default {
         message || 'No additional message provided.',
       ].join('\n')
     } else {
-      const name = normalizeLine(payload.name, 100)
-      const message = String(payload.message ?? '').trim().slice(0, 5_000)
-      const community = normalizeLine(payload.community, 150)
+      const name = normalizeLine(payload.name)
+      const message = String(payload.message ?? '').trim()
+      const community = normalizeLine(payload.community)
+      const validationError = validateLine(payload.name, 'Name', 100, { required: true })
+        || validateLine(payload.community, 'Community', 150)
+        || (!message ? 'Message is required.' : null)
+        || (message.length > 5_000 ? 'Message must be 5000 characters or fewer.' : null)
 
-      if (!name || !isEmail(email) || !message) {
-        return json({ error: 'Please provide your name, a valid email, and a message.' }, 400)
+      if (validationError) {
+        return json({ error: validationError }, 400)
       }
 
       subject = requestType === 'community-tour' && community
@@ -224,12 +230,29 @@ export default {
       ].join('\n')
     }
 
+    let rateLimit
+    try {
+      rateLimit = await checkRateLimit(request, email)
+    } catch (error) {
+      console.error('Contact rate limiting is unavailable:', error.message)
+      return json({ error: 'Message delivery is temporarily unavailable. Please try again shortly.' }, 503)
+    }
+
+    if (!rateLimit.allowed) {
+      return json(
+        { error: 'Too many messages have been submitted. Please try again later.' },
+        429,
+        { 'Retry-After': String(rateLimit.retryAfter) },
+      )
+    }
+
     const apiKey = process.env.RESEND_API_KEY
     const toEmail = process.env.CONTACT_TO_EMAIL
     const fromEmail = process.env.CONTACT_FROM_EMAIL || 'Schottenstein Homes Website <onboarding@resend.dev>'
 
     if (!apiKey || !toEmail) {
-      console.error('Contact form email environment variables are not configured.')
+      if (!apiKey) console.error('Missing environment variable: RESEND_API_KEY.')
+      if (!toEmail) console.error('Missing environment variable: CONTACT_TO_EMAIL.')
       return json({ error: 'Email delivery is not configured yet.' }, 503)
     }
 

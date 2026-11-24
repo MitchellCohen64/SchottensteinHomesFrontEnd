@@ -1,7 +1,7 @@
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import standardLogoUrl from '../media/SH_logo.png'
-import columbusMapUrl from '../media/columbus_map.png'
+import columbusMapUrl from '../media/columbus_map.webp'
 import { communityPlanData, inventoryPlans } from './data/basePricing.js'
 
 const header = document.querySelector('.site-header')
@@ -174,7 +174,7 @@ if (header && !isHomePage) {
     <div class="hero-menu-backdrop" aria-hidden="true"></div>
     <aside id="site-menu-drawer" class="hero-menu-drawer is-right" aria-label="Main menu" aria-hidden="true">
       <div class="hero-menu-drawer-header">
-        <img src="${standardLogoUrl}" alt="Schottenstein Homes" />
+        <img src="${standardLogoUrl}" alt="Schottenstein Homes" width="185" height="74" loading="lazy" decoding="async" />
         <button class="hero-menu-close" type="button" aria-label="Close menu">
           <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" /></svg>
         </button>
@@ -649,7 +649,7 @@ if (communityMapImage) {
     <div class="community-map-lightbox-backdrop" data-map-lightbox-close></div>
     <div class="community-map-lightbox-dialog" role="dialog" aria-modal="true" aria-label="Enlarged community map">
       <button class="community-map-lightbox-close" type="button" aria-label="Close enlarged community map" data-map-lightbox-close>&times;</button>
-      <img src="${communityMapImage.src}" alt="${communityMapImage.alt}" />
+      <img src="${communityMapImage.src}" alt="${communityMapImage.alt}" width="${communityMapImage.width}" height="${communityMapImage.height}" loading="lazy" decoding="async" />
     </div>
   `
   document.body.append(lightbox)
@@ -1102,88 +1102,88 @@ const floorPlanFor = (name, community) => {
 
 const planImagesByCommunity = {
   'Jerome Village Aster': {
-    'The Carroll II': new URL('../media/Renders/Aster_in_Jerome_Village/Carroll_II.jpg', import.meta.url).href,
-    'The Erie II': new URL('../media/Renders/Aster_in_Jerome_Village/Erie_II.jpg', import.meta.url).href,
-    'The Franklin II': new URL('../media/Renders/Aster_in_Jerome_Village/Franklin_II.jpg', import.meta.url).href,
-    'The Knox II': new URL('../media/Renders/Aster_in_Jerome_Village/Knox_II.jpg', import.meta.url).href,
-    'The Madison II': new URL('../media/Renders/Aster_in_Jerome_Village/Madison_II.jpg', import.meta.url).href,
-    'The Seneca II': new URL('../media/Renders/Aster_in_Jerome_Village/Seneca_II.jpg', import.meta.url).href,
-    'The Trumbull II': new URL('../media/Renders/Aster_in_Jerome_Village/Trumbull_II.jpg', import.meta.url).href,
-    'The Vinton II': new URL('../media/Renders/Aster_in_Jerome_Village/Vinton_II.jpg', import.meta.url).href,
+    'The Carroll II': new URL('../media/Renders/Aster_in_Jerome_Village/Carroll_II.webp', import.meta.url).href,
+    'The Erie II': new URL('../media/Renders/Aster_in_Jerome_Village/Erie_II.webp', import.meta.url).href,
+    'The Franklin II': new URL('../media/Renders/Aster_in_Jerome_Village/Franklin_II.webp', import.meta.url).href,
+    'The Knox II': new URL('../media/Renders/Aster_in_Jerome_Village/Knox_II.webp', import.meta.url).href,
+    'The Madison II': new URL('../media/Renders/Aster_in_Jerome_Village/Madison_II.webp', import.meta.url).href,
+    'The Seneca II': new URL('../media/Renders/Aster_in_Jerome_Village/Seneca_II.webp', import.meta.url).href,
+    'The Trumbull II': new URL('../media/Renders/Aster_in_Jerome_Village/Trumbull_II.webp', import.meta.url).href,
+    'The Vinton II': new URL('../media/Renders/Aster_in_Jerome_Village/Vinton_II.webp', import.meta.url).href,
   },
   'The Cottages at Verbena': {
-    'The Reed': new URL('../media/Renders/The_Cottages_at_Verbena/Reed.jpg', import.meta.url).href,
-    'The York': new URL('../media/Renders/The_Cottages_at_Verbena/York.jpg', import.meta.url).href,
+    'The Reed': new URL('../media/Renders/The_Cottages_at_Verbena/Reed.webp', import.meta.url).href,
+    'The York': new URL('../media/Renders/The_Cottages_at_Verbena/York.webp', import.meta.url).href,
   },
   'Glacier Pointe': {
-    'The Addison': new URL('../media/Renders/Glacier_Pointe/Addison.jpg', import.meta.url).href,
-    'The Chester': new URL('../media/Renders/Glacier_Pointe/Chester.jpg', import.meta.url).href,
-    'The Columbia': new URL('../media/Renders/Glacier_Pointe/Columbia.jpg', import.meta.url).href,
-    'The Hanover': new URL('../media/Renders/Glacier_Pointe/Hanover.jpg', import.meta.url).href,
-    'The Knox': new URL('../media/Renders/Glacier_Pointe/Knox.jpg', import.meta.url).href,
-    'The Reed': new URL('../media/Renders/Glacier_Pointe/Reed.jpg', import.meta.url).href,
-    'The York': new URL('../media/Renders/Glacier_Pointe/York.jpg', import.meta.url).href,
+    'The Addison': new URL('../media/Renders/Glacier_Pointe/Addison.webp', import.meta.url).href,
+    'The Chester': new URL('../media/Renders/Glacier_Pointe/Chester.webp', import.meta.url).href,
+    'The Columbia': new URL('../media/Renders/Glacier_Pointe/Columbia.webp', import.meta.url).href,
+    'The Hanover': new URL('../media/Renders/Glacier_Pointe/Hanover.webp', import.meta.url).href,
+    'The Knox': new URL('../media/Renders/Glacier_Pointe/Knox.webp', import.meta.url).href,
+    'The Reed': new URL('../media/Renders/Glacier_Pointe/Reed.webp', import.meta.url).href,
+    'The York': new URL('../media/Renders/Glacier_Pointe/York.webp', import.meta.url).href,
   },
   'Hickory Creek': {
-    'The Athens': new URL('../media/Renders/Hickory_Creek/Athens.jpg', import.meta.url).href,
-    'The Benton': new URL('../media/Renders/Hickory_Creek/Benton.jpg', import.meta.url).href,
-    'The Columbia': new URL('../media/Renders/Hickory_Creek/Columbia.jpg', import.meta.url).href,
-    'The Fayette': new URL('../media/Renders/Hickory_Creek/Fayette.jpg', import.meta.url).href,
-    'The Franklin': new URL('../media/Renders/Hickory_Creek/Franklin.jpg', import.meta.url).href,
-    'The Harrison': new URL('../media/Renders/Hickory_Creek/Harrison.png', import.meta.url).href,
-    'The Hayes': new URL('../media/Renders/Hickory_Creek/Hayes.jpg', import.meta.url).href,
-    'The Hudson': new URL('../media/Renders/Hickory_Creek/Hudson.jpg', import.meta.url).href,
-    'The Jefferson': new URL('../media/Renders/Hickory_Creek/Jefferson.jpg', import.meta.url).href,
-    'The Madison': new URL('../media/Renders/Hickory_Creek/Madison.jpg', import.meta.url).href,
-    'The Richland': new URL('../media/Renders/Hickory_Creek/Richland.jpg', import.meta.url).href,
-    'The Stillwater': new URL('../media/Renders/Hickory_Creek/Stillwater.png', import.meta.url).href,
-    'The Stillwater Plus': new URL('../media/Renders/Hickory_Creek/Stillwater_Plus.png', import.meta.url).href,
-    'The Vinton': new URL('../media/Renders/Hickory_Creek/Vinton.jpg', import.meta.url).href,
+    'The Athens': new URL('../media/Renders/Hickory_Creek/Athens.webp', import.meta.url).href,
+    'The Benton': new URL('../media/Renders/Hickory_Creek/Benton.webp', import.meta.url).href,
+    'The Columbia': new URL('../media/Renders/Hickory_Creek/Columbia.webp', import.meta.url).href,
+    'The Fayette': new URL('../media/Renders/Hickory_Creek/Fayette.webp', import.meta.url).href,
+    'The Franklin': new URL('../media/Renders/Hickory_Creek/Franklin.webp', import.meta.url).href,
+    'The Harrison': new URL('../media/Renders/Hickory_Creek/Harrison.webp', import.meta.url).href,
+    'The Hayes': new URL('../media/Renders/Hickory_Creek/Hayes.webp', import.meta.url).href,
+    'The Hudson': new URL('../media/Renders/Hickory_Creek/Hudson.webp', import.meta.url).href,
+    'The Jefferson': new URL('../media/Renders/Hickory_Creek/Jefferson.webp', import.meta.url).href,
+    'The Madison': new URL('../media/Renders/Hickory_Creek/Madison.webp', import.meta.url).href,
+    'The Richland': new URL('../media/Renders/Hickory_Creek/Richland.webp', import.meta.url).href,
+    'The Stillwater': new URL('../media/Renders/Hickory_Creek/Stillwater.webp', import.meta.url).href,
+    'The Stillwater Plus': new URL('../media/Renders/Hickory_Creek/Stillwater_Plus.webp', import.meta.url).href,
+    'The Vinton': new URL('../media/Renders/Hickory_Creek/Vinton.webp', import.meta.url).href,
   },
   'Holton Run': {
-    'The Fayette': new URL('../media/Renders/Holton_Run/Fayette.jpg', import.meta.url).href,
-    'The Franklin': new URL('../media/Renders/Holton_Run/Franklin.jpg', import.meta.url).href,
-    'The Hayes': new URL('../media/Renders/Holton_Run/Hayes.jpg', import.meta.url).href,
-    'The Madison': new URL('../media/Renders/Holton_Run/Madison.jpg', import.meta.url).href,
-    'The Richland': new URL('../media/Renders/Holton_Run/Richland.jpg', import.meta.url).href,
-    'The Seneca': new URL('../media/Renders/Holton_Run/Seneca.jpg', import.meta.url).href,
-    'The Vinton': new URL('../media/Renders/Holton_Run/Vinton.jpg', import.meta.url).href,
+    'The Fayette': new URL('../media/Renders/Holton_Run/Fayette.webp', import.meta.url).href,
+    'The Franklin': new URL('../media/Renders/Holton_Run/Franklin.webp', import.meta.url).href,
+    'The Hayes': new URL('../media/Renders/Holton_Run/Hayes.webp', import.meta.url).href,
+    'The Madison': new URL('../media/Renders/Holton_Run/Madison.webp', import.meta.url).href,
+    'The Richland': new URL('../media/Renders/Holton_Run/Richland.webp', import.meta.url).href,
+    'The Seneca': new URL('../media/Renders/Holton_Run/Seneca.webp', import.meta.url).href,
+    'The Vinton': new URL('../media/Renders/Holton_Run/Vinton.webp', import.meta.url).href,
   },
   'Renner Park': {
-    'The Athens': new URL('../media/Renders/Renner_Park/Athens.jpg', import.meta.url).href,
-    'The Benton': new URL('../media/Renders/Renner_Park/Benton.jpg', import.meta.url).href,
-    'The Columbia': new URL('../media/Renders/Renner_Park/Columbia.jpg', import.meta.url).href,
-    'The Fayette': new URL('../media/Renders/Renner_Park/Fayette.jpg', import.meta.url).href,
-    'The Franklin': new URL('../media/Renders/Renner_Park/Franklin.jpg', import.meta.url).href,
-    'The Hayes': new URL('../media/Renders/Renner_Park/Hayes.jpg', import.meta.url).href,
-    'The Hudson': new URL('../media/Renders/Renner_Park/Hudson.jpg', import.meta.url).href,
-    'The Madison': new URL('../media/Renders/Renner_Park/Madison.jpg', import.meta.url).href,
-    'The Richland': new URL('../media/Renders/Renner_Park/Richland.jpg', import.meta.url).href,
-    'The Seneca': new URL('../media/Renders/Renner_Park/Seneca_II.jpg', import.meta.url).href,
-    'The Stillwater': new URL('../media/Renders/Renner_Park/Stillwater.png', import.meta.url).href,
-    'The Stillwater Plus': new URL('../media/Renders/Renner_Park/Stillwater_Plus.jpg', import.meta.url).href,
-    'The Vinton': new URL('../media/Renders/Renner_Park/Vinton.jpg', import.meta.url).href,
+    'The Athens': new URL('../media/Renders/Renner_Park/Athens.webp', import.meta.url).href,
+    'The Benton': new URL('../media/Renders/Renner_Park/Benton.webp', import.meta.url).href,
+    'The Columbia': new URL('../media/Renders/Renner_Park/Columbia.webp', import.meta.url).href,
+    'The Fayette': new URL('../media/Renders/Renner_Park/Fayette.webp', import.meta.url).href,
+    'The Franklin': new URL('../media/Renders/Renner_Park/Franklin.webp', import.meta.url).href,
+    'The Hayes': new URL('../media/Renders/Renner_Park/Hayes.webp', import.meta.url).href,
+    'The Hudson': new URL('../media/Renders/Renner_Park/Hudson.webp', import.meta.url).href,
+    'The Madison': new URL('../media/Renders/Renner_Park/Madison.webp', import.meta.url).href,
+    'The Richland': new URL('../media/Renders/Renner_Park/Richland.webp', import.meta.url).href,
+    'The Seneca': new URL('../media/Renders/Renner_Park/Seneca_II.webp', import.meta.url).href,
+    'The Stillwater': new URL('../media/Renders/Renner_Park/Stillwater.webp', import.meta.url).href,
+    'The Stillwater Plus': new URL('../media/Renders/Renner_Park/Stillwater_Plus.webp', import.meta.url).href,
+    'The Vinton': new URL('../media/Renders/Renner_Park/Vinton.webp', import.meta.url).href,
   },
   'The Retreat at Hickory Lakes': {
-    'The Fayette': new URL('../media/Renders/The_Retreat_at_Hickory_Lakes/Fayette.jpg', import.meta.url).href,
-    'The Franklin': new URL('../media/Renders/The_Retreat_at_Hickory_Lakes/Franklin.jpg', import.meta.url).href,
-    'The Hayes': new URL('../media/Renders/The_Retreat_at_Hickory_Lakes/Hayes.jpg', import.meta.url).href,
-    'The Hudson': new URL('../media/Renders/The_Retreat_at_Hickory_Lakes/Hudson.jpg', import.meta.url).href,
-    'The Jefferson': new URL('../media/Renders/The_Retreat_at_Hickory_Lakes/Jefferson.jpg', import.meta.url).href,
-    'The Madison': new URL('../media/Renders/The_Retreat_at_Hickory_Lakes/Madison.jpg', import.meta.url).href,
-    'The Richland': new URL('../media/Renders/The_Retreat_at_Hickory_Lakes/Richland.jpg', import.meta.url).href,
-    'The Seneca': new URL('../media/Renders/The_Retreat_at_Hickory_Lakes/Seneca.jpg', import.meta.url).href,
-    'The Stillwater': new URL('../media/Renders/The_Retreat_at_Hickory_Lakes/Stillwater.jpg', import.meta.url).href,
-    'The Stillwater Plus': new URL('../media/Renders/The_Retreat_at_Hickory_Lakes/Stillwater_Plus.jpg', import.meta.url).href,
-    'The Vinton': new URL('../media/Renders/The_Retreat_at_Hickory_Lakes/Vinton.jpg', import.meta.url).href,
+    'The Fayette': new URL('../media/Renders/The_Retreat_at_Hickory_Lakes/Fayette.webp', import.meta.url).href,
+    'The Franklin': new URL('../media/Renders/The_Retreat_at_Hickory_Lakes/Franklin.webp', import.meta.url).href,
+    'The Hayes': new URL('../media/Renders/The_Retreat_at_Hickory_Lakes/Hayes.webp', import.meta.url).href,
+    'The Hudson': new URL('../media/Renders/The_Retreat_at_Hickory_Lakes/Hudson.webp', import.meta.url).href,
+    'The Jefferson': new URL('../media/Renders/The_Retreat_at_Hickory_Lakes/Jefferson.webp', import.meta.url).href,
+    'The Madison': new URL('../media/Renders/The_Retreat_at_Hickory_Lakes/Madison.webp', import.meta.url).href,
+    'The Richland': new URL('../media/Renders/The_Retreat_at_Hickory_Lakes/Richland.webp', import.meta.url).href,
+    'The Seneca': new URL('../media/Renders/The_Retreat_at_Hickory_Lakes/Seneca.webp', import.meta.url).href,
+    'The Stillwater': new URL('../media/Renders/The_Retreat_at_Hickory_Lakes/Stillwater.webp', import.meta.url).href,
+    'The Stillwater Plus': new URL('../media/Renders/The_Retreat_at_Hickory_Lakes/Stillwater_Plus.webp', import.meta.url).href,
+    'The Vinton': new URL('../media/Renders/The_Retreat_at_Hickory_Lakes/Vinton.webp', import.meta.url).href,
   },
   'The Reserve at New California': {
-    'The Erie': new URL('../media/Renders/The_Reserve_at_New_California/Erie.jpg', import.meta.url).href,
-    'The Franklin': new URL('../media/Renders/The_Reserve_at_New_California/Franklin.jpg', import.meta.url).href,
-    'The Jefferson II': new URL('../media/Renders/The_Reserve_at_New_California/Jefferson_II.jpg', import.meta.url).href,
-    'The Knox': new URL('../media/Renders/The_Reserve_at_New_California/Knox.jpg', import.meta.url).href,
-    'The Seneca': new URL('../media/Renders/The_Reserve_at_New_California/Seneca.jpg', import.meta.url).href,
-    'The Vinton': new URL('../media/Renders/The_Reserve_at_New_California/Vinton.jpg', import.meta.url).href,
+    'The Erie': new URL('../media/Renders/The_Reserve_at_New_California/Erie.webp', import.meta.url).href,
+    'The Franklin': new URL('../media/Renders/The_Reserve_at_New_California/Franklin.webp', import.meta.url).href,
+    'The Jefferson II': new URL('../media/Renders/The_Reserve_at_New_California/Jefferson_II.webp', import.meta.url).href,
+    'The Knox': new URL('../media/Renders/The_Reserve_at_New_California/Knox.webp', import.meta.url).href,
+    'The Seneca': new URL('../media/Renders/The_Reserve_at_New_California/Seneca.webp', import.meta.url).href,
+    'The Vinton': new URL('../media/Renders/The_Reserve_at_New_California/Vinton.webp', import.meta.url).href,
   },
 }
 
@@ -1255,7 +1255,7 @@ document.querySelectorAll('.plan-card').forEach((card) => {
 
   const media = document.createElement('div')
   media.className = 'plan-card-media'
-  media.innerHTML = `<img src="${planImage || homePlaceholderUrl}" alt="${planImage ? `${planName} exterior rendering` : `No exterior rendering available for ${planName}`}" />`
+  media.innerHTML = `<img src="${planImage || homePlaceholderUrl}" alt="${planImage ? `${planName} exterior rendering` : `No exterior rendering available for ${planName}`}" width="900" height="540" loading="lazy" decoding="async" />`
 
   if (['The Chester', 'The Franklin'].includes(title.textContent.trim())) {
     card.classList.add('is-move-in-ready')
