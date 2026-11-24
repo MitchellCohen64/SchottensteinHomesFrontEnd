@@ -6657,6 +6657,24 @@ main .plan-card h3 {
   color: #8d2637;
 }
 
+.model-home-email {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-decoration: underline;
+  text-decoration-color: #c8beb2;
+  text-underline-offset: 4px;
+  cursor: copy;
+}
+
+.model-home-email:hover,
+.model-home-email:focus-visible,
+.model-home-email.is-copied {
+  color: #8d2637;
+}
+
 .model-home-actions {
   display: flex;
   flex-wrap: wrap;
