@@ -6640,7 +6640,8 @@ main .plan-card h3 {
   color: #8d2637;
 }
 
-.model-home-email {
+.model-home-email,
+.model-home-phone {
   padding: 0;
   border: 0;
   background: transparent;
@@ -6654,7 +6655,10 @@ main .plan-card h3 {
 
 .model-home-email:hover,
 .model-home-email:focus-visible,
-.model-home-email.is-copied {
+.model-home-email.is-copied,
+.model-home-phone:hover,
+.model-home-phone:focus-visible,
+.model-home-phone.is-copied {
   color: #8d2637;
 }
 
